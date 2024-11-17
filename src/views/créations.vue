@@ -62,7 +62,7 @@
   
   <script>
 import api_pokemon from '../assets/api_pokemon.png';
-import calculatrice_ios from '../assets/calculatrice_ios.png';
+import calculatrice_ios from '../assets/Calculatrice_ios.png';
 
 export default {
   data() {
