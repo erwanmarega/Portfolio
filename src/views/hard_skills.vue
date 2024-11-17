@@ -21,15 +21,15 @@
 	  return {
 		competences: [
 		  {
-			title: 'Design Graphique',
-			description:
-			  "Dans le cadre de mes projets tutorés, j'ai realisé plusieurs logos, charte graphique, illustration. Je dessine également depuis 10 ans. J'ai commencé par le manga et j'ai continué par du portrait et des illustrations."
-		  },
-		  {
 			title: 'Développement Web',
 			description:
-			  "J'ai créé plusieurs sites statiques en HTML & CSS dans le cadre de mes cours et de mes projets personnels, j'ai réalisé également des sites dynamiques en intégrant de JavaScript, du PHP et du SQL pour la base de données dans le cadre de mes projets tutorés. J'utilise occasionnelement des CMS comme WordPress ou Wix."
+			"J'ai créé plusieurs sites statiques en HTML & CSS dans le cadre de mes cours et de mes projets personnels, j'ai réalisé également des sites dynamiques en intégrant de JavaScript, du PHP et du SQL pour la base de données dans le cadre de mes projets tutorés. J'utilise occasionnelement des CMS comme WordPress ou Wix. Je maîtrise également le framework Vue.js, notamment pour la création de ce portfolio. J'utilise également Git pour la gestion de version de mes projets. Node JS pour la création de serveur. Postman pour tester mes API. Symfony pour le back-end."
 		  },
+		  {
+			title: 'Design Graphique',
+			description:
+			"Dans le cadre de mes projets tutorés, j'ai realisé plusieurs logos, charte graphique, illustration. Je dessine également depuis 10 ans. J'ai commencé par le manga et j'ai continué par du portrait et des illustrations."
+		},
 		  
 		  {
 			title: 'Audiovisuel',

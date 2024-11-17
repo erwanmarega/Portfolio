@@ -15,5 +15,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  assetsInclude: ['**/*.JPG', '**/*.pdf'] // Ajout des fichiers .JPG et .pdf dans assetsInclude
+  assetsInclude: ['**/*.JPG', '**/*.pdf'] 
 })
