@@ -12,9 +12,9 @@
 		<div class="backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl shadow-lg p-8 text-white">
 		  <h2 class="text-4xl font-bold mb-6">Contactez-moi !</h2>
 		  <form @submit.prevent="submitForm" class="space-y-5">
-			<div class="flex space-x-4">
-			  <input type="text" v-model="prenom" class="input-field" placeholder="Prénom" required />
-			  <input type="text" v-model="nom" class="input-field" placeholder="Nom" required />
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  				<input type="text" v-model="prenom" class="input-field" placeholder="Prénom" required />
+  				<input type="text" v-model="nom" class="input-field" placeholder="Nom" required />
 			</div>
 			<div>
 			  <input type="email" v-model="email" class="input-field w-full" placeholder="Email" required />
