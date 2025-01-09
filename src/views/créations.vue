@@ -1,6 +1,5 @@
 <template>
 	<main class="min-h-screen flex items-center justify-center bg-gray-100 flex-col p-4 relative">
-	  <!-- Bloc pour l'API Pokemon -->
 	  <div class="relative text-center p-8 bg-white shadow-lg rounded-lg m-12 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-center">
 		<img :src="api_pokemon" alt="API Pokemon" class="album-img sm:mr-8 mb-4 sm:mb-0" />
 		<div class="flex flex-col justify-center mt-4 sm:mt-0">
@@ -17,9 +16,7 @@
 		</div>
 	  </div>
   
-	  <!-- Bloc pour la Calculatrice IOS -->
 	  <div class="relative text-center p-8 bg-white shadow-lg rounded-lg m-12 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-center">
-		<!-- Applique une taille différente si la modale est ouverte -->
 		<img :src="calculatrice_ios" alt="Calculatrice IOS" class="album-img sm:mr-8 mb-4 sm:mb-0" :class="{'small-img': isModalOpen}" />
 		<div class="flex flex-col justify-center mt-4 sm:mt-0">
 		  <p class="font-bold text-lg">Voici un exercice pour reproduire une calculatrice IOS !</p>
@@ -35,14 +32,12 @@
 		</div>
 	  </div>
   
-	  <!-- Fenêtre modale -->
 	  <transition name="modal-fade">
 		<div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
 		  <div class="modal-content" @click.stop>
 			<img :src="modalImage" alt="Image dans la modale" class="w-full max-w-screen-sm mx-auto rounded" />
 			<h2 class="text-2xl font-bold mt-4">{{ modalTitle }}</h2>
 			<p class="text-gray-700 mt-2">{{ modalDescription }}</p>
-			<!-- Lien spécifique pour chaque projet -->
 			<p v-if="modalLink" class="mt-4 text-blue-600 hover:underline">
 			  <a :href="modalLink" target="_blank" rel="noopener noreferrer">{{ modalLinkText }}</a>
 			</p>

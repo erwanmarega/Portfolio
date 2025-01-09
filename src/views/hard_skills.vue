@@ -1,14 +1,18 @@
 <template>
-	<div class="bg-gray-100 text-black min-h-screen p-6 relative">
-		<div class="text-center">
-			<h1 class="text-4xl font-bold text-gray-800 mb-24">
-			Compétences : 
-			</h1>
-		</div>
-	  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-12">
+	<div class="bg-gray-100 text-black min-h-screen p-2 relative">
+	  <div class="text-center">
+		<h1 class="text-4xl font-bold text-gray-800 mb-6">
+		  Compétences :
+		</h1>
+	  </div>
+	  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
 		<div v-for="competence in competences" :key="competence.title">
-		  <h2 class="text-xl font-bold mb-4 border-b-2 border-black pb-2 uppercase">{{ competence.title }}</h2>
-		  <p class=" text-black">{{ competence.description }}</p>
+		  <h2 class="text-xl font-bold mb-2 border-b-2 border-black pb-1 uppercase">
+			{{ competence.title }}
+		  </h2>
+		  <ul class="list-disc pl-5 text-black">
+			<li v-for="item in competence.description" :key="item">{{ item }}</li>
+		  </ul>
 		</div>
 	  </div>
 	</div>
@@ -16,25 +20,46 @@
   
   <script>
   export default {
-	name: 'Page',
+	name: "Page",
 	data() {
 	  return {
 		competences: [
 		  {
-			title: 'Développement Web',
-			description:
-			"J'ai créé plusieurs sites statiques en HTML & CSS dans le cadre de mes cours et de mes projets personnels, j'ai réalisé également des sites dynamiques en intégrant de JavaScript, du PHP et du SQL pour la base de données dans le cadre de mes projets tutorés. J'utilise occasionnelement des CMS comme WordPress ou Wix. Je maîtrise également le framework Vue.js, notamment pour la création de ce portfolio. J'utilise également Git pour la gestion de version de mes projets. Node JS pour la création de serveur. Postman pour tester mes API. Symfony pour le back-end."
+			title: "Développement Front-End",
+			description: [
+			  "Création de sites statiques en HTML & CSS",
+			  "Développement dynamique avec JavaScript",
+			  "Maîtrise de frameworks front-end comme Vue.js et React, Nuxt.js et Next.js",
+			  "Utilisation de préprocesseurs CSS",
+			  "Création d’interfaces responsives et mobiles"
+			]
 		  },
 		  {
-			title: 'Design Graphique',
-			description:
-			"Dans le cadre de mes projets tutorés, j'ai realisé plusieurs logos, charte graphique, illustration. Je dessine également depuis 10 ans. J'ai commencé par le manga et j'ai continué par du portrait et des illustrations."
-		},
-		  
+			title: "Développement Back-End",
+			description: [
+			  "Création de serveurs avec Node.js et Express",
+			  "Utilisation de Symfony pour des projets complexes",
+			  "Gestion de bases de données relationnelles et non relationnelles (MySQL, PostgreSQL)",
+			  "Mise en place d’API RESTful",
+			  "Gestion de conteneurs avec Docker",
+			]
+		  },
 		  {
-			title: 'Audiovisuel',
-			description:
-			  "Dans le cadre de mes projets tutorés, mes partenaires et moi avons réalisés un documentaire sur le festival du Brie de Meaux. Dans ce projet, je me suis occupé de la partie son, caméra et également une partie du montage."
+			title: "Design Graphique",
+			description: [
+			  "Création de logos, chartes graphiques et illustrations",
+			  "Pratique du dessin depuis 10 ans",
+			  "Spécialisation en manga, portrait et illustrations",
+			  "Utilisation de logiciels comme Adobe Photoshop, Illustrator, et Figma"
+			]
+		  },
+		  {
+			title: "Outils et Méthodologies",
+			description: [
+			  "Utilisation de Git et GitHub pour la gestion de version",
+			  "Travail en méthodologies agiles (Scrum, Kanban)",
+			  "Déploiement continu avec des outils tel que GitLab CI/CD"
+			]
 		  }
 		]
 	  };
@@ -43,5 +68,6 @@
   </script>
   
   <style scoped>
+
   </style>
   

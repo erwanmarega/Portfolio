@@ -16,7 +16,9 @@
     </div>
 
     <div class="fixed bottom-4 right-4">
+      <a href="#about" class="cursor-pointer">
       <img :src="flecheImage" alt="Flèche vers le bas" class="w-12 h-12 animate-bounce mx-auto">
+      </a>
     </div>
   </main>
 </template>

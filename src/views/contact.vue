@@ -60,7 +60,7 @@
 		  this.message = '';
 		} catch (error) {
 		  alert('Erreur lors de l\'envoi de l\'email.');
-		  console.error('Erreur:', error.response ? error.response.data : error.message); // Afficher l'erreur
+		  console.error('Erreur:', error.response ? error.response.data : error.message); 
 		}
 	  }
 	}
