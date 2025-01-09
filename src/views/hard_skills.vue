@@ -1,25 +1,33 @@
 <template>
 	<div class="bg-gray-100 text-black min-h-screen p-2 relative">
 	  <div class="text-center">
-		<h1 class="text-4xl font-bold text-gray-800 mb-6">
+		<h1 class="text-4xl font-bold text-gray-800 mb-24">
 		  Compétences :
 		</h1>
 	  </div>
 	  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-		<div v-for="competence in competences" :key="competence.title">
-		  <h2 class="text-xl font-bold mb-2 border-b-2 border-black pb-1 uppercase">
-			{{ competence.title }}
+		<div 
+			v-for="(competence, index) in competences" 
+			:key="competence.title" 
+			class="mb-12"> 
+		  <h2 
+			class="text-xl font-bold mb-2 border-b-2 border-black pb-1 uppercase">
+			<div :id="'title-' + index"></div>
 		  </h2>
 		  <ul class="list-disc pl-5 text-black">
-			<li v-for="item in competence.description" :key="item">{{ item }}</li>
+			<li v-for="(item, itemIndex) in competence.description" :key="item">
+			  <div :id="'desc-' + index + '-' + itemIndex"></div>
+			</li>
 		  </ul>
 		</div>
 	  </div>
 	</div>
-  </template>
-  
-  <script>
-  export default {
+</template>
+
+<script>
+import Typewriter from "typewriter-effect/dist/core";
+
+export default {
 	name: "Page",
 	data() {
 	  return {
@@ -63,11 +71,32 @@
 		  }
 		]
 	  };
-	}
-  };
-  </script>
-  
-  <style scoped>
+	},
+	mounted() {
+	  this.animateText();
+	},
+	methods: {
+	  animateText() {
+		this.competences.forEach((competence, index) => {
+		  new Typewriter(`#title-${index}`, {
+			delay: 50,
+		  })
+			.typeString(competence.title)
+			.start();
 
-  </style>
-  
+		  competence.description.forEach((item, itemIndex) => {
+			new Typewriter(`#desc-${index}-${itemIndex}`, {
+			  delay: 50,
+			})
+			  .typeString(item)
+			  .start();
+		  });
+		});
+	  }
+	}
+};
+</script>
+
+<style scoped>
+
+</style>

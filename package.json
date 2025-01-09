@@ -24,6 +24,7 @@
     "path": "^0.12.7",
     "react-icon-cloud": "^4.1.4",
     "swiper": "^11.1.14",
+    "typewriter-effect": "^2.21.0",
     "vue": "^3.4.29",
     "vue-router": "^4.4.5",
     "vueperslides": "^3.5.1"
