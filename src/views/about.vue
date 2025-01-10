@@ -5,7 +5,6 @@
       ref="aboutSection"
       :class="{ 'animate-visible': isVisible }"
     >
-      <!-- Image à gauche -->
       <div
         class="sm:flex-shrink-0 transition-transform duration-500 ease-out transform"
         :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
@@ -13,7 +12,6 @@
         <img :src="erwanImage" alt="Photo d'Erwan" class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full object-cover object-center shadow-lg border-4 border-white hover:scale-105">
       </div>
 
-      <!-- Texte à droite -->
       <div
         class="text-center p-8 bg-white shadow-lg rounded-lg transition-transform duration-500 ease-out transform"
         :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
@@ -26,7 +24,6 @@
           en alternance au sein de Présence Verte en tant qu’assistant communication.
         </p>
         <div class="flex justify-center space-x-4">
-          <!-- Boutons inchangés avec effets -->
           <a :href="CV_Link" target="_blank" class="group relative inline-block overflow-hidden rounded border border-gray-100 bg-gray-200 px-6 py-2 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white">
             <span class="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
             <span class="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
@@ -53,7 +50,7 @@ import ErwanImage from '../assets/img_erwan.JPG';
 export default {
   data() {
     return {
-      isVisible: false, // Contrôle de la visibilité
+      isVisible: false, 
       erwanImage: ErwanImage,
       CV_Link: 'https://drive.google.com/file/d/1o0u6f1W0iew4LDbRSwhZF0FSfMco4yXt/view?usp=drive_link',
       Portfolio_Link: 'https://drive.google.com/file/d/1gbwL6-WvAEey_DaKdZSM0f64DIyAMvGa/view?usp=drive_link'
@@ -79,7 +76,7 @@ export default {
 <style scoped>
 /* Styles d'animation */
 .transition-transform {
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  transition: transform 2s ease, opacity 2s ease;
 }
 
 .opacity-0 {
@@ -91,14 +88,18 @@ export default {
 }
 
 .-translate-x-10 {
-  transform: translateX(-2.5rem);
+  transform: translateX(-15.5rem);
 }
 
 .translate-x-10 {
-  transform: translateX(2.5rem);
+  transform: translateX(15.5rem);
 }
 
 .translate-x-0 {
   transform: translateX(0);
 }
+
+main {
+	margin-top: -150px;   
+  }
 </style>

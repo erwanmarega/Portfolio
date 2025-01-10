@@ -1,15 +1,16 @@
 <template>
+	
 	<div class="bg-gray-100 text-black min-h-screen p-2 relative">
 	  <div class="text-center">
-		<h1 class="text-4xl font-bold text-gray-800 mb-24">
-		  Compétences :
+		<h1 class="text-4xl font-bold text-gray-800 mb-12"> 
+		  Compétences
 		</h1>
 	  </div>
-	  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+	  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6"> 
 		<div 
-			v-for="(competence, index) in competences" 
-			:key="competence.title" 
-			class="mb-12"> 
+		  v-for="(competence, index) in competences" 
+		  :key="competence.title" 
+		  class="mb-6"> 
 		  <h2 
 			class="text-xl font-bold mb-2 border-b-2 border-black pb-1 uppercase">
 			<div :id="'title-' + index"></div>
@@ -22,12 +23,12 @@
 		</div>
 	  </div>
 	</div>
-</template>
-
-<script>
-import Typewriter from "typewriter-effect/dist/core";
-
-export default {
+  </template>
+  
+  <script>
+  import Typewriter from "typewriter-effect/dist/core";
+  
+  export default {
 	name: "Page",
 	data() {
 	  return {
@@ -83,7 +84,7 @@ export default {
 		  })
 			.typeString(competence.title)
 			.start();
-
+  
 		  competence.description.forEach((item, itemIndex) => {
 			new Typewriter(`#desc-${index}-${itemIndex}`, {
 			  delay: 50,
@@ -94,9 +95,12 @@ export default {
 		});
 	  }
 	}
-};
-</script>
-
-<style scoped>
-
-</style>
+  };
+  </script>
+  
+  <style scoped>
+  main {
+	margin-top: 150px; /* Ajustez cette valeur pour rapprocher la section */
+  }
+  </style>
+  

@@ -13,8 +13,8 @@
 		  <h2 class="text-4xl font-bold mb-6">Contactez-moi !</h2>
 		  <form @submit.prevent="submitForm" class="space-y-5">
 			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  				<input type="text" v-model="prenom" class="input-field" placeholder="Prénom" required />
-  				<input type="text" v-model="nom" class="input-field" placeholder="Nom" required />
+			  <input type="text" v-model="prenom" class="input-field" placeholder="Prénom" required />
+			  <input type="text" v-model="nom" class="input-field" placeholder="Nom" required />
 			</div>
 			<div>
 			  <input type="email" v-model="email" class="input-field w-full" placeholder="Email" required />
@@ -25,6 +25,11 @@
 			<button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center">Envoyer</button>
 		  </form>
 		</div>
+	  </div>
+  
+	  <!-- Horloge en bas à droite -->
+	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
+		{{ currentTime }}
 	  </div>
 	</div>
   </template>
@@ -40,7 +45,8 @@
 		nom: '',
 		email: '',
 		message: '',
-		logoGmail 
+		logoGmail,
+		currentTime: this.getCurrentTime()
 	  };
 	},
 	methods: {
@@ -54,6 +60,7 @@
 		  });
 		  alert('Email envoyé avec succès !');
 		  
+		  // Réinitialiser les champs
 		  this.prenom = '';
 		  this.nom = '';
 		  this.email = '';
@@ -62,7 +69,23 @@
 		  alert('Erreur lors de l\'envoi de l\'email.');
 		  console.error('Erreur:', error.response ? error.response.data : error.message); 
 		}
+	  },
+	  getCurrentTime() {
+		const date = new Date();
+		const hours = date.getHours().toString().padStart(2, '0');
+		const minutes = date.getMinutes().toString().padStart(2, '0');
+		const seconds = date.getSeconds().toString().padStart(2, '0');
+		return `${hours}:${minutes}:${seconds}`;
+	  },
+	  updateClock() {
+		this.currentTime = this.getCurrentTime();
 	  }
+	},
+	mounted() {
+	  setInterval(this.updateClock, 1000);  // Mettre à jour l'heure toutes les secondes
+	},
+	beforeDestroy() {
+	  clearInterval(this.updateClock);  // Nettoyer l'intervalle quand le composant est détruit
 	}
   };
   </script>
@@ -70,6 +93,18 @@
   <style scoped>
   .input-field {
 	@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+  
+  .absolute {
+	position: absolute;
+  }
+  
+  .bottom-4 {
+	bottom: 1rem;
+  }
+  
+  .right-4 {
+	right: 1rem;
   }
   </style>
   

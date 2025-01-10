@@ -2,10 +2,14 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}", // Assurez-vous que les chemins sont corrects
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      zIndex: {
+        60: '60',  
+      },
+    },
   },
   plugins: [],
 };

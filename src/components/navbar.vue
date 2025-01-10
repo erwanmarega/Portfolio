@@ -23,12 +23,12 @@
       </li>
       <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
         <a href="#twitter">
-          <font-awesome-icon :icon="['fab', 'twitter']" />
+          <font-awesome-icon :icon="['fab', 'discord']" />
         </a>
       </li>
       <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
-        <a href="#youtube">
-          <font-awesome-icon :icon="['fab', 'youtube']" />
+        <a href="https://www.tiktok.com/@445nuits._">
+          <font-awesome-icon :icon="['fab', 'tiktok']" />        
         </a>
       </li>
       <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
@@ -43,10 +43,10 @@
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHome, faBook, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faLinkedin, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faLinkedin, faTwitter, faYoutube, faDiscord, faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faHome, faBook, faGithub, faLinkedin, faTwitter, faYoutube, faPhone);
+library.add(faHome, faBook, faGithub, faLinkedin, faTiktok, faDiscord, faPhone);
 
 export default {
   components: {
@@ -56,5 +56,4 @@ export default {
 </script>
 
 <style scoped>
-/* Ajoutez ici des styles si nécessaire pour votre navbar */
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<main class="min-h-screen flex items-center justify-center bg-gray-100 relative">
+	<main class="min-h-screen flex items-center justify-center bg-gray-100 flex-col p-4 relative">
 	  <div class="relative overflow-hidden w-full max-w-4xl mx-auto p-6 bg-gray-100 relative">
 		<div class="text-center">
 		  <h1 class="text-4xl font-bold text-gray-800 mb-6">
@@ -55,7 +55,7 @@
 	data() {
 	  return {
 		currentSlide: 0,
-		interval: null, 
+		interval: null,
 		skills: [
 		  { name: "HTML", icon: "https://cdn-icons-png.flaticon.com/512/732/732212.png" },
 		  { name: "CSS", icon: "https://cdn-icons-png.flaticon.com/512/732/732190.png" },
@@ -68,18 +68,16 @@
 	  };
 	},
 	mounted() {
-	  
 	  this.startAutoSlide();
 	},
 	beforeDestroy() {
-	  
 	  clearInterval(this.interval);
 	},
 	methods: {
 	  startAutoSlide() {
 		this.interval = setInterval(() => {
 		  this.nextSlide();
-		}, 5000); 
+		}, 5000);
 	  },
 	  nextSlide() {
 		this.currentSlide = (this.currentSlide + 1) % this.skills.length;
@@ -96,8 +94,7 @@
   </script>
   
   <style scoped>
-  .carousel-container {
-	height: 300px;
+  main {
+	margin-top: -450px; 
   }
   </style>
-  
