@@ -60,7 +60,6 @@
 		  });
 		  alert('Email envoyé avec succès !');
 		  
-		  // Réinitialiser les champs
 		  this.prenom = '';
 		  this.nom = '';
 		  this.email = '';
@@ -82,10 +81,10 @@
 	  }
 	},
 	mounted() {
-	  setInterval(this.updateClock, 1000);  // Mettre à jour l'heure toutes les secondes
+	  setInterval(this.updateClock, 1000);  
 	},
 	beforeDestroy() {
-	  clearInterval(this.updateClock);  // Nettoyer l'intervalle quand le composant est détruit
+	  clearInterval(this.updateClock);  
 	}
   };
   </script>

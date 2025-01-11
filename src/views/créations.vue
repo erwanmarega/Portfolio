@@ -1,10 +1,8 @@
 <template>
 	<div class="relative">
-	  <!-- Arrière-plan flou -->
 	  <main :class="{'blur-background': isModalOpen}" class="min-h-screen flex items-center justify-center bg-gray-100 flex-col p-4 relative">
 		<h1 class="text-4xl font-bold text-gray-800 mb-6">Projets</h1>
 		
-		<!-- Section Projet API Pokemon -->
 		<div
 		  class="relative text-center p-8 bg-white shadow-lg rounded-lg m-12 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-center transition-transform duration-500 ease-out transform"
 		  ref="creationsSection"
@@ -25,7 +23,6 @@
 		  </div>
 		</div>
   
-		<!-- Section Projet Calculatrice IOS -->
 		<div
 		  class="relative text-center p-8 bg-white shadow-lg rounded-lg m-12 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-center transition-transform duration-500 ease-out transform"
 		  :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
@@ -94,7 +91,6 @@
 		this.modalLink = link;
 		this.modalLinkText = linkText;
 		this.isModalOpen = true;
-		// Ajouter la classe 'no-scroll' au body pour désactiver le scroll
 		document.body.classList.add('no-scroll');
 	  },
 	  closeModal() {
@@ -104,7 +100,6 @@
 		this.modalDescription = '';
 		this.modalLink = '';
 		this.modalLinkText = '';
-		// Retirer la classe 'no-scroll' du body pour réactiver le scroll
 		document.body.classList.remove('no-scroll');
 	  },
 	  handleKeydown(event) {
@@ -116,7 +111,6 @@
 	mounted() {
 	  document.addEventListener('keydown', this.handleKeydown);
   
-	  // Initialisation de l'Intersection Observer
 	  const observer = new IntersectionObserver(
 		([entry]) => {
 		  if (entry.isIntersecting) {
@@ -124,7 +118,7 @@
 		  }
 		},
 		{
-		  threshold: 0.1 // Détecte lorsque 10% de l'élément est visible
+		  threshold: 0.1 
 		}
 	  );
 	  observer.observe(this.$refs.creationsSection);
@@ -136,18 +130,15 @@
   </script>
   
   <style scoped>
-  /* Classe pour empêcher le défilement */
   .no-scroll {
 	overflow: hidden;
   }
   
-  /* Applique le flou uniquement sur l'arrière-plan (main) quand la modale est ouverte */
   .blur-background {
 	filter: blur(8px);
 	transition: filter 0.3s ease-in-out;
   }
   
-  /* Animation de transition pour les éléments de la page */
   .transition-transform {
 	transition: transform 2s ease, opacity 2s ease;
   }
@@ -196,12 +187,10 @@
 	opacity: 0;
   }
   
-  /* Styles pour l'overlay de l'image de projet */
   .overlay {
 	@apply absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out rounded-xl opacity-0 hover:opacity-100;
   }
   
-  /* Styles de l'image dans la fenêtre modale */
   .modal-img {
 	@apply w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96;
   }

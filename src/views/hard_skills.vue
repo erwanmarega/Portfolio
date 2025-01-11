@@ -1,5 +1,4 @@
 <template>
-	
 	<div class="bg-gray-100 text-black min-h-screen p-2 relative">
 	  <div class="text-center">
 		<h1 class="text-4xl font-bold text-gray-800 mb-12"> 
@@ -100,7 +99,7 @@
   
   <style scoped>
   main {
-	margin-top: 150px; /* Ajustez cette valeur pour rapprocher la section */
+	margin-top: 150px; 
   }
   </style>
   
