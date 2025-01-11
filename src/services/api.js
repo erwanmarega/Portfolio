@@ -1,14 +1,41 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const fetchData = async (endpoint) => {
+if (!API_URL) {
+  console.error("Erreur : La variable d'environnement 'VITE_API_URL' n'est pas définie.");
+}
+
+export const fetchData = async (endpoint, options = {}) => {
   try {
-    const response = await fetch(`${API_URL}${endpoint}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    const url = `${API_URL}${endpoint}`;
+    console.log(`Appel API vers : ${url}`); 
+
+    const defaultOptions = {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json', 
+      },
+    };
+
+    const finalOptions = { ...defaultOptions, ...options };
+
+    if (options.body) {
+      console.log("Données envoyées :", options.body); 
+      finalOptions.body = JSON.stringify(options.body);
     }
-    return await response.json();
+
+    const response = await fetch(url, finalOptions);
+
+    if (!response.ok) {
+      const errorText = `Erreur HTTP ! Statut : ${response.status}`;
+      console.error(errorText);
+      throw new Error(errorText);
+    }
+
+    const data = await response.json();
+    console.log("Réponse reçue :", data);
+    return data;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Erreur lors de l\'appel API :', error.message);
     throw error;
   }
 };

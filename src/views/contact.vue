@@ -32,7 +32,6 @@
 		</div>
 	  </div>
   
-	  <!-- Horloge en bas à droite -->
 	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
 		{{ currentTime }}
 	  </div>
@@ -41,7 +40,7 @@
   
   <script>
   import logoGmail from '../assets/logo_gmail.png';
-  import { fetchData } from '../services/api'; // Importation de la fonction fetchData
+  import { fetchData } from '../services/api'; 
   
   export default {
 	data() {
