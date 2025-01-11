@@ -43,7 +43,6 @@
 		</div>
 	  </main>
   
-	  <!-- Fenêtre modale -->
 	  <transition name="modal-fade">
 		<div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
 		  <div class="modal-content" @click.stop>
