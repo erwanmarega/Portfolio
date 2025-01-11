@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <!-- NAVBAR -->
     <navbar />
 
-    <!-- SECTIONS -->
     <div class="section" id="home">
       <home />
     </div>

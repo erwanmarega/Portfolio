@@ -22,7 +22,12 @@
 			<div>
 			  <textarea v-model="message" class="input-field w-full h-24" placeholder="Message" required></textarea>
 			</div>
-			<button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center">Envoyer</button>
+			<button
+			  type="submit"
+			  class="w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-3 text-center"
+			>
+			  Envoyer
+			</button>
 		  </form>
 		</div>
 	  </div>
@@ -35,8 +40,8 @@
   </template>
   
   <script>
-  import axios from 'axios';
-  import logoGmail from '../assets/logo_gmail.png'; 
+  import logoGmail from '../assets/logo_gmail.png';
+  import { fetchData } from '../services/api'; // Importation de la fonction fetchData
   
   export default {
 	data() {
@@ -46,27 +51,28 @@
 		email: '',
 		message: '',
 		logoGmail,
-		currentTime: this.getCurrentTime()
+		currentTime: this.getCurrentTime(),
 	  };
 	},
 	methods: {
 	  async submitForm() {
 		try {
-		  await axios.post('http://localhost:3000/send-email', {
+		  await fetchData('/send-email', {
 			prenom: this.prenom,
 			nom: this.nom,
 			email: this.email,
-			message: this.message
+			message: this.message,
 		  });
+  
 		  alert('Email envoyé avec succès !');
-		  
+  
 		  this.prenom = '';
 		  this.nom = '';
 		  this.email = '';
 		  this.message = '';
 		} catch (error) {
-		  alert('Erreur lors de l\'envoi de l\'email.');
-		  console.error('Erreur:', error.response ? error.response.data : error.message); 
+		  alert("Erreur lors de l'envoi de l'email.");
+		  console.error('Erreur:', error.message);
 		}
 	  },
 	  getCurrentTime() {
@@ -78,14 +84,14 @@
 	  },
 	  updateClock() {
 		this.currentTime = this.getCurrentTime();
-	  }
+	  },
 	},
 	mounted() {
-	  setInterval(this.updateClock, 1000);  
+	  setInterval(this.updateClock, 1000);
 	},
 	beforeDestroy() {
-	  clearInterval(this.updateClock);  
-	}
+	  clearInterval(this.updateClock);
+	},
   };
   </script>
   
