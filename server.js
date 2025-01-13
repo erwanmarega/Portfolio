@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 10000;
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://portfolio-j2wv9px5i-erwanmaregas-projects.vercel.app'], // Autoriser uniquement les domaines spécifiques
+    origin: ['http://localhost:5173', 'https://portfolio-yyem.vercel.app/'], // Autoriser uniquement les domaines spécifiques
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })

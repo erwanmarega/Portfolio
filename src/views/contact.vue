@@ -55,7 +55,7 @@
 	methods: {
 	  async submitForm() {
 		try {
-		  const API_URL = 'https://portfolio-em.onrender.com'; 
+		  const API_URL = import.meta.env.VITE_API_URL; 
 		  const response = await fetch(`${API_URL}/send-email`, {
 			method: 'POST',
 			headers: {
