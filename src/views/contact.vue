@@ -40,7 +40,6 @@
   
   <script>
   import logoGmail from '../assets/logo_gmail.png';
-  import { fetchData } from '../services/api'; 
   
   export default {
 	data() {
@@ -56,13 +55,25 @@
 	methods: {
 	  async submitForm() {
 		try {
-		  await fetchData('/send-email', {
-			prenom: this.prenom,
-			nom: this.nom,
-			email: this.email,
-			message: this.message,
+		  const API_URL = import.meta.env.VITE_API_URL; 
+		  const response = await fetch(`${API_URL}/send-email`, {
+			method: 'POST',
+			headers: {
+			  'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+			  prenom: this.prenom,
+			  nom: this.nom,
+			  email: this.email,
+			  message: this.message,
+			}),
 		  });
   
+		  if (!response.ok) {
+			throw new Error(`Erreur HTTP : ${response.status}`);
+		  }
+  
+		  const result = await response.json();
 		  alert('Email envoyé avec succès !');
   
 		  this.prenom = '';
@@ -71,7 +82,7 @@
 		  this.message = '';
 		} catch (error) {
 		  alert("Erreur lors de l'envoi de l'email.");
-		  console.error('Erreur:', error.message);
+		  console.error('Erreur :', error.message);
 		}
 	  },
 	  getCurrentTime() {
