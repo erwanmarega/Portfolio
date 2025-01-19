@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-gray-100 text-black min-h-screen p-4 relative">
+	<div class="bg-gray-100 text-black  p-4 relative">
 	  <div class="text-center">
 		<h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">
 		  Compétences

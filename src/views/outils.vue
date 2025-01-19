@@ -98,10 +98,7 @@
   </script>
   
   <style scoped>
-  main {
-	margin-top: -300px;
-  }
-  
+ 
   h1 {
 	font-size: 2rem;
   }

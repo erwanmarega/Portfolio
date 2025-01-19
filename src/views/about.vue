@@ -97,7 +97,5 @@ export default {
   transform: translateX(0);
 }
 
-main {
-	margin-top: -150px;   
-  }
+
 </style>
