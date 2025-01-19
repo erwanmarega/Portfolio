@@ -60,7 +60,6 @@
 		  return;
 		}
   
-		// Affichage de l'URL utilisée pour débogage
 		console.log(`Appel à l'API : ${API_URL}/send-email`);
   
 		try {
@@ -86,7 +85,7 @@
 		  const result = await response.json();
 		  alert(result.message || 'Email envoyé avec succès !');
   
-		  // Réinitialisation du formulaire après envoi
+
 		  this.prenom = '';
 		  this.nom = '';
 		  this.email = '';
