@@ -95,6 +95,6 @@
   
   <style scoped>
   main {
-	margin-top: -470px; 
+	margin-top: -350px; 
   }
   </style>
