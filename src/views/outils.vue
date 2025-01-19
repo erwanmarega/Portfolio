@@ -26,7 +26,6 @@
 		  </div>
 		</div>
   
-		<!-- Boutons de navigation -->
 		<button
 		  @click="prevSlide"
 		  class="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 p-2 bg-gray-700 text-white rounded-full hover:bg-gray-900"
@@ -40,7 +39,6 @@
 		  &#10095;
 		</button>
   
-		<!-- Indicateurs -->
 		<div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
 		  <span
 			v-for="(skill, index) in skills"

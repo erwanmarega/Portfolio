@@ -3,15 +3,14 @@
 	  <main :class="{ 'blur-background': isModalOpen }" class="min-h-screen bg-gray-100 flex flex-col items-center p-4">
 		<h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Projets</h1>
   
-		<!-- Section API Pokemon -->
 		<div
 		  class="project-card"
 		  ref="creationsSection"
 		  :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
 		>
-		  <div class="flex items-center"> <!-- Flexbox pour aligner l'image et le texte -->
+		  <div class="flex items-center"> 
 			<img :src="api_pokemon" alt="API Pokemon" class="album-img" />
-			<div class="flex flex-col justify-center ml-4 text-center sm:text-left"> <!-- Aligner le texte au centre -->
+			<div class="flex flex-col justify-center ml-4 text-center sm:text-left"> 
 			  <p class="font-bold text-lg md:text-xl">Voici un exercice pour tester et apprendre comment marche une API !</p>
 			</div>
 		  </div>
@@ -26,14 +25,13 @@
 		  </div>
 		</div>
   
-		<!-- Section Calculatrice IOS -->
 		<div
 		  class="project-card"
 		  :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
 		>
-		  <div class="flex items-center"> <!-- Flexbox pour aligner l'image et le texte -->
+		  <div class="flex items-center"> 
 			<img :src="calculatrice_ios" alt="Calculatrice IOS" class="album-img" />
-			<div class="flex flex-col justify-center ml-4 text-center sm:text-left"> <!-- Aligner le texte au centre -->
+			<div class="flex flex-col justify-center ml-4 text-center sm:text-left"> 
 			  <p class="font-bold text-lg md:text-xl">Voici un exercice pour reproduire une calculatrice IOS !</p>
 			</div>
 		  </div>
@@ -143,7 +141,6 @@
 	@apply w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-xl object-cover;
   }
   
-  /* Centrer les images sur mobile et aligner à gauche sur des écrans plus larges */
   @media (max-width: 639px) {
 	.album-img {
 	  @apply mx-auto mb-4;
@@ -154,7 +151,6 @@
 	@apply absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 transition-opacity duration-300 ease-in-out rounded-xl opacity-0 hover:opacity-100;
   }
   
-  /* Modal Overlay */
   .modal-overlay {
 	@apply fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50;
   }

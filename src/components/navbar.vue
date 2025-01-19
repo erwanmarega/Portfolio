@@ -12,6 +12,16 @@
         </a>
       </li>
       <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
+        <a href="#creations">
+          <font-awesome-icon :icon="['fas', 'list-check']" />
+        </a>
+      </li>
+      <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
+        <a href="#contact">
+          <font-awesome-icon :icon="['fas', 'phone']" />
+        </a>
+      </li>
+      <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
         <a href="https://github.com/erwanmarega" target="_blank" rel="noopener noreferrer">
           <font-awesome-icon :icon="['fab', 'github']" />
         </a>
@@ -22,18 +32,8 @@
         </a>
       </li>
       <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
-        <a href="#twitter">
-          <font-awesome-icon :icon="['fab', 'discord']" />
-        </a>
-      </li>
-      <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
         <a href="https://www.tiktok.com/@445nuits._">
           <font-awesome-icon :icon="['fab', 'tiktok']" />        
-        </a>
-      </li>
-      <li class="text-2xl cursor-pointer transform transition-transform hover:scale-110 active:scale-100">
-        <a href="#contact">
-          <font-awesome-icon :icon="['fas', 'phone']" />
         </a>
       </li>
     </ul>
@@ -42,11 +42,11 @@
 
 <script>
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faHome, faBook, faPhone } from '@fortawesome/free-solid-svg-icons';
-import { faGithub, faLinkedin, faTwitter, faYoutube, faDiscord, faTiktok } from '@fortawesome/free-brands-svg-icons';
+import { faHome, faBook, faPhone, faListCheck } from '@fortawesome/free-solid-svg-icons';
+import { faGithub, faLinkedin, faTiktok } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faHome, faBook, faGithub, faLinkedin, faTiktok, faDiscord, faPhone);
+library.add(faHome, faBook, faGithub, faLinkedin, faTiktok, faListCheck, faPhone);
 
 export default {
   components: {
