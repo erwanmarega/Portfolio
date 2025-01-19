@@ -34,5 +34,31 @@ import Contact from './views/contact.vue';
 </script>
 
 <style scoped>
+html, body {
+  overflow-x: hidden;  
+  margin: 0;
+  padding: 0;
+  width: 100%;   
+  height: 100%;  
+}
 
+.section {
+  max-width: 100vw;    
+  overflow-x: hidden;   
+}
+
+* {
+  box-sizing: border-box; 
+  overflow-wrap: break-word;  
+}
+
+img {
+  max-width: 100%; 
+  height: auto;    
+}
+
+video {
+  max-width: 100%; 
+  height: auto;
+}
 </style>

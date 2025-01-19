@@ -1,8 +1,8 @@
 <template>
 	<main class="min-h-screen flex items-center justify-center bg-gray-100 flex-col p-4 relative">
-	  <div class="relative overflow-hidden w-full max-w-4xl mx-auto p-6 bg-gray-100 relative">
+	  <div class="relative overflow-hidden w-full max-w-4xl mx-auto p-6  rounded-lg shadow-md">
 		<div class="text-center">
-		  <h1 class="text-4xl font-bold text-gray-800 mb-6">
+		  <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
 			Outils
 		  </h1>
 		</div>
@@ -13,30 +13,34 @@
 		  <div
 			v-for="(skill, index) in skills"
 			:key="index"
-			class="min-w-full flex flex-col items-center justify-center p-4"
+			class="min-w-full flex flex-col items-center justify-center p-6"
 		  >
 			<img
 			  :src="skill.icon"
 			  :alt="skill.name"
-			  class="w-20 h-20 object-contain mb-4"
+			  class="w-16 h-16 md:w-20 md:h-20 object-contain mb-4"
 			/>
-			<p class="text-lg font-semibold text-gray-800">{{ skill.name }}</p>
+			<p class="text-base md:text-lg font-semibold text-gray-800">
+			  {{ skill.name }}
+			</p>
 		  </div>
 		</div>
   
+		<!-- Boutons de navigation -->
 		<button
 		  @click="prevSlide"
-		  class="absolute left-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-700 text-white rounded-full hover:bg-gray-900"
+		  class="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 p-2 bg-gray-700 text-white rounded-full hover:bg-gray-900"
 		>
 		  &#10094;
 		</button>
 		<button
 		  @click="nextSlide"
-		  class="absolute right-0 top-1/2 transform -translate-y-1/2 p-2 bg-gray-700 text-white rounded-full hover:bg-gray-900"
+		  class="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 p-2 bg-gray-700 text-white rounded-full hover:bg-gray-900"
 		>
 		  &#10095;
 		</button>
   
+		<!-- Indicateurs -->
 		<div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
 		  <span
 			v-for="(skill, index) in skills"
@@ -95,6 +99,48 @@
   
   <style scoped>
   main {
-	margin-top: -350px; 
+	margin-top: -300px;
+  }
+  
+  h1 {
+	font-size: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+	h1 {
+	  font-size: 2.5rem;
+	}
+  }
+  
+  button {
+	width: 40px;
+	height: 40px;
+	font-size: 1.25rem;
+  }
+  
+  @media (min-width: 1024px) {
+	button {
+	  width: 50px;
+	  height: 50px;
+	  font-size: 1.5rem;
+	}
+  }
+  
+  img {
+	max-width: 100%;
+	height: auto;
+  }
+  
+  @media (max-width: 640px) {
+	p {
+	  font-size: 0.875rem;
+	}
+  }
+  
+  @media (min-width: 768px) {
+	p {
+	  font-size: 1.125rem;
+	}
   }
   </style>
+  

@@ -52,12 +52,11 @@ export default {
     return {
       isVisible: false, 
       erwanImage: ErwanImage,
-      CV_Link: 'https://drive.google.com/file/d/1o0u6f1W0iew4LDbRSwhZF0FSfMco4yXt/view?usp=drive_link',
+      CV_Link: 'https://drive.google.com/file/d/1jbPXZD6-mMvPCqerhvApvyMFWUY1alRb/view?usp=drive_link',
       Portfolio_Link: 'https://drive.google.com/file/d/1gbwL6-WvAEey_DaKdZSM0f64DIyAMvGa/view?usp=drive_link'
     };
   },
   mounted() {
-    // Initialisation de l'Intersection Observer
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -65,7 +64,7 @@ export default {
         }
       },
       {
-        threshold: 0.1 // Détecte lorsque 10% de l'élément est visible
+        threshold: 0.1 
       }
     );
     observer.observe(this.$refs.aboutSection);
@@ -74,7 +73,6 @@ export default {
 </script>
 
 <style scoped>
-/* Styles d'animation */
 .transition-transform {
   transition: transform 2s ease, opacity 2s ease;
 }
