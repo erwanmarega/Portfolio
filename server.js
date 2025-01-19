@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 10000;
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://portfolio-yyem.vercel.app/'], // Autoriser uniquement les domaines spécifiques
+    origin: ['https://www.ewmdev.com/'], 
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
@@ -34,6 +34,9 @@ app.post('/send-email', async (req, res) => {
     auth: {
       user: process.env.USER, 
       pass: process.env.PASS, 
+    },
+    tls: {
+      rejectUnauthorized: false,  
     },
   });
 

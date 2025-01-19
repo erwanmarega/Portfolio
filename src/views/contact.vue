@@ -54,8 +54,16 @@
 	},
 	methods: {
 	  async submitForm() {
+		const API_URL = import.meta.env.VITE_API_URL;
+		if (!API_URL) {
+		  alert("Erreur : L'URL de l'API n'est pas définie.");
+		  return;
+		}
+  
+		// Affichage de l'URL utilisée pour débogage
+		console.log(`Appel à l'API : ${API_URL}/send-email`);
+  
 		try {
-		  const API_URL = import.meta.env.VITE_API_URL; 
 		  const response = await fetch(`${API_URL}/send-email`, {
 			method: 'POST',
 			headers: {
@@ -70,21 +78,25 @@
 		  });
   
 		  if (!response.ok) {
-			throw new Error(`Erreur HTTP : ${response.status}`);
+			const errorMessage = `Erreur HTTP : ${response.status}`;
+			console.error(errorMessage);
+			throw new Error(errorMessage);
 		  }
   
 		  const result = await response.json();
 		  alert(result.message || 'Email envoyé avec succès !');
   
+		  // Réinitialisation du formulaire après envoi
 		  this.prenom = '';
 		  this.nom = '';
 		  this.email = '';
 		  this.message = '';
 		} catch (error) {
+		  console.error('Erreur lors de l\'envoi de l\'email :', error);
 		  alert("Erreur lors de l'envoi de l'email.");
-		  console.error('Erreur :', error.message);
 		}
 	  },
+  
 	  getCurrentTime() {
 		const date = new Date();
 		const hours = date.getHours().toString().padStart(2, '0');
@@ -92,6 +104,7 @@
 		const seconds = date.getSeconds().toString().padStart(2, '0');
 		return `${hours}:${minutes}:${seconds}`;
 	  },
+  
 	  updateClock() {
 		this.currentTime = this.getCurrentTime();
 	  },
