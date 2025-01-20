@@ -10,13 +10,16 @@ const PORT = process.env.PORT || 10000;
 
 app.use(
   cors({
-    origin: ['https://www.ewmdev.com/', 'https://ewmnode.onrender.com'], 
+    origin: ['https://www.ewmdev.com', 'https://ewmnode.onrender.com'], 
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
 );
 
 app.use(express.json());
+
+app.options('*', cors()); 
+
 
 app.get('/', (req, res) => {
   res.send("Bienvenue sur le serveur d'envoi d'emails !");
