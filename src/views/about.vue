@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row  overflow-hidden" ref="stackArea">
+  <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
     <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6">
       <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
         <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[88px] text-center lg:text-left">
@@ -36,12 +36,12 @@
       </div>
     </div>
 
-    <div class="flex-1 flex items-center justify-center relative pt-0 min-h-[40vh]  "> 
+    <div class="flex-1 flex items-center justify-center relative pt-0 mt-[-40px]"> 
       <div
         v-for="(card, index) in cards"
         :key="index"
         :class="[ 
-          'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
+          'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[450px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
           { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking }
         ]"
         :style="getCardStyle(index)"
@@ -79,7 +79,7 @@ export default {
     const getCardStyle = (index) => {
       const zIndex = cards.length - index;
       const rotationAngle = index === currentCardIndex.value ? 0 : -10 * (index - currentCardIndex.value);
-      const translateY = index === currentCardIndex.value ? "0" : "-150vh";  
+      const translateY = index === currentCardIndex.value ? "0" : "-120vh";
       const transform = `translateY(${translateY}) rotate(${rotationAngle}deg)`;
       const backgroundColor = cards[index].color;
 
@@ -153,8 +153,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px 12px;
-  gap: 10px;
+  padding: 10px 15px;
+  gap: 15px;
   background-color: #181717;
   outline: 3px #181717 solid;
   outline-offset: -3px;
@@ -162,13 +162,12 @@ export default {
   border: none;
   cursor: pointer;
   transition: 400ms;
-  margin: 0;
 }
 
 .button .text {
   color: white;
   font-weight: 700;
-  font-size: 0.9em;
+  font-size: 1em;
   transition: 400ms;
 }
 
@@ -178,15 +177,5 @@ export default {
 
 .button:hover .text {
   color: #181717;
-}
-
-@media (max-width: 768px) {
-  .flex-1:first-of-type {
-    margin-bottom: 0; 
-  }
-
-  .flex-1:nth-of-type(2) {
-    margin-top: -40px; 
-  }
 }
 </style>
