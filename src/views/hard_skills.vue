@@ -1,5 +1,5 @@
 <template>
-	<div class="bg-gray-100 text-black p-4 flex flex-col min-h-screen justify-center items-center">
+	<div class="bg-gray-100 text-black p-4 flex flex-col  justify-center items-center">
     <div class="min-h-[20vh] lg:sticky top-0 flex flex-col items-center justify-center text-center p-4 pb-4">
       <div class="flex flex-col items-center space-y-4">
         <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[84px] font-bold leading-tight lg:leading-[88px]">

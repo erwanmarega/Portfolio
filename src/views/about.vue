@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row  min-h-[120vh] overflow-hidden" ref="stackArea">
-    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-2">
+  <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row  overflow-hidden" ref="stackArea">
+    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6">
       <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
         <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[88px] text-center lg:text-left">
           Portfolio
@@ -36,23 +36,23 @@
       </div>
     </div>
 
-<div class="flex-1 flex items-center justify-center relative pt-0"> 
-  <div
-    v-for="(card, index) in cards"
-    :key="index"
-    :class="[ 
-      'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
-      { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking }
-    ]"
-    :style="getCardStyle(index)"
-    @click="showNextCard"
-  >
-    <div class="text-lg sm:text-xl font-bold text-white">{{ card.sub }}</div>
-    <div class="text-xl sm:text-2xl md:text-3xl lg:text-[36px] font-bold leading-tight sm:leading-[44px] text-white">
-      {{ card.content }}
+    <div class="flex-1 flex items-center justify-center relative pt-0 min-h-[40vh]  "> 
+      <div
+        v-for="(card, index) in cards"
+        :key="index"
+        :class="[ 
+          'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
+          { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking }
+        ]"
+        :style="getCardStyle(index)"
+        @click="showNextCard"
+      >
+        <div class="text-lg sm:text-xl font-bold text-white">{{ card.sub }}</div>
+        <div class="text-xl sm:text-2xl md:text-3xl lg:text-[36px] font-bold leading-tight sm:leading-[44px] text-white">
+          {{ card.content }}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
   </div>
 </template>
 
@@ -77,19 +77,19 @@ export default {
     const isShaking = ref(false);
 
     const getCardStyle = (index) => {
-  const zIndex = cards.length - index;
-  const rotationAngle = index === currentCardIndex.value ? 0 : -10 * (index - currentCardIndex.value);
-  const translateY = index === currentCardIndex.value ? "0" : "-150vh";  
-  const transform = `translateY(${translateY}) rotate(${rotationAngle}deg)`;
-  const backgroundColor = cards[index].color;
+      const zIndex = cards.length - index;
+      const rotationAngle = index === currentCardIndex.value ? 0 : -10 * (index - currentCardIndex.value);
+      const translateY = index === currentCardIndex.value ? "0" : "-150vh";  
+      const transform = `translateY(${translateY}) rotate(${rotationAngle}deg)`;
+      const backgroundColor = cards[index].color;
 
-  return {
-    zIndex,
-    transform,
-    backgroundColor,
-    transition: "0.5s ease-in-out",
-  };
-};
+      return {
+        zIndex,
+        transform,
+        backgroundColor,
+        transition: "0.5s ease-in-out",
+      };
+    };
 
     const showNextCard = () => {
       currentCardIndex.value = (currentCardIndex.value + 1) % cards.length;
@@ -178,5 +178,15 @@ export default {
 
 .button:hover .text {
   color: #181717;
+}
+
+@media (max-width: 768px) {
+  .flex-1:first-of-type {
+    margin-bottom: 0; 
+  }
+
+  .flex-1:nth-of-type(2) {
+    margin-top: -40px; 
+  }
 }
 </style>

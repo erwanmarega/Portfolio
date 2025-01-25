@@ -32,7 +32,6 @@ import navbar from './components/navbar.vue';
 import home from './views/home.vue';
 import about from './views/about.vue';
 import Hard_skills from './views/hard_skills.vue';
-import Outils from './views/outils.vue';
 import Créations from './views/créations.vue';
 import Contact from './views/contact.vue';
 import StaticChatbot from './components/StaticChatbot.vue';
@@ -45,8 +44,7 @@ html, body {
   overflow-x: hidden;  
   margin: 0;
   padding: 0;
-  width: 100%;   
-  height: 100%;  
+ 
 }
 
 .section {
@@ -59,13 +57,5 @@ html, body {
   overflow-wrap: break-word;  
 }
 
-img {
-  max-width: 100%; 
-  height: auto;    
-}
 
-video {
-  max-width: 100%; 
-  height: auto;
-}
 </style>
