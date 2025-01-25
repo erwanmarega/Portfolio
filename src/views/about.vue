@@ -1,37 +1,42 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
-    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6 mt-24">
-      <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
-        <img 
-          :src="erwanImage" 
-          alt="Photo d'Erwan" 
-          class="w-32 h-32 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full object-cover object-center shadow-lg border-2 border-white mt-3 lg:mt-0"
-        />
-        <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[72px] text-center lg:text-left mt-6 lg:mt-0">
-          Portfolio
-        </h1>
-      </div>
-      <p class="text-center lg:text-left text-sm sm:text-base lg:text-lg mt-2 max-w-[420px]">
-        Développeur web en formation, passionné par la création de sites internet et la gestion de projets digitaux. Actuellement en BUT Métiers du Multimédia et de l'Internet, en alternance au sein de Présence Verte en tant qu’assistant communication.
-      </p>
-      <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
-        <a 
-          :href="CV_Link"
-          target="_blank"
-          class="button"
-        >
-          <span class="text">Téléchargez mon CV !</span>
-        </a>
-        <a 
-          :href="Portfolio_Link"
-          target="_blank"
-          class="button"
-        >
-          <span class="text">Téléchargez mon portfolio en design !</span>
-        </a>
+    <!-- Première Section: Image + Texte -->
+    <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-32">
+      <div class="flex flex-col items-center space-y-6">
+        <div class="flex flex-col items-center lg:items-center lg:flex-row lg:space-x-4">
+          <img 
+            :src="erwanImage" 
+            alt="Photo d'Erwan" 
+            class="w-32 h-32 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full object-cover object-center shadow-lg border-2 border-white mt-3 lg:mt-0"
+          />
+          <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[72px] text-center mt-6 lg:mt-0">
+            Portfolio
+          </h1>
+        </div>
+        <p class="text-sm sm:text-base lg:text-lg mt-7 max-w-[420px]">
+          Développeur web en formation, passionné par la création de sites internet et la gestion de projets digitaux. Actuellement en BUT Métiers du Multimédia et de l'Internet, en alternance au sein de Présence Verte en tant qu’assistant communication.
+        </p>
+        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
+          <a 
+            :href="CV_Link"
+            target="_blank"
+            class="button"
+          >
+            <span class="text">Téléchargez mon CV !</span>
+          </a>
+          <a 
+            :href="Portfolio_Link"
+            target="_blank"
+            class="button"
+          >
+            <span class="text">Téléchargez mon portfolio en design !</span>
+          </a>
+        </div>
       </div>
     </div>
-    <div class="flex-1 flex items-center justify-center relative pt-0 mb-32">
+
+    <!-- Deuxième Section: Cartes -->
+    <div class="flex-1 flex items-center justify-center relative pt-0 mb-32 lg:mb-0">
       <div
         v-for="(card, index) in cards"
         :key="index"
@@ -50,6 +55,8 @@
     </div>
   </div>
 </template>
+
+
 
 <script>
 import { ref, reactive, onMounted } from "vue";
@@ -174,18 +181,61 @@ export default {
   color: #181717;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .w-full {
-    margin-top: -100px; 
+    margin-top: -60px;
   }
-  .flex-1 {
-    padding: 1rem; 
-  }
+
   .text-center {
-    margin-top: 1rem; 
+    margin-top: 1rem;
+    font-size: 1rem;
   }
+
   .button {
     margin-top: 1rem;
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+
+  .w-32 {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .w-full {
+    margin-top: -50px;
+  }
+
+  .text-center {
+    font-size: 1rem;
+  }
+
+  .button {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-center {
+    font-size: 0.875rem;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .w-32 {
+    width: 90px;
+    height: 90px;
+  }
+
+  .w-24 {
+    width: 70px;
+    height: 70px;
   }
 }
 </style>
