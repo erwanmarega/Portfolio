@@ -2,7 +2,7 @@
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
     <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6">
       <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[88px] text-center lg:text-left">
+        <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[72px] text-center lg:text-left">
           Portfolio
         </h1>
 
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="flex-1 flex items-center justify-center relative pt-0 mt-[-120px]"> 
+    <div class="flex-1 flex items-center justify-center relative pt-0 mt-[-40px]">
       <div
         v-for="(card, index) in cards"
         :key="index"
@@ -178,4 +178,20 @@ export default {
 .button:hover .text {
   color: #181717;
 }
+
+@media (max-width: 768px) {
+  .w-full {
+    margin-top: -100px; 
+  }
+  .flex-1 {
+    padding: 1rem; 
+  }
+  .text-center {
+    margin-top: 1rem; 
+  }
+  .button {
+    margin-top: 1rem;
+  }
+}
+
 </style>

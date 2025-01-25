@@ -1,7 +1,7 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row" ref="techWatchArea">
-    <div class="h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-4">
-      <div class="flex flex-col items-center space-y-4">
+    <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-32">
+      <div class="flex flex-col items-center space-y-6">
         <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[84px] font-bold leading-tight lg:leading-[88px]">
           Veille Technologique
         </h1>
@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="h-auto lg:h-screen lg:sticky top-0 flex items-center justify-center flex-1 relative p-4">
+    <div class="h-auto lg:h-screen flex items-center justify-center flex-1 p-6 mb-0">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="(item, index) in techList"
@@ -116,7 +116,22 @@ export default {
   transition: filter 0.3s ease;
 }
 
-.button {
+.tech-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tech-card:hover {
+  box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+a {
+  text-decoration: underline;
+}
+
+button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,18 +146,12 @@ export default {
   transition: 400ms;
 }
 
-.button .text {
-  color: white;
-  font-weight: 700;
-  font-size: 1em;
-  transition: 400ms;
-}
-
-.button:hover {
+button:hover {
   background-color: transparent;
 }
 
-.button:hover .text {
+button:hover .text {
   color: #181717;
 }
+
 </style>

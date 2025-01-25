@@ -1,6 +1,6 @@
 <template>
   <main class="flex flex-col justify-center items-center h-screen bg-gray-100">
-    <div class="container flex justify-center items-center w-full mt-48">
+    <div class="container flex justify-center items-center w-full mt-12">
       <div class="macbook">
         <div class="macbook__topBord">
           <div class="macbook__display">
@@ -62,12 +62,9 @@
 
 
 <script>
-import lottie from 'lottie-web';
-import animationData from '@/assets/Animation.json'; 
 import ErwanImage from '../assets/Erwan.png'; 
 
 export default {
-  name: 'LottieAnimation',
   data() {
     return {
       erwanImage: ErwanImage,  
@@ -76,18 +73,9 @@ export default {
   mounted() {
     this.loadAnimation();  
   },
-  methods: {
-    loadAnimation() {
-      lottie.loadAnimation({
-        container: this.$refs.lottieContainer,  
-        renderer: 'svg',  
-        loop: true,       
-        autoplay: true,   
-        animationData: animationData,  
-      });
-    }
+
   }
-};
+;
 </script>
 
 <style scoped>

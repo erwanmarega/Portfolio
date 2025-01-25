@@ -1,6 +1,7 @@
 <template>
-	<div class="bg-gray-100 text-black p-4 flex flex-col  justify-center items-center">
-    <div class="min-h-[20vh] lg:sticky top-0 flex flex-col items-center justify-center text-center p-4 pb-4">
+  <div class="bg-gray-100 text-black p-4 flex flex-col justify-center items-center mb-0">
+    <!-- Section Header -->
+    <div class="min-h-[10vh] lg:sticky top-0 flex flex-col items-center justify-center text-center p-4 pb-4 mb-0">
       <div class="flex flex-col items-center space-y-4">
         <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[84px] font-bold leading-tight lg:leading-[88px]">
           Compétences
@@ -8,7 +9,7 @@
       </div>
     </div>
 
-    <div class="w-full flex justify-center items-center min-h-[70vh]">
+    <div class="w-full flex justify-center items-center min-h-[70vh] mb-0">
       <div class="flex flex-wrap justify-center gap-8">
         <div
           v-for="(competence, index) in competences"
@@ -18,8 +19,7 @@
         >
           <div class="card-front brutalist-card">
             <div class="brutalist-card__header">
-              <div class="brutalist-card__icon">
-              </div>
+              <div class="brutalist-card__icon"></div>
               <div class="brutalist-card__alert">{{ competence.title }}</div>
             </div>
             <div v-if="competence.title === 'Développement Front-End'" class="grid grid-cols-2 gap-4 mt-4">
@@ -79,6 +79,7 @@
     </div>
   </div>
 </template>
+
 
 
 <script>
