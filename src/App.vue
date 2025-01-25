@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <navbar />
+    <StaticChatbot/>
 
     <div class="section" id="home">
       <home />
@@ -12,7 +13,10 @@
       <Hard_skills />
     </div>
     <div class="section" id="outils">
-      <Outils />
+      <veille />
+    </div>
+    <div class="section" id="outils">
+      <Text />
     </div>
     <div class="section" id="creations">
       <Créations />
@@ -31,6 +35,9 @@ import Hard_skills from './views/hard_skills.vue';
 import Outils from './views/outils.vue';
 import Créations from './views/créations.vue';
 import Contact from './views/contact.vue';
+import StaticChatbot from './components/StaticChatbot.vue';
+import veille from './views/veille.vue';
+import Text from './views/Text.vue';
 </script>
 
 <style scoped>

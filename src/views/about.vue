@@ -1,101 +1,184 @@
 <template>
-  <main id="about" class="min-h-screen flex items-center justify-center bg-gray-100 relative">
-    <div
-      class="flex flex-col sm:flex-row items-center space-y-6 sm:space-y-0 sm:space-x-12"
-      ref="aboutSection"
-      :class="{ 'animate-visible': isVisible }"
-    >
-      <div
-        class="sm:flex-shrink-0 transition-transform duration-500 ease-out transform"
-        :class="isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'"
-      >
-        <img :src="erwanImage" alt="Photo d'Erwan" class="w-32 h-32 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 rounded-full object-cover object-center shadow-lg border-4 border-white hover:scale-105">
+  <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row h-[60vh]" ref="stackArea">
+    <!-- Section Portfolio -->
+    <div class="h-auto lg:h-[50vh] flex flex-col items-center justify-center flex-1 p-4 pb-2">
+      <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
+        <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[88px] text-center lg:text-left">
+          Portfolio
+        </h1>
+
+        <img 
+          :src="erwanImage" 
+          alt="Photo d'Erwan" 
+          class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full object-cover object-center shadow-lg border-2 border-white mt-3 lg:mt-0"
+        />
       </div>
 
+      <p class="text-center lg:text-left text-sm sm:text-base lg:text-lg mt-2 max-w-[420px]">
+        Développeur web en formation, passionné par la création de sites internet et la gestion de projets digitaux. Actuellement en BUT Métiers du Multimédia et de l'Internet, en alternance au sein de Présence Verte en tant qu’assistant communication.
+      </p>
+
+      <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
+        <a 
+          :href="CV_Link"
+          target="_blank"
+          class="button"
+        >
+          <span class="text">Téléchargez mon CV !</span>
+        </a>
+
+        <a 
+          :href="Portfolio_Link"
+          target="_blank"
+          class="button"
+        >
+          <span class="text">Téléchargez mon portfolio en design !</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Section des Cartes -->
+    <div class="h-auto lg:h-[50vh] flex items-center justify-center flex-1 relative p-2">
       <div
-        class="text-center p-8 bg-white shadow-lg rounded-lg transition-transform duration-500 ease-out transform"
-        :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
+        v-for="(card, index) in cards"
+        :key="index"
+        :class="[ 
+          'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[200px] sm:h-[250px] md:h-[300px] lg:h-[350px] xl:h-[400px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
+          { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking }
+        ]"
+        :style="getCardStyle(index)"
+        @click="showNextCard"
       >
-        <h1 class="text-4xl font-bold text-gray-800 mb-6">PORTFOLIO</h1>
-        <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-          Développeur web en formation, <br />
-          passionné par la création de sites internet et la gestion de projets digitaux.<br/> 
-          Actuellement en BUT Métiers du Multimédia et de l'Internet,<br />
-          en alternance au sein de Présence Verte en tant qu’assistant communication.
-        </p>
-        <div class="flex justify-center space-x-4">
-          <a :href="CV_Link" target="_blank" class="group relative inline-block overflow-hidden rounded border border-gray-100 bg-gray-200 px-6 py-2 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white">
-            <span class="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
-            <span class="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
-            <span class="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
-            <span class="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
-            Téléchargez mon CV !
-          </a>
-          <a :href="Portfolio_Link" target="_blank" class="group relative inline-block overflow-hidden rounded border border-gray-100 bg-gray-200 px-6 py-2 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white">
-            <span class="ease absolute left-0 top-0 h-0 w-0 border-t-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
-            <span class="ease absolute right-0 top-0 h-0 w-0 border-r-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
-            <span class="ease absolute bottom-0 right-0 h-0 w-0 border-b-2 border-violet-600 transition-all duration-200 group-hover:w-full"></span>
-            <span class="ease absolute bottom-0 left-0 h-0 w-0 border-l-2 border-violet-600 transition-all duration-200 group-hover:h-full"></span>
-            Téléchargez mon portfolio en design !
-          </a>
+        <div class="text-lg sm:text-xl font-bold text-white">{{ card.sub }}</div>
+        <div class="text-xl sm:text-2xl md:text-3xl lg:text-[36px] font-bold leading-tight sm:leading-[44px] text-white">
+          {{ card.content }}
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script>
-import ErwanImage from '../assets/img_erwan.JPG';
+import { ref, reactive, onMounted } from "vue";
+import ErwanImage from "../assets/img_erwan.JPG"; 
 
 export default {
-  data() {
+  setup() {
+    const CV_Link = "https://drive.google.com/file/d/1jbPXZD6-mMvPCqerhvApvyMFWUY1alRb/view?usp=drive_link";
+    const Portfolio_Link = "https://drive.google.com/file/d/1gbwL6-WvAEey_DaKdZSM0f64DIyAMvGa/view?usp=drive_link";
+
+    const stackArea = ref(null);
+    const erwanImage = ErwanImage; 
+    const cards = reactive([ 
+      { sub: "Certifications", content: "Certificat en NodeJs et SQL sur UDEMY", color: "rgb(64, 122, 255)" },
+      { sub: "Objectifs de carrière", content: "Je veux contribuer à des projets et renforcer mes compétences backend.", color: "rgb(221, 62, 88)" },
+      { sub: "Langues", content: "Français (natif), Anglais (courant), Espagnol (intermédiaire)", color: "rgb(186, 113, 245)" },
+      { sub: "Hobbies", content: "Passionné par le dessin, le sport et les voyages.", color: "rgb(247, 92, 208)" },
+    ]);
+    const currentCardIndex = ref(0);
+    const isShaking = ref(false);
+
+    const getCardStyle = (index) => {
+      const zIndex = cards.length - index;
+      const rotationAngle = index === currentCardIndex.value ? 0 : -10 * (index - currentCardIndex.value);
+      const translateY = index === currentCardIndex.value ? "0" : "-120vh";
+      const transform = `translateY(${translateY}) rotate(${rotationAngle}deg)`;
+      const backgroundColor = cards[index].color;
+
+      return {
+        zIndex,
+        transform,
+        backgroundColor,
+        transition: "0.5s ease-in-out",
+      };
+    };
+
+    const showNextCard = () => {
+      currentCardIndex.value = (currentCardIndex.value + 1) % cards.length;
+    };
+
+    const handleShakeEffect = () => {
+      isShaking.value = true;
+      setTimeout(() => {
+        isShaking.value = false;
+      }, 500); 
+    };
+
+    onMounted(() => {
+      const shakeInterval = setInterval(handleShakeEffect, 3000);
+
+      return () => {
+        clearInterval(shakeInterval);
+      };
+    });
+
     return {
-      isVisible: false, 
-      erwanImage: ErwanImage,
-      CV_Link: 'https://drive.google.com/file/d/1jbPXZD6-mMvPCqerhvApvyMFWUY1alRb/view?usp=drive_link',
-      Portfolio_Link: 'https://drive.google.com/file/d/1gbwL6-WvAEey_DaKdZSM0f64DIyAMvGa/view?usp=drive_link'
+      CV_Link,
+      Portfolio_Link,
+      erwanImage,
+      stackArea,
+      cards,
+      currentCardIndex,
+      isShaking,
+      getCardStyle,
+      showNextCard,
     };
   },
-  mounted() {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          this.isVisible = true;
-        }
-      },
-      {
-        threshold: 0.1 
-      }
-    );
-    observer.observe(this.$refs.aboutSection);
-  }
 };
 </script>
 
 <style scoped>
-.transition-transform {
-  transition: transform 2s ease, opacity 2s ease;
+.away {
+  transform-origin: bottom left;
 }
 
-.opacity-0 {
-  opacity: 0;
+.shake {
+  animation: shake 0.5s ease-in-out;
 }
 
-.opacity-100 {
-  opacity: 1;
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-15px);
+  }
+  50% {
+    transform: translateX(15px);
+  }
+  75% {
+    transform: translateX(-15px);
+  }
 }
 
-.-translate-x-10 {
-  transform: translateX(-15.5rem);
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 10px;
+  background-color: #181717;
+  outline: 3px #181717 solid;
+  outline-offset: -3px;
+  border-radius: 9999px; 
+  border: none;
+  cursor: pointer;
+  transition: 400ms;
+  margin: 0;
 }
 
-.translate-x-10 {
-  transform: translateX(15.5rem);
+.button .text {
+  color: white;
+  font-weight: 700;
+  font-size: 0.9em;
+  transition: 400ms;
 }
 
-.translate-x-0 {
-  transform: translateX(0);
+.button:hover {
+  background-color: transparent;
 }
 
-
+.button:hover .text {
+  color: #181717;
+}
 </style>

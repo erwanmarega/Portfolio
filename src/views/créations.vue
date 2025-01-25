@@ -1,8 +1,6 @@
 <template>
 	<div class="relative">
-	  <main :class="{ 'blur-background': isModalOpen }" class="min-h-screen bg-gray-100 flex flex-col items-center p-4">
-		<h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Projets</h1>
-  
+	  <main :class="{ 'blur-background': isModalOpen }" class="min-h-[80vh] bg-gray-100 flex flex-col items-center p-4">
 		<div
 		  class="project-card"
 		  ref="creationsSection"
@@ -134,11 +132,11 @@
   
   <style scoped>
   .project-card {
-	@apply relative text-center p-8 bg-white shadow-lg rounded-lg m-4 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-start sm:ml-12 transition-transform duration-500 ease-out transform;
+	@apply relative text-center p-6 bg-white shadow-lg rounded-lg m-4 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-start sm:ml-12 transition-transform duration-500 ease-out transform;
   }
   
   .album-img {
-	@apply w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-xl object-cover;
+	@apply w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-xl object-cover;
   }
   
   @media (max-width: 639px) {
@@ -156,11 +154,11 @@
   }
   
   .modal-content {
-	@apply bg-white p-8 rounded-lg shadow-lg text-center;
+	@apply bg-white p-6 rounded-lg shadow-lg text-center;
   }
   
   .modal-img {
-	@apply w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-xl object-cover;
+	@apply w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-xl object-cover;
   }
   
   .btn-primary {
