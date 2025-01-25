@@ -108,7 +108,6 @@ export default {
 </script>
 
 <style scoped>
-/* Add blur effect to the other cards */
 .blur {
   filter: blur(5px);
 }
