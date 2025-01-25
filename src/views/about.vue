@@ -1,22 +1,19 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
-    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6">
+    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6 mt-28">
       <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
-        <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[72px] text-center lg:text-left">
-          Portfolio
-        </h1>
-
         <img 
           :src="erwanImage" 
           alt="Photo d'Erwan" 
-          class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full object-cover object-center shadow-lg border-2 border-white mt-3 lg:mt-0"
+          class="w-32 h-32 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full object-cover object-center shadow-lg border-2 border-white mt-3 lg:mt-0"
         />
+        <h1 class="text-3xl sm:text-4xl lg:text-[48px] xl:text-[60px] font-bold leading-tight lg:leading-[72px] text-center lg:text-left mt-6 lg:mt-0">
+          Portfolio
+        </h1>
       </div>
-
       <p class="text-center lg:text-left text-sm sm:text-base lg:text-lg mt-2 max-w-[420px]">
         Développeur web en formation, passionné par la création de sites internet et la gestion de projets digitaux. Actuellement en BUT Métiers du Multimédia et de l'Internet, en alternance au sein de Présence Verte en tant qu’assistant communication.
       </p>
-
       <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
         <a 
           :href="CV_Link"
@@ -25,7 +22,6 @@
         >
           <span class="text">Téléchargez mon CV !</span>
         </a>
-
         <a 
           :href="Portfolio_Link"
           target="_blank"
@@ -35,13 +31,12 @@
         </a>
       </div>
     </div>
-
-    <div class="flex-1 flex items-center justify-center relative pt-0 mt-[-40px]">
+    <div class="flex-1 flex items-center justify-center relative pt-0 mb-32">
       <div
         v-for="(card, index) in cards"
         :key="index"
         :class="[ 
-          'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] xl:h-[450px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
+          'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[150px] sm:h-[150px] md:h-[350px] lg:h-[250px] xl:h-[300px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
           { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking }
         ]"
         :style="getCardStyle(index)"
@@ -193,5 +188,4 @@ export default {
     margin-top: 1rem;
   }
 }
-
 </style>
