@@ -32,6 +32,12 @@
 		</div>
 	  </div>
   
+	  <div class="absolute bottom-4 left-4 text-white text-sm font-light">
+		<p>
+		  <a href="/mentions-legales" class="hover:underline">Mentions légales</a> | &copy; 2025
+		</p>
+	  </div>
+  
 	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
 		{{ currentTime }}
 	  </div>
@@ -85,7 +91,6 @@
 		  const result = await response.json();
 		  alert(result.message || 'Email envoyé avec succès !');
   
-
 		  this.prenom = '';
 		  this.nom = '';
 		  this.email = '';
@@ -128,6 +133,10 @@
   
   .bottom-4 {
 	bottom: 1rem;
+  }
+  
+  .left-4 {
+	left: 1rem;
   }
   
   .right-4 {

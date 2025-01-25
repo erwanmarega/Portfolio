@@ -36,8 +36,7 @@
       </div>
     </div>
 
-    <!-- Section des Cartes -->
-<div class="flex-1 flex items-center justify-center relative pt-0"> <!-- Changer de p-2 à pt-0 -->
+<div class="flex-1 flex items-center justify-center relative pt-0"> 
   <div
     v-for="(card, index) in cards"
     :key="index"

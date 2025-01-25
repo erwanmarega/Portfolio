@@ -56,7 +56,7 @@ export default {
       isChatOpen: false,
       messages: [
         {
-          text: "Bonjour ! Je suis votre assistant virtuel. Cliquez sur un mot-clé ci-dessous ou écrivez votre message.",
+          text: "Bonjour ! Je suis votre assistant virtuel. Cliquez sur un mot-clé ci-dessous.",
           sender: "bot",
         },
       ],
