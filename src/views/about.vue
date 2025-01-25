@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="flex-1 flex items-center justify-center relative pt-0 mt-[-110px]"> 
+    <div class="flex-1 flex items-center justify-center relative pt-0 mt-[-120px]"> 
       <div
         v-for="(card, index) in cards"
         :key="index"
