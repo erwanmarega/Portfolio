@@ -1,6 +1,6 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
-    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6 mt-28">
+    <div class="flex-1 flex flex-col items-center justify-center p-4 pb-4 lg:pb-6 mt-24">
       <div class="flex flex-col items-center lg:flex-row lg:items-center lg:space-x-4">
         <img 
           :src="erwanImage" 
