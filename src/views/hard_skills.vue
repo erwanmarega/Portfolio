@@ -1,6 +1,5 @@
 <template>
   <div class="bg-gray-100 text-black p-4 flex flex-col justify-center items-center mb-0">
-    <!-- Section Header -->
     <div class="min-h-[10vh] lg:sticky top-0 flex flex-col items-center justify-center text-center p-4 pb-4 mb-0">
       <div class="flex flex-col items-center space-y-4">
         <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[84px] font-bold leading-tight lg:leading-[88px]">
