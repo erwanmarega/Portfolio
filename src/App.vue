@@ -50,22 +50,9 @@ html, body {
   max-width: 100vw;    
   overflow-x: hidden;   
   position: relative;
-  z-index: 10; 
+
 }
 
-body {
-  background-color: white;
-  color: black;
-}
 
-/* Styles pour le mode nuit */
-body.dark-mode {
-  background-color: #121212;
-  color: white;
-}
-
-body.dark-mode .section {
-  background-color: #333;
-}
 
 </style>
