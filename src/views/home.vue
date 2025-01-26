@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col justify-center items-center h-screen bg-gray-100">
+  <main class="relative flex flex-col justify-center items-center h-screen bg-gray-100">
     <div class="container flex justify-center items-center w-full mt-12">
       <div class="macbook">
         <div class="macbook__topBord">
@@ -46,36 +46,31 @@
     </div>
 
     <div class="text-center mb-56">
-    <h1 class="bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-teal-500 via-purple-500 to-red-500 text-transparent bg-clip-text text-5xl leading-normal relative ">
-      Erwan Marega
-    </h1>
-    <h1 class="text-2xl relative ">Développeur back-end</h1>
-  </div>
-
-    <div class="absolute top-4 left-4 " >
-      <img :src="erwanImage" alt="LOGO EM" class="w-9 h-9" />
+      <h1
+        class="bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-teal-500 via-purple-500 to-red-500 text-transparent bg-clip-text text-5xl leading-normal relative"
+      >
+        Erwan Marega
+      </h1>
+      <h1 class="text-2xl relative">Développeur back-end</h1>
     </div>
 
-  
+    <div class="absolute top-4 left-4">
+      <img :src="erwanImage" alt="LOGO EM" class="w-9 h-9" />
+    </div>
   </main>
 </template>
 
-
 <script>
-import ErwanImage from '../assets/Erwan.png'; 
+import ErwanImage from "../assets/Erwan.png";
 
 export default {
+  
   data() {
     return {
-      erwanImage: ErwanImage,  
+      erwanImage: ErwanImage,
     };
   },
-  mounted() {
-    this.loadAnimation();  
-  },
-
-  }
-;
+};
 </script>
 
 <style scoped>
@@ -507,5 +502,7 @@ export default {
       opacity: 1;
     }
   }
+
+  
 </style>
 

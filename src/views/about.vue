@@ -1,6 +1,6 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
-    <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-32">
+    <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-2">
       <div class="flex flex-col items-center space-y-6">
         <div class="flex flex-col items-center lg:items-center lg:flex-row lg:space-x-4">
           <img 

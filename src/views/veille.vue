@@ -1,6 +1,6 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row" ref="techWatchArea">
-    <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-32">
+    <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-6">
       <div class="flex flex-col items-center space-y-6">
         <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[84px] font-bold leading-tight lg:leading-[88px]">
           Veille Technologique

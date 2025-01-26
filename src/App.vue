@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <navbar />
-    <StaticChatbot/>
-
+    <StaticChatbot />
+  
     <div class="section" id="home">
       <home />
     </div>
@@ -12,10 +12,10 @@
     <div class="section" id="hard-skills">
       <Hard_skills />
     </div>
-    <div class="section" id="outils">
+    <div class="section" id="veille">
       <veille />
     </div>
-    <div class="section" id="outils">
+    <div class="section" id="texte">
       <Text />
     </div>
     <div class="section" id="creations">
@@ -44,18 +44,28 @@ html, body {
   overflow-x: hidden;  
   margin: 0;
   padding: 0;
- 
 }
 
 .section {
   max-width: 100vw;    
   overflow-x: hidden;   
+  position: relative;
+  z-index: 10; 
 }
 
-* {
-  box-sizing: border-box; 
-  overflow-wrap: break-word;  
+body {
+  background-color: white;
+  color: black;
 }
 
+/* Styles pour le mode nuit */
+body.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+body.dark-mode .section {
+  background-color: #333;
+}
 
 </style>
