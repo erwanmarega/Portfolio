@@ -1,6 +1,5 @@
 <template>
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row min-h-screen overflow-hidden" ref="stackArea">
-    <!-- Première Section: Image + Texte -->
     <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-32">
       <div class="flex flex-col items-center space-y-6">
         <div class="flex flex-col items-center lg:items-center lg:flex-row lg:space-x-4">
@@ -35,7 +34,6 @@
       </div>
     </div>
 
-    <!-- Deuxième Section: Cartes -->
     <div class="flex-1 flex items-center justify-center relative pt-0 mb-32 lg:mb-0">
       <div
         v-for="(card, index) in cards"
