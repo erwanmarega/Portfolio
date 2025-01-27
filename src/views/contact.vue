@@ -41,11 +41,10 @@
 		{{ currentTime }}
 	  </div>
   
-	  <!-- Popup de confirmation -->
 	  <div v-if="messageSent" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
 		<div class="bg-white rounded-xl p-6 shadow-lg text-center space-y-4 max-w-md w-full">
 		  <h3 class="text-xl font-bold text-gray-900">Message envoyé !</h3>
-		  <p class="text-gray-700">Votre message a bien été envoyé. Nous vous répondrons rapidement.</p>
+		  <p class="text-gray-700">Votre message a bien été envoyé. Vous aurez une réponse rapidement.</p>
 		  <button
 			@click="messageSent = false"
 			class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg focus:ring focus:ring-blue-300"
