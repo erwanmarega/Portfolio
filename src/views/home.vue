@@ -47,8 +47,7 @@
 
     <div class="text-center mb-56">
       <h1
-        class="bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-teal-500 via-purple-500 to-red-500 text-transparent bg-clip-text text-5xl leading-normal relative"
-      >
+        class="bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-teal-500 via-purple-500 to-red-500 text-transparent bg-clip-text text-5xl leading-normal relative">
         Erwan Marega
       </h1>
       <h1 class="text-2xl relative">Développeur back-end</h1>

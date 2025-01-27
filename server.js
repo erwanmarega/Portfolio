@@ -8,19 +8,19 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 10000; 
 
+// Middleware
 app.use(
   cors({
-    origin: ['https://www.ewmdev.com', 'https://ewmnode.onrender.com'], 
+    origin: ['https://www.ewmdev.com', 'https://ewmnode.onrender.com'],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
 );
 
 app.use(express.json());
+app.options('*', cors());
 
-app.options('*', cors()); 
-
-
+// Routes
 app.get('/', (req, res) => {
   res.send("Bienvenue sur le serveur d'envoi d'emails !");
 });
@@ -44,7 +44,7 @@ app.post('/send-email', async (req, res) => {
   });
 
   const mailOptions = {
-    from: email,
+    from: `"${prenom} ${nom}" <${email}>`, 
     to: 'maregaerwan@gmail.com',
     subject: `Message de ${prenom} ${nom}`,
     text: message,
@@ -52,6 +52,7 @@ app.post('/send-email', async (req, res) => {
 
   try {
     await transporter.sendMail(mailOptions);
+    console.log(`Email envoyé par ${prenom} ${nom} (${email})`);
     res.status(200).json({ message: 'Email envoyé avec succès !' });
   } catch (error) {
     console.error("Erreur lors de l'envoi de l'email:", error.message);
@@ -59,6 +60,7 @@ app.post('/send-email', async (req, res) => {
   }
 });
 
+// Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`Serveur en écoute sur le port ${PORT}`);
 });
