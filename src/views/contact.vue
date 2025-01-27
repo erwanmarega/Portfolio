@@ -45,15 +45,15 @@
   </template>
   
   <script>
-  import logoGmail from '../assets/logo_gmail.png';
+  import logoGmail from "../assets/logo_gmail.png";
   
   export default {
 	data() {
 	  return {
-		prenom: '',
-		nom: '',
-		email: '',
-		message: '',
+		prenom: "",
+		nom: "",
+		email: "",
+		message: "",
 		logoGmail,
 		currentTime: this.getCurrentTime(),
 	  };
@@ -61,6 +61,7 @@
 	methods: {
 	  async submitForm() {
 		const API_URL = import.meta.env.VITE_API_URL;
+  
 		if (!API_URL) {
 		  alert("Erreur : L'URL de l'API n'est pas définie.");
 		  return;
@@ -76,41 +77,36 @@
 			message: this.message,
 		  };
   
-		  const response = await fetch(new URL('/send-email', API_URL).toString(), {
-			method: 'POST',
+		  const response = await fetch(new URL("/send-email", API_URL).toString(), {
+			method: "POST",
 			headers: {
-			  'Content-Type': 'application/json',
+			  "Content-Type": "application/json",
 			},
 			body: JSON.stringify(requestData),
-			credentials: 'include',
+			credentials: "include",
 		  });
   
 		  if (!response.ok) {
-			const errorMessage = `Erreur HTTP : ${response.status}`;
-			console.error(errorMessage);
 			const errorDetails = await response.text();
-			throw new Error(`${errorMessage} - ${errorDetails}`);
+			throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
 		  }
   
 		  const result = await response.json();
-		  alert(result.message || 'Email envoyé avec succès !');
+		  alert(result.message || "Email envoyé avec succès !");
   
-		  this.prenom = '';
-		  this.nom = '';
-		  this.email = '';
-		  this.message = '';
+		  this.prenom = "";
+		  this.nom = "";
+		  this.email = "";
+		  this.message = "";
 		} catch (error) {
-		  console.error('Erreur lors de l\'envoi de l\'email :', error);
+		  console.error("Erreur lors de l'envoi de l'email :", error);
 		  alert(`Erreur lors de l'envoi de l'email : ${error.message}`);
 		}
 	  },
   
 	  getCurrentTime() {
 		const date = new Date();
-		const hours = date.getHours().toString().padStart(2, '0');
-		const minutes = date.getMinutes().toString().padStart(2, '0');
-		const seconds = date.getSeconds().toString().padStart(2, '0');
-		return `${hours}:${minutes}:${seconds}`;
+		return date.toLocaleTimeString();
 	  },
   
 	  updateClock() {
@@ -118,10 +114,10 @@
 	  },
 	},
 	mounted() {
-	  setInterval(this.updateClock, 1000);
+	  this.clockInterval = setInterval(this.updateClock, 1000);
 	},
 	beforeDestroy() {
-	  clearInterval(this.updateClock);
+	  clearInterval(this.clockInterval);
 	},
   };
   </script>
@@ -129,22 +125,6 @@
   <style scoped>
   .input-field {
 	@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
-  }
-  
-  .absolute {
-	position: absolute;
-  }
-  
-  .bottom-4 {
-	bottom: 1rem;
-  }
-  
-  .left-4 {
-	left: 1rem;
-  }
-  
-  .right-4 {
-	right: 1rem;
   }
   </style>
   
