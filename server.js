@@ -8,10 +8,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 10000; 
 
-// Middleware
 app.use(
   cors({
-    origin: ['https://www.ewmdev.com', 'https://ewmnode.onrender.com'],
+    origin: ['https://www.ewmdev.com', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
@@ -20,7 +19,6 @@ app.use(
 app.use(express.json());
 app.options('*', cors());
 
-// Routes
 app.get('/', (req, res) => {
   res.send("Bienvenue sur le serveur d'envoi d'emails !");
 });
@@ -44,7 +42,7 @@ app.post('/send-email', async (req, res) => {
   });
 
   const mailOptions = {
-    from: `"${prenom} ${nom}" <${email}>`, 
+    from: `"${prenom} ${nom} ${email}"`, 
     to: 'maregaerwan@gmail.com',
     subject: `Message de ${prenom} ${nom}`,
     text: message,
@@ -60,7 +58,6 @@ app.post('/send-email', async (req, res) => {
   }
 });
 
-// Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`Serveur en écoute sur le port ${PORT}`);
 });
