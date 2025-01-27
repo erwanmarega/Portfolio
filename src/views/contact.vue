@@ -1,7 +1,6 @@
 <template>
 	<div class="min-h-screen bg-gradient-to-r from-blue-400 to-purple-600 flex items-center justify-center px-6 relative">
 	  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-5xl">
-		<!-- Section gauche -->
 		<div class="text-white">
 		  <h1 class="text-5xl font-bold mb-6 leading-tight">Un projet ou une demande ?</h1>
 		  <div class="flex items-center space-x-4 mt-4">
@@ -10,7 +9,6 @@
 		  </div>
 		</div>
   
-		<!-- Section droite -->
 		<div class="backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl shadow-lg p-8 text-white">
 		  <h2 class="text-4xl font-bold mb-6">Contactez-moi !</h2>
 		  <form @submit.prevent="submitForm" class="space-y-5">
@@ -34,15 +32,12 @@
 		</div>
 	  </div>
   
-	  <!-- Mentions légales -->
 	  <div class="absolute bottom-4 left-4 text-white text-sm font-light">
 		<p>
 		  <a href="/mentions-legales" class="hover:underline">Mentions légales</a> | &copy; 2025
 		</p>
 	  </div>
-  
-	  <!-- Heure actuelle -->
-	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
+  	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
 		{{ currentTime }}
 	  </div>
 	</div>
@@ -78,8 +73,8 @@ export default {
           message: this.message,
         };
 
-        const response = await fetch(new URL("/send-email", API_URL).toString(), {
-          method: "POST",
+		const response = await fetch("https://ewmnode.onrender.com/send-email", {
+			method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
