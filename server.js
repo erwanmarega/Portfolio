@@ -12,8 +12,10 @@ app.use(
   cors({
     origin: [
       "https://www.ewmdev.com",
+      "http://localhost:5173",
     ],
     methods: ["GET", "POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
     credentials: true,
   })
 );

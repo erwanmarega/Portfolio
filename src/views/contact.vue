@@ -46,8 +46,6 @@
   
   <script>
 
-
-  
 	export default {
 	data() {
 		return {
@@ -81,6 +79,7 @@
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+
 			},
 			body: JSON.stringify(requestData),
 			credentials: "include",
@@ -88,7 +87,7 @@
 
 			if (!response.ok) {
 			const errorDetails = await response.text();
-			throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
+			throw new Error(`Erreur HTTPS : ${response.status} - ${errorDetails}`);
 			}
 
 			const result = await response.json();
