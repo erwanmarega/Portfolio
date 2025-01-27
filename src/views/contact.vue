@@ -1,6 +1,7 @@
 <template>
 	<div class="min-h-screen bg-gradient-to-r from-blue-400 to-purple-600 flex items-center justify-center px-6 relative">
 	  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-5xl">
+		<!-- Section gauche -->
 		<div class="text-white">
 		  <h1 class="text-5xl font-bold mb-6 leading-tight">Un projet ou une demande ?</h1>
 		  <div class="flex items-center space-x-4 mt-4">
@@ -9,6 +10,7 @@
 		  </div>
 		</div>
   
+		<!-- Section droite -->
 		<div class="backdrop-blur-lg bg-white/10 border border-white/30 rounded-xl shadow-lg p-8 text-white">
 		  <h2 class="text-4xl font-bold mb-6">Contactez-moi !</h2>
 		  <form @submit.prevent="submitForm" class="space-y-5">
@@ -32,12 +34,14 @@
 		</div>
 	  </div>
   
+	  <!-- Mentions légales -->
 	  <div class="absolute bottom-4 left-4 text-white text-sm font-light">
 		<p>
 		  <a href="/mentions-legales" class="hover:underline">Mentions légales</a> | &copy; 2025
 		</p>
 	  </div>
   
+	  <!-- Heure actuelle -->
 	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
 		{{ currentTime }}
 	  </div>
@@ -45,67 +49,73 @@
   </template>
   
   <script>
-
-	export default {
+  export default {
 	data() {
-		return {
+	  return {
 		prenom: "",
 		nom: "",
 		email: "",
 		message: "",
 		currentTime: this.getCurrentTime(),
-		};
+	  };
 	},
 	methods: {
-		async submitForm() {
-		const API_URL = import.meta.env.VITE_API_URL;
-
+	  async submitForm() {
+		const API_URL = import.meta.env.VITE_API_URL || "https://ewmnode.onrender.com";
+  
 		if (!API_URL) {
-			alert("Erreur : L'URL de l'API n'est pas définie.");
-			return;
+		  alert("Erreur : L'URL de l'API n'est pas définie.");
+		  return;
 		}
-
-		console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
-
+  
 		try {
-			const requestData = {
+		  const requestData = {
 			prenom: this.prenom,
 			nom: this.nom,
 			email: this.email,
 			message: this.message,
-			};
-
-			const response = await fetch(new URL("/send-email", API_URL).toString(), {
+		  };
+  
+		  console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
+  
+		  const response = await fetch(new URL("/send-email", API_URL).toString(), {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
-
+			  "Content-Type": "application/json",
 			},
 			body: JSON.stringify(requestData),
-			credentials: "include",
-			});
-
-			if (!response.ok) {
+		  });
+  
+		  if (!response.ok) {
 			const errorDetails = await response.text();
-			throw new Error(`Erreur HTTPS : ${response.status} - ${errorDetails}`);
-			}
-
-			const result = await response.json();
-			console.log("Email envoyé avec succès :", result);
+			throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
+		  }
+  
+		  const result = await response.json();
+		  console.log("Email envoyé avec succès :", result);
+		  alert("Votre message a été envoyé avec succès !");
+		  this.resetForm();
 		} catch (error) {
-			console.error("Erreur lors de l'envoi de l'email :", error);
+		  console.error("Erreur lors de l'envoi de l'email :", error);
+		  alert("Une erreur s'est produite. Veuillez réessayer plus tard.");
 		}
-		},
-		getCurrentTime() {
+	  },
+	  getCurrentTime() {
 		return new Date().toLocaleTimeString();
-		},
+	  },
+	  resetForm() {
+		this.prenom = "";
+		this.nom = "";
+		this.email = "";
+		this.message = "";
+	  },
 	},
-	};
-	</script>
-	
-	<style scoped>
-	.input-field {
-		@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
-	}
-	</style>
-	
+  };
+  </script>
+  
+  <style scoped>
+  .input-field {
+	@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+  }
+  </style>
+  
