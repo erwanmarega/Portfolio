@@ -21,7 +21,6 @@ app.use(
 );
 
 app.use(express.json());
-app.options("*", cors());
 
 app.get("/", (req, res) => {
   res.send("Bienvenue sur le serveur d'envoi d'emails !");
