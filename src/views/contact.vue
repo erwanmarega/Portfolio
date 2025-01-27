@@ -44,6 +44,9 @@
   </template>
   
   <script>
+
+  import logoGmail from "../assets/logo_gmail.png";
+
 export default {
   data() {
     return {
@@ -52,6 +55,7 @@ export default {
       email: "",
       message: "",
       currentTime: this.getCurrentTime(),
+	  logoGmail,
     };
   },
   methods: {
