@@ -45,65 +45,68 @@
   </template>
   
   <script>
-export default {
-  data() {
-    return {
-      prenom: "",
-      nom: "",
-      email: "",
-      message: "",
-      currentTime: this.getCurrentTime(),
-    };
-  },
-  methods: {
-    async submitForm() {
-      const API_URL = import.meta.env.VITE_API_URL;
 
-      if (!API_URL) {
-        alert("Erreur : L'URL de l'API n'est pas définie.");
-        return;
-      }
 
-      console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
-
-      try {
-        const requestData = {
-          prenom: this.prenom,
-          nom: this.nom,
-          email: this.email,
-          message: this.message,
-        };
-
-        const response = await fetch(new URL("/send-email", API_URL).toString(), {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          const errorDetails = await response.text();
-          throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
-        }
-
-        const result = await response.json();
-        console.log("Email envoyé avec succès :", result);
-      } catch (error) {
-        console.error("Erreur lors de l'envoi de l'email :", error);
-      }
-    },
-    getCurrentTime() {
-      return new Date().toLocaleTimeString();
-    },
-  },
-};
-</script>
   
-  <style scoped>
-  .input-field {
-	@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
-  }
-  </style>
-  
+	export default {
+	data() {
+		return {
+		prenom: "",
+		nom: "",
+		email: "",
+		message: "",
+		currentTime: this.getCurrentTime(),
+		};
+	},
+	methods: {
+		async submitForm() {
+		const API_URL = import.meta.env.VITE_API_URL;
+
+		if (!API_URL) {
+			alert("Erreur : L'URL de l'API n'est pas définie.");
+			return;
+		}
+
+		console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
+
+		try {
+			const requestData = {
+			prenom: this.prenom,
+			nom: this.nom,
+			email: this.email,
+			message: this.message,
+			};
+
+			const response = await fetch(new URL("/send-email", API_URL).toString(), {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(requestData),
+			credentials: "include",
+			});
+
+			if (!response.ok) {
+			const errorDetails = await response.text();
+			throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
+			}
+
+			const result = await response.json();
+			console.log("Email envoyé avec succès :", result);
+		} catch (error) {
+			console.error("Erreur lors de l'envoi de l'email :", error);
+		}
+		},
+		getCurrentTime() {
+		return new Date().toLocaleTimeString();
+		},
+	},
+	};
+	</script>
+	
+	<style scoped>
+	.input-field {
+		@apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+	}
+	</style>
+	
