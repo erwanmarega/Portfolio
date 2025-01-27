@@ -10,13 +10,19 @@ const PORT = process.env.PORT || 10000;
 
 app.use(
   cors({
-    origin: ['https://www.ewmdev.com', 'http://localhost:5173'], 
+    origin: [
+      'https://www.ewmdev.com',
+      'http://localhost:5173',
+      'https://portfolio-yyem.vercel.app',
+    ],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
+    credentials: true,
   })
 );
 
 app.use(express.json());
+app.options('*', cors());
 
 app.get('/', (req, res) => {
   res.send("Bienvenue sur le serveur d'envoi d'emails !");
@@ -32,16 +38,16 @@ app.post('/send-email', async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.USER, 
-      pass: process.env.PASS, 
+      user: process.env.USER,
+      pass: process.env.PASS,
     },
     tls: {
-      rejectUnauthorized: false,  
+      rejectUnauthorized: false,
     },
   });
 
   const mailOptions = {
-    from: `"${prenom} ${nom} <${email}>"`,
+    from: `"${prenom} ${nom} ${email}"`,
     to: 'maregaerwan@gmail.com',
     subject: `Message de ${prenom} ${nom}`,
     text: message,
