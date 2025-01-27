@@ -34,75 +34,96 @@
   
 	  <div class="absolute bottom-4 left-4 text-white text-sm font-light">
 		<p>
-		 &copy; 2025 Erwan Marega | Tous droits réservés
+		  &copy; 2025 Erwan Marega | Tous droits réservés
 		</p>
 	  </div>
-  	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
+	  <div class="absolute bottom-4 right-4 text-white text-xl font-bold">
 		{{ currentTime }}
+	  </div>
+  
+	  <!-- Popup de confirmation -->
+	  <div v-if="messageSent" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+		<div class="bg-white rounded-xl p-6 shadow-lg text-center space-y-4 max-w-md w-full">
+		  <h3 class="text-xl font-bold text-gray-900">Message envoyé !</h3>
+		  <p class="text-gray-700">Votre message a bien été envoyé. Nous vous répondrons rapidement.</p>
+		  <button
+			@click="messageSent = false"
+			class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg focus:ring focus:ring-blue-300"
+		  >
+			OK
+		  </button>
+		</div>
 	  </div>
 	</div>
   </template>
   
   <script>
-
   import logoGmail from "../assets/logo_gmail.png";
-
-export default {
-  data() {
-    return {
-      prenom: "",
-      nom: "",
-      email: "",
-      message: "",
-      currentTime: this.getCurrentTime(),
-	  logoGmail,
-    };
-  },
-  methods: {
-    async submitForm() {
-      const API_URL = import.meta.env.VITE_API_URL;
-
-      if (!API_URL) {
-        alert("Erreur : L'URL de l'API n'est pas définie.");
-        return;
-      }
-
-      console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
-
-      try {
-        const requestData = {
-          prenom: this.prenom,
-          nom: this.nom,
-          email: this.email,
-          message: this.message,
-        };
-
-		const response = await fetch("https://ewmnode.onrender.com/send-email", {
+  
+  export default {
+	data() {
+	  return {
+		prenom: "",
+		nom: "",
+		email: "",
+		message: "",
+		currentTime: this.getCurrentTime(),
+		messageSent: false, 
+		logoGmail,
+	  };
+	},
+	methods: {
+	  async submitForm() {
+		const API_URL = import.meta.env.VITE_API_URL;
+  
+		if (!API_URL) {
+		  alert("Erreur : L'URL de l'API n'est pas définie.");
+		  return;
+		}
+  
+		console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
+  
+		try {
+		  const requestData = {
+			prenom: this.prenom,
+			nom: this.nom,
+			email: this.email,
+			message: this.message,
+		  };
+  
+		  const response = await fetch("https://ewmnode.onrender.com/send-email", {
 			method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-          credentials: "include",
-        });
-
-        if (!response.ok) {
-          const errorDetails = await response.text();
-          throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
-        }
-
-        const result = await response.json();
-        console.log("Email envoyé avec succès :", result);
-      } catch (error) {
-        console.error("Erreur lors de l'envoi de l'email :", error);
-      }
-    },
-    getCurrentTime() {
-      return new Date().toLocaleTimeString();
-    },
-  },
-};
-</script>
+			headers: {
+			  "Content-Type": "application/json",
+			},
+			body: JSON.stringify(requestData),
+			credentials: "include",
+		  });
+  
+		  if (!response.ok) {
+			const errorDetails = await response.text();
+			throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
+		  }
+  
+		  const result = await response.json();
+		  console.log("Email envoyé avec succès :", result);
+  
+		  this.messageSent = true;
+  
+		  this.prenom = "";
+		  this.nom = "";
+		  this.email = "";
+		  this.message = "";
+		} catch (error) {
+		  console.error("Erreur lors de l'envoi de l'email :", error);
+		}
+	  },
+	  getCurrentTime() {
+		return new Date().toLocaleTimeString();
+	  },
+	},
+  };
+  </script>
   
   <style scoped>
   .input-field {
