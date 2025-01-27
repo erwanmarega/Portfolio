@@ -49,70 +49,61 @@
   </template>
   
   <script>
-  export default {
-	data() {
-	  return {
-		prenom: "",
-		nom: "",
-		email: "",
-		message: "",
-		currentTime: this.getCurrentTime(),
-	  };
-	},
-	methods: {
-	  async submitForm() {
-		const API_URL = import.meta.env.VITE_API_URL;
-  
-		if (!API_URL) {
-		  alert("Erreur : L'URL de l'API n'est pas définie.");
-		  return;
-		}
-  
-		try {
-		  const requestData = {
-			prenom: this.prenom,
-			nom: this.nom,
-			email: this.email,
-			message: this.message,
-		  };
-  
-		  console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
-  
-		  const response = await fetch(new URL("/send-email", API_URL).toString(), {
-			method: "POST",
-			headers: {
-			  "Content-Type": "application/json",
-			},
-			body: JSON.stringify(requestData),
-			credentials: "include",
-		  });
-  
-		  if (!response.ok) {
-			const errorDetails = await response.text();
-			throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
-		  }
-  
-		  const result = await response.json();
-		  console.log("Email envoyé avec succès :", result);
-		  alert("Votre message a été envoyé avec succès !");
-		  this.resetForm();
-		} catch (error) {
-		  console.error("Erreur lors de l'envoi de l'email :", error);
-		  alert("Une erreur s'est produite. Veuillez réessayer plus tard.");
-		}
-	  },
-	  getCurrentTime() {
-		return new Date().toLocaleTimeString();
-	  },
-	  resetForm() {
-		this.prenom = "";
-		this.nom = "";
-		this.email = "";
-		this.message = "";
-	  },
-	},
-  };
-  </script>
+export default {
+  data() {
+    return {
+      prenom: "",
+      nom: "",
+      email: "",
+      message: "",
+      currentTime: this.getCurrentTime(),
+    };
+  },
+  methods: {
+    async submitForm() {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      if (!API_URL) {
+        alert("Erreur : L'URL de l'API n'est pas définie.");
+        return;
+      }
+
+      console.log(`Appel à l'API : ${new URL("/send-email", API_URL).toString()}`);
+
+      try {
+        const requestData = {
+          prenom: this.prenom,
+          nom: this.nom,
+          email: this.email,
+          message: this.message,
+        };
+
+        const response = await fetch(new URL("/send-email", API_URL).toString(), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestData),
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          const errorDetails = await response.text();
+          throw new Error(`Erreur HTTP : ${response.status} - ${errorDetails}`);
+        }
+
+        const result = await response.json();
+        console.log("Email envoyé avec succès :", result);
+      } catch (error) {
+        console.error("Erreur lors de l'envoi de l'email :", error);
+      }
+    },
+    getCurrentTime() {
+      return new Date().toLocaleTimeString();
+    },
+  },
+};
+</script>
   
   <style scoped>
   .input-field {
