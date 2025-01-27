@@ -61,7 +61,7 @@
 	},
 	methods: {
 	  async submitForm() {
-		const API_URL = "https://ewmnode.onrender.com";
+		const API_URL = import.meta.env.VITE_API_URL;
   
 		if (!API_URL) {
 		  alert("Erreur : L'URL de l'API n'est pas définie.");
@@ -84,6 +84,7 @@
 			  "Content-Type": "application/json",
 			},
 			body: JSON.stringify(requestData),
+			credentials: "include",
 		  });
   
 		  if (!response.ok) {
