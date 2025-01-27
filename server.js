@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 10000;
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://www.ewmdev.com",
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
     credentials: true,
