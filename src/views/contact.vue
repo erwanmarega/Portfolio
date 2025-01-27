@@ -45,6 +45,7 @@
   </template>
   
   <script>
+  import logoGmail from "../assets/logo_gmail.png";
   export default {
 	data() {
 	  return {
@@ -81,6 +82,8 @@
 			},
 			body: JSON.stringify(requestData),
 			credentials: "include",
+			mode : 'no-cors'
+
 		  });
   
 		  if (!response.ok) {
