@@ -67,7 +67,7 @@
 		  return;
 		}
   
-		console.log(`Appel à l'API : ${API_URL}/send-email`);
+		console.log(`Appel à l'API : ${API_URL}send-email`);
   
 		try {
 		  const requestData = {
