@@ -6,18 +6,17 @@ import cors from 'cors';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 10000; 
+const PORT = process.env.PORT || 10000;
 
 app.use(
   cors({
-    origin: ['https://www.ewmdev.com', 'http://localhost:5173'],
+    origin: ['https://www.ewmdev.com', 'http://localhost:5173'], 
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
 );
 
 app.use(express.json());
-app.options('*', cors());
 
 app.get('/', (req, res) => {
   res.send("Bienvenue sur le serveur d'envoi d'emails !");
@@ -42,7 +41,7 @@ app.post('/send-email', async (req, res) => {
   });
 
   const mailOptions = {
-    from: `"${prenom} ${nom} ${email}"`, 
+    from: `"${prenom} ${nom} <${email}>"`,
     to: 'maregaerwan@gmail.com',
     subject: `Message de ${prenom} ${nom}`,
     text: message,
