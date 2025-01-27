@@ -69,23 +69,26 @@
 		console.log(`Appel à l'API : ${API_URL}/send-email`);
   
 		try {
+		  const requestData = {
+			prenom: this.prenom,
+			nom: this.nom,
+			email: this.email,
+			message: this.message,
+		  };
+  
 		  const response = await fetch(`${API_URL}/send-email`, {
 			method: 'POST',
 			headers: {
 			  'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({
-			  prenom: this.prenom,
-			  nom: this.nom,
-			  email: this.email,
-			  message: this.message,
-			}),
+			body: JSON.stringify(requestData),
 		  });
   
 		  if (!response.ok) {
 			const errorMessage = `Erreur HTTP : ${response.status}`;
 			console.error(errorMessage);
-			throw new Error(errorMessage);
+			const errorDetails = await response.text(); 
+			throw new Error(`${errorMessage} - ${errorDetails}`);
 		  }
   
 		  const result = await response.json();
@@ -97,7 +100,7 @@
 		  this.message = '';
 		} catch (error) {
 		  console.error('Erreur lors de l\'envoi de l\'email :', error);
-		  alert("Erreur lors de l'envoi de l'email.");
+		  alert(`Erreur lors de l'envoi de l'email : ${error.message}`);
 		}
 	  },
   
