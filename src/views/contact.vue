@@ -76,18 +76,19 @@
 			message: this.message,
 		  };
   
-		  const response = await fetch(`${API_URL}/send-email`, {
+		  const response = await fetch(new URL('/send-email', API_URL).toString(), {
 			method: 'POST',
 			headers: {
 			  'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(requestData),
+			credentials: 'include',
 		  });
   
 		  if (!response.ok) {
 			const errorMessage = `Erreur HTTP : ${response.status}`;
 			console.error(errorMessage);
-			const errorDetails = await response.text(); 
+			const errorDetails = await response.text();
 			throw new Error(`${errorMessage} - ${errorDetails}`);
 		  }
   

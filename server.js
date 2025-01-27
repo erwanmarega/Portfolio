@@ -13,7 +13,6 @@ app.use(
     origin: [
       'https://www.ewmdev.com',
       'http://localhost:5173',
-      'https://portfolio-yyem.vercel.app',
     ],
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
