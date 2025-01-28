@@ -43,6 +43,27 @@
 			</button>
 		  </div>
 		</div>
+  
+		<div
+		  class="project-card"
+		  :class="isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'"
+		>
+		  <div class="flex items-center"> 
+			<img :src="figma_image" alt="Projet Figma" class="album-img figma-img" />
+			<div class="flex flex-col justify-center ml-4 text-center sm:text-left"> 
+			  <p class="font-bold text-lg md:text-xl">Voici un projet de design réalisé avec Figma !</p>
+			</div>
+		  </div>
+		  <div class="overlay">
+			<span class="text-white text-xl font-bold">Projet Figma</span>
+			<button
+			  @click="openModal(figma_image, 'Projet Figma', 'Un projet de design réalisé avec Figma !', 'https://www.figma.com/proto/wQ9lPQ2EJPcImz1pcZemxz/Untitled?node-id=2-2&p=f&t=bv86bR1iRDJ1X8bl-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A2', 'Voir le projet Figma')"
+			  class="mt-4 btn-primary"
+			>
+			  Découvrir plus
+			</button>
+		  </div>
+		</div>
 	  </main>
   
 	  <transition name="modal-fade">
@@ -69,12 +90,14 @@
   <script>
   import api_pokemon from '../assets/api_pokemon.png';
   import calculatrice_ios from '../assets/Calculatrice_ios.webp';
+  import figma_image from '../assets/figma.svg';
   
   export default {
 	data() {
 	  return {
 		api_pokemon,
 		calculatrice_ios,
+		figma_image,
 		isModalOpen: false,
 		modalImage: '',
 		modalTitle: '',
@@ -107,7 +130,7 @@
 		if (event.key === 'Escape') {
 		  this.closeModal();
 		}
-	  },
+	  }
 	},
 	mounted() {
 	  document.addEventListener('keydown', this.handleKeydown);
@@ -126,14 +149,14 @@
 	},
 	beforeDestroy() {
 	  document.removeEventListener('keydown', this.handleKeydown);
-	},
+	}
   };
   </script>
   
   <style scoped>
   .project-card {
-	@apply relative text-center p-6 bg-white shadow-lg rounded-lg m-4 w-full max-w-screen-lg flex flex-col sm:flex-row sm:justify-start sm:ml-12 transition-transform duration-500 ease-out transform;
-  }
+    @apply relative text-center p-6 bg-white shadow-lg rounded-lg m-4 w-full max-w-screen-lg flex flex-col sm:flex-row sm:items-center transition-transform duration-500 ease-out transform;
+}
   
   .album-img {
 	@apply w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 rounded-xl object-cover;
@@ -168,10 +191,18 @@
   .btn-danger {
 	@apply bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 transition duration-200;
   }
+
+  .album-img, .figma-img {
+    @apply w-40 h-40 sm:w-48 sm:h-48 md:w-32 md:h-32  object-cover;
+}
+
+.text-container {
+    @apply flex flex-col justify-center ml-4 text-center sm:text-left;
+}
+
   
   .blur-background {
 	filter: blur(8px);
 	transition: filter 0.3s ease-in-out;
   }
   </style>
-  
