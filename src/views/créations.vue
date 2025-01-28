@@ -15,7 +15,7 @@
 		  <div class="overlay">
 			<span class="text-white text-xl font-bold">API Pokemon</span>
 			<button
-			  @click="openModal(api_pokemon, 'API Pokemon', 'Un projet pour tester et apprendre une API !', 'https://erwanmarega.github.io/Api_exo/', 'Voir l\'API Pokémon')"
+			  @click="openModal(api_pokemon, 'API Pokemon', 'Un projet pour tester et apprendre une API Développé en HTML, CSS et JAVASCRIPT !', 'https://erwanmarega.github.io/Api_exo/', 'Voir l\'API Pokémon')"
 			  class="mt-4 btn-primary"
 			>
 			  Découvrir plus
@@ -36,7 +36,7 @@
 		  <div class="overlay">
 			<span class="text-white text-xl font-bold">Calculatrice IOS</span>
 			<button
-			  @click="openModal(calculatrice_ios, 'Calculatrice IOS', 'Un projet pour refaire une calculatrice IOS !', 'https://erwanmarega.github.io/Calculatrice_ios/', 'Voir la Calculatrice IOS')"
+			  @click="openModal(calculatrice_ios, 'Calculatrice IOS', 'Un projet pour refaire une calculatrice IOS ! Développé en HTML, CSS et JAVASCRIPT', 'https://erwanmarega.github.io/Calculatrice_ios/', 'Voir la Calculatrice IOS')"
 			  class="mt-4 btn-primary"
 			>
 			  Découvrir plus
