@@ -22,25 +22,25 @@
               <div class="brutalist-card__alert">{{ competence.title }}</div>
             </div>
             <div v-if="competence.title === 'Développement Front-End'" class="grid grid-cols-2 gap-4 mt-4">
-              <img src="@/assets/Front-end/html.png" alt="HTML" class="w-12 h-12">
-              <img src="@/assets/Front-end/css.png" alt="CSS" class="w-12 h-12">
-              <img src="@/assets/Front-end/javascript.png" alt="JavaScript" class="w-12 h-12">
-              <img src="@/assets/Front-end/vue.png" alt="Vue.js" class="w-12 ">
-              <img src="@/assets/Front-end/react.png" alt="React" class="w-12 ">
-              <img src="@/assets/Front-end/tailwind.webp" alt="Tailwind CSS" class="w-16">
+              <img src="@/assets/Front-end/html5.svg" alt="HTML" class="w-12 h-12">
+              <img src="@/assets/Front-end/css_old.svg" alt="CSS" class="w-12 h-12">
+              <img src="@/assets/Front-end/javascript.svg" alt="JavaScript" class="w-12 h-12">
+              <img src="@/assets/Front-end/vue.svg" alt="Vue.js" class="w-12 h-12">
+              <img src="@/assets/Front-end/React_wordmark_light.svg" alt="React" class="w-12 h-12">
+              <img src="@/assets/Front-end/tailwindcss.svg" alt="Tailwind CSS" class="w-12 h-12">
             </div>
             <div v-if="competence.title === 'Développement Back-End'" class="grid grid-cols-2 gap-4 mt-4">
-              <img src="@/assets/Back-end/docker.png" alt="Docker" class="w-12 ">
-              <img src="@/assets/Back-end/mysql.png" alt="MySQL" class="w-12 h-12">
-              <img src="@/assets/Back-end/Node.png" alt="Node.js" class="w-12 ">
-              <img src="@/assets/Back-end/php.png" alt="PHP" class="w-12 h-12">
+              <img src="@/assets/Back-end/docker.svg" alt="Docker" class="w-12 h-12">
+              <img src="@/assets/Back-end/mysql.svg" alt="MySQL" class="w-12 h-12">
+              <img src="@/assets/Back-end/nodejs.svg" alt="Node.js" class="w-12 ">
+              <img src="@/assets/Back-end/php.svg" alt="PHP" class="w-12 h-12">
               <img src="@/assets/Back-end/symfony.png" alt="Symfony" class="w-12 h-12">
             </div>
             <div v-if="competence.title === 'Outils et Méthodologies'" class="grid grid-cols-2 gap-4 mt-4">
               <img src="@/assets/Gestion de projet/agile.png" alt="Agile" class="w-12 h-12">
-              <img src="@/assets/Gestion de projet/git.png" alt="Git" class="w-12 h-12">
-              <img src="@/assets/Gestion de projet/Github.png" alt="Github" class="w-12">
-              <img src="@/assets/Gestion de projet/Gitlab.png" alt="Gitlab" class="w-12 ">
+              <img src="@/assets/Gestion de projet/git.svg" alt="Git" class="w-12 h-12">
+              <img src="@/assets/Gestion de projet/github-light.svg" alt="Github" class="w-12">
+              <img src="@/assets/Gestion de projet/gitlab.svg" alt="Gitlab" class="w-12 h-12">
               <img src="@/assets/Gestion de projet/kanban.png" alt="Kanban" class="w-12 h-12">
             </div>
             <div class="brutalist-card__actions">
