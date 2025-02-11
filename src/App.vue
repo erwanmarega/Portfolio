@@ -9,6 +9,9 @@
     <div class="section" id="about">
       <about />
     </div>
+    <div class="section" id="education">
+      <education />
+    </div>
     <div class="section" id="hard-skills">
       <Hard_skills />
     </div>
@@ -37,6 +40,7 @@ import Contact from './views/contact.vue';
 import StaticChatbot from './components/StaticChatbot.vue';
 import veille from './views/veille.vue';
 import Text from './views/Text.vue';
+import education from './views/education.vue';
 </script>
 
 <style scoped>

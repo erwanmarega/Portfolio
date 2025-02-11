@@ -12,7 +12,7 @@
             Portfolio
           </h1>
         </div>
-        <p class="text-sm sm:text-base lg:text-lg mt-7 max-w-[420px]">
+        <p class="text-sm sm:text-base italic lg:text-lg mt-7 max-w-[420px] text-gray-600">
           Développeur web en formation, passionné par la création de sites internet et la gestion de projets digitaux. Actuellement en BUT Métiers du Multimédia et de l'Internet, en alternance au sein de Présence Verte en tant qu’assistant communication.
         </p>
         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
@@ -237,3 +237,9 @@ export default {
   }
 }
 </style>
+Formation technologique axée sur l'innovation, l'ingénierie et le développement durable.
+Formation polyvalente en multimédia, web, communication et développement web.
+Formation de haut niveau aux compétences multiples maitrisant les technologies back End et front End
+Mastère Dev Manager Full Stack 
+BUT Métiers du Multimédia et de l'Internet
+Baccalauréat sciences et technologies de l'industrie et du développement durable

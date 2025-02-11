@@ -2,10 +2,10 @@
   <div class="w-full relative bg-gray-100 flex flex-col lg:flex-row" ref="techWatchArea">
     <div class="h-auto lg:h-screen lg:sticky top-0 flex flex-col items-center justify-center flex-1 text-center p-6 mb-0 mt-20 lg:mt-6">
       <div class="flex flex-col items-center space-y-6">
-        <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[84px] font-bold leading-tight lg:leading-[88px]">
+        <h1 class="text-4xl sm:text-5xl lg:text-[64px] xl:text-[49px] font-bold leading-tight lg:leading-[88px]">
           Veille Technologique
         </h1>
-        <p class="text-sm sm:text-base lg:text-lg mt-7 max-w-[420px]">
+        <p class="text-sm sm:text-base lg:text-lg mt-7 max-w-[420px] text-gray-600 italic">
           Restons à jour avec les dernières tendances, outils et ressources en développement web et technologies modernes.
         </p>
       </div>
