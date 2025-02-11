@@ -51,7 +51,7 @@
               "Formation polyvalente en multimédia, web, communication et développement web."
           },
           {
-            title: "Master en Développement Web",
+            title: "Mastère en Développement Web",
             institution: "Efrei",
             years: "2025 - 2027",
             description:
