@@ -51,7 +51,7 @@
               "Formation polyvalente en multimédia, web, communication et développement web."
           },
           {
-            title: "Mastère en Développement Web",
+            title: "Mastère Dev Manager Full Stack",
             institution: "Efrei",
             years: "2025 - 2027",
             description:
