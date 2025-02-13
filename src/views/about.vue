@@ -237,9 +237,3 @@ export default {
   }
 }
 </style>
-Formation technologique axée sur l'innovation, l'ingénierie et le développement durable.
-Formation polyvalente en multimédia, web, communication et développement web.
-Formation de haut niveau aux compétences multiples maitrisant les technologies back End et front End
-Mastère Dev Manager Full Stack 
-BUT Métiers du Multimédia et de l'Internet
-Baccalauréat sciences et technologies de l'industrie et du développement durable
