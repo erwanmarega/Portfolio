@@ -5,7 +5,7 @@
         <span 
           v-for="i in 10" 
           :key="'left-' + i" 
-          class="text-[20vw] sm:text-[12vw] lg:text-[8vw] font-extrabold text-black stroke-white">
+          class="text-[20vw] sm:text-[12vw] lg:text-[8vw] font-extrabold text-indigo-600 stroke-white">
           Projets
         </span>
       </div>

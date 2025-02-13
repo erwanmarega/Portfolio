@@ -10,7 +10,6 @@
             Découvrez mon parcours académique et mes compétences acquises.
           </p>
         </div>
-        <!-- Timeline container avec flèches entre chaque formation -->
         <div class="flex flex-col items-center">
           <template v-for="(item, index) in educationList" :key="index">
             <div
