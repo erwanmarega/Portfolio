@@ -28,7 +28,6 @@
                 {{ item.description }}
               </p>
             </div>
-            <!-- Affichage de la flèche si ce n'est pas la dernière carte -->
             <div v-if="index !== educationList.length - 1" class="arrow-container flex justify-center items-center mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
