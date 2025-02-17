@@ -90,7 +90,7 @@ export default {
       const translateY = index === currentCardIndex.value ? "0" : "-120vh";
       const transform = `translateY(${translateY}) rotate(${rotationAngle}deg)`;
       const backgroundColor = cards[index].color;
-
+      
       return {
         zIndex,
         transform,
@@ -109,7 +109,6 @@ export default {
         isShaking.value = false;
       }, 500); 
     };
-
     onMounted(() => {
       const shakeInterval = setInterval(handleShakeEffect, 3000);
 
