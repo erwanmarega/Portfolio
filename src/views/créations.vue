@@ -41,7 +41,7 @@
   import figma_image from '../assets/Figma.png';
   import pokemon from '../assets/pokemon.png';
   import spotify from '../assets/spotify.png';
-  import calculatrice from '../assets/calculatrice.png';
+  import calculatrice from '../assets/Calculatrice.png';
   
   const slider = ref(null);
   
