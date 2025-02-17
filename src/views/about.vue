@@ -40,11 +40,17 @@
         :key="index"
         :class="[ 
           'absolute w-[80vw] sm:w-[60vw] md:w-[50vw] lg:w-[400px] xl:w-[450px] h-[150px] sm:h-[150px] md:h-[350px] lg:h-[250px] xl:h-[300px] rounded-[20px] flex flex-col justify-between p-3 shadow-lg transition-transform duration-500 ease-in-out',
-          { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking }
+          { away: index !== currentCardIndex, shake: index === currentCardIndex && isShaking },
         ]"
         :style="getCardStyle(index)"
         @click="showNextCard"
       >
+        <img 
+          :src="Clique" 
+          alt="Clique" 
+          class="absolute top-0 right-0 w-12 h-12 sm:w-16 sm:h-16 lg:w-16 lg:h-16" 
+        />
+
         <div class="text-lg sm:text-xl font-bold text-white">{{ card.sub }}</div>
         <div class="text-xl sm:text-2xl md:text-3xl lg:text-[36px] font-bold leading-tight sm:leading-[44px] text-white">
           {{ card.content }}
@@ -56,9 +62,11 @@
 
 
 
+
 <script>
 import { ref, reactive, onMounted } from "vue";
 import ErwanImage from "../assets/img_erwan.JPG"; 
+import Clique from "../assets/Clique.png";
 
 export default {
   setup() {
@@ -120,6 +128,7 @@ export default {
       isShaking,
       getCardStyle,
       showNextCard,
+      Clique,
     };
   },
 };
