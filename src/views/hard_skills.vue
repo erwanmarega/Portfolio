@@ -61,7 +61,6 @@
                 </button>
               </div>
             </div>
-
             <div class="card-face card-back absolute w-full h-full backface-hidden rounded-xl shadow-xl bg-indigo-600 text-white p-6 transform rotate-y-180 border border-indigo-600 flex flex-col justify-between">
               <div>
                 <h3 class="text-xl font-bold mb-3">Détails</h3>
