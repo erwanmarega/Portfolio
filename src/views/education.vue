@@ -81,11 +81,9 @@ const focusedCardIndex = ref(null);
     transform: translateY(0);
   }
 }
-
 .animate-fadeIn {
   animation: fadeIn 1s ease-out;
 }
-
 .blur {
   filter: blur(5px);
   transition: filter 0.3s ease;
