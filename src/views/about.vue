@@ -64,7 +64,7 @@
 
 
 <script>
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive } from "vue";
 import ErwanImage from "../assets/img_erwan.JPG"; 
 import Clique from "../assets/Clique.png";
 
@@ -82,7 +82,6 @@ export default {
       { sub: "Hobbies", content: "Passionné par le dessin, le sport et les voyages.", color: "rgb(247, 92, 208)" },
     ]);
     const currentCardIndex = ref(0);
-    const isShaking = ref(false);
 
     const getCardStyle = (index) => {
       const zIndex = cards.length - index;
@@ -90,7 +89,6 @@ export default {
       const translateY = index === currentCardIndex.value ? "0" : "-120vh";
       const transform = `translateY(${translateY}) rotate(${rotationAngle}deg)`;
       const backgroundColor = cards[index].color;
-      
       return {
         zIndex,
         transform,
@@ -103,20 +101,7 @@ export default {
       currentCardIndex.value = (currentCardIndex.value + 1) % cards.length;
     };
 
-    const handleShakeEffect = () => {
-      isShaking.value = true;
-      setTimeout(() => {
-        isShaking.value = false;
-      }, 500); 
-    };
-    onMounted(() => {
-      const shakeInterval = setInterval(handleShakeEffect, 3000);
-
-      return () => {
-        clearInterval(shakeInterval);
-      };
-    });
-
+   
     return {
       CV_Link,
       Portfolio_Link,
@@ -124,7 +109,6 @@ export default {
       stackArea,
       cards,
       currentCardIndex,
-      isShaking,
       getCardStyle,
       showNextCard,
       Clique,
@@ -134,28 +118,6 @@ export default {
 </script>
 
 <style scoped>
-.away {
-  transform-origin: bottom left;
-}
-
-.shake {
-  animation: shake 0.5s ease-in-out;
-}
-
-@keyframes shake {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-15px);
-  }
-  50% {
-    transform: translateX(15px);
-  }
-  75% {
-    transform: translateX(-15px);
-  }
-}
 
 .button {
   display: flex;
