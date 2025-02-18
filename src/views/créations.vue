@@ -1,20 +1,19 @@
 <template>
-	<div class="bg-gray-100 text-black min-h-screen p-6 relative overflow-hidden">
+	<div class="bg-gray-100 text-black min-h-screen p-6 relative">
 	  <header class="mb-12 text-center">
 		<h1 class="text-5xl font-bold mb-4 animate-fadeIn">Mes Créations</h1>
 		<p class="text-lg text-gray-600">Découvrez mes projets récents et mes idées innovantes.</p>
 	  </header>
-	  
-	  <div 
-		ref="slider" 
-		class="flex gap-8 overflow-x-hidden"
-		@wheel.prevent="handleScroll"
-	  >
-		<div 
-		  v-for="creation in creations" 
-		  :key="creation.id" 
-		  class="min-w-[300px] md:min-w-[400px] flex-shrink-0 rounded-xl shadow-xl relative overflow-hidden group"
-		>
+			<div 
+			ref="slider"
+			class="flex md:flex-row flex-col gap-8 overflow-x-auto md:overflow-hidden items-center md:scroll-smooth md:snap-x md:snap-mandatory"
+			@wheel.prevent="handleScroll"
+			>
+			<div 
+				v-for="creation in creations" 
+				:key="creation.id" 
+				class="w-80 md:w-[400px] flex-shrink-0 rounded-xl shadow-xl relative overflow-hidden group snap-center"
+			>
 		  <img 
 			:src="creation.image" 
 			:alt="creation.title" 
@@ -46,40 +45,18 @@
   const slider = ref(null);
   
   const handleScroll = (event) => {
-	if (slider.value) {
-	  slider.value.scrollLeft += event.deltaY * 0.5;
+	if (window.innerWidth >= 768) {
+	  if (slider.value) {
+		slider.value.scrollLeft += event.deltaY * 1.5; 
+	  }
 	}
   };
   
   const creations = ref([
-	{
-	  id: 1,
-	  title: "Figma",
-	  description: "Une Maquette figma afin d'apprendre à faire des animations et apprendre à faire des pages créatives et attractives.",
-	  image: figma_image,
-	  link: "https://www.figma.com/proto/wQ9lPQ2EJPcImz1pcZemxz/Untitled?node-id=2-2&starting-point-node-id=2%3A2&t=PP4n6QUkMOcHgwHO-1"
-	},
-	{
-	  id: 2,
-	  title: "Api Pokemon",
-	  description: "Un projet pour tester et apprendre une API Développé en HTML, CSS et JavaScript !.",
-	  image: pokemon,
-	  link: "https://erwanmarega.github.io/Api_exo/"
-	},
-	{
-	  id: 3,
-	  title: "Calendrier Spotify",
-	  description: "Un projet visant à offrir un récapitulatif des sorties musicales de la semaine en fonction des genres choisis.",
-	  image: spotify,
-	  link: "https://calendarspotify.vercel.app/"
-	},
-	{
-	  id: 4,
-	  title: "Calculatrice IOS",
-	  description: "Un projet visant à reproduire une calculatrice IOS en HTML, CSS et JavaScript.",
-	  image: calculatrice,
-	  link: "https://erwanmarega.github.io/Calculatrice_ios/"
-	}
+	{ id: 1, title: "Figma", description: "Maquette Figma avec animations.", image: figma_image, link: "https://www.figma.com" },
+	{ id: 2, title: "API Pokémon", description: "Projet d’apprentissage d’API.", image: pokemon, link: "https://erwanmarega.github.io/Api_exo/" },
+	{ id: 3, title: "Calendrier Spotify", description: "Suivi des sorties musicales.", image: spotify, link: "https://calendarspotify.vercel.app/" },
+	{ id: 4, title: "Calculatrice iOS", description: "Reproduction d'une calculatrice iOS.", image: calculatrice, link: "https://erwanmarega.github.io/Calculatrice_ios/" }
   ]);
   </script>
   
