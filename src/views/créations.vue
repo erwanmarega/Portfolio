@@ -4,9 +4,9 @@
 		<h1 class="text-5xl font-bold mb-4 animate-fadeIn">Mes Créations</h1>
 		<p class="text-lg text-gray-600">Découvrez mes projets récents et mes idées innovantes.</p>
 	  </header>
-			<div 
+				<div 
 			ref="slider"
-			class="flex md:flex-row flex-col gap-8 overflow-x-auto md:overflow-hidden items-center md:scroll-smooth md:snap-x md:snap-mandatory"
+			class="flex md:flex-row flex-col gap-8 overflow-x-auto md:overflow-hidden items-center md:snap-x md:snap-mandatory"
 			@wheel.prevent="handleScroll"
 			>
 			<div 
@@ -45,12 +45,12 @@
   const slider = ref(null);
   
   const handleScroll = (event) => {
-	if (window.innerWidth >= 768) {
-	  if (slider.value) {
-		slider.value.scrollLeft += event.deltaY * 1.5; 
-	  }
-	}
-  };
+  if (window.innerWidth >= 768 && slider.value) { 
+    event.preventDefault(); 
+    const scrollAmount = 400 + 32; 
+    slider.value.scrollLeft += event.deltaY > 0 ? scrollAmount : -scrollAmount; 
+  }
+};
   
   const creations = ref([
 	{ id: 1, title: "Figma", description: "Maquette Figma avec animations.", image: figma_image, link: "https://www.figma.com" },
