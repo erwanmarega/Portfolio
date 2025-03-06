@@ -53,7 +53,7 @@
 };
   
   const creations = ref([
-	{ id: 1, title: "Figma", description: "Maquette Figma avec animations.", image: figma_image, link: "https://www.figma.com/proto/wQ9lPQ2EJPcImz1pcZemxz/Untitled?node-id=2-2&starting-point-node-id=2%3A2" },
+	{ id: 1, title: "Figma", description: "Maquette Figma avec animations.", image: figma_image, link: "https://www.figma.com/proto/wQ9lPQ2EJPcImz1pcZemxz/Untitled?node-id=2-2&starting-point-node-id=2%3A2&t=Nvfx0PEgLLcEeyQh-1" },
 	{ id: 2, title: "API Pokémon", description: "Projet d’apprentissage d’API.", image: pokemon, link: "https://erwanmarega.github.io/Api_exo/" },
 	{ id: 3, title: "Calendrier Spotify", description: "Suivi des sorties musicales.", image: spotify, link: "https://calendarspotify.vercel.app/" },
 	{ id: 4, title: "Calculatrice iOS", description: "Reproduction d'une calculatrice iOS.", image: calculatrice, link: "https://erwanmarega.github.io/Calculatrice_ios/" }
