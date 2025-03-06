@@ -75,9 +75,9 @@ export default {
         color: "#06B6D4",
       },
       {
-        title: "Lobsters",
-        description: "Communauté de développeurs partageant des liens et des discussions.",
-        link: "https://lobste.rs/",
+        title: "Blog Node.js",
+        description: "Actualités et mises à jour de la communauté Node.js.",
+        link: "https://nodejs.org/fr/blog/",
         color: "#2496ED",
       },
     ]);
