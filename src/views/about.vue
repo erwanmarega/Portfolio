@@ -70,7 +70,7 @@ import Clique from "../assets/Clique.png";
 
 export default {
   setup() {
-    const CV_Link = "https://drive.google.com/file/d/1jbPXZD6-mMvPCqerhvApvyMFWUY1alRb/view?usp=drive_link";
+    const CV_Link = "https://drive.google.com/file/d/10UmUSqv2cg0AVlFwo84XCvrRHwHuxRnU/view?usp=drive_link";
     const Portfolio_Link = "https://drive.google.com/file/d/1gbwL6-WvAEey_DaKdZSM0f64DIyAMvGa/view?usp=drive_link";
 
     const stackArea = ref(null);
