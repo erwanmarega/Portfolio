@@ -4,7 +4,7 @@
       <section class="max-w-4xl mx-auto">
         <div class="text-center mb-16">
           <h2 class="text-5xl font-extrabold text-gray-900 animate-fadeIn">
-            Mes Parcours &amp; Connaissances
+            Mon Parcours &amp; Connaissances
           </h2>
           <p class="mt-4 text-lg italic text-gray-600">
             Découvrez mon parcours académique et mes compétences acquises.
