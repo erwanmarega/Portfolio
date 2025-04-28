@@ -70,7 +70,6 @@
 		nom: "",
 		email: "",
 		message: "",
-		currentTime: this.getCurrentTime(),
 		messageSent: false, 
 		isLoading: false, 
 		logoGmail,
@@ -123,9 +122,6 @@
 		} finally {
 		  this.isLoading = false; 
 		}
-	  },
-	  getCurrentTime() {
-		return new Date().toLocaleTimeString();
 	  },
 	},
   };
