@@ -88,6 +88,7 @@
   import spotifyImage from '../assets/spotify.png';
   import calculatriceImage from '../assets/Calculatrice.png';
   import adiImage from '../assets/AdiImage.png';
+  import React_nativeImage from '../assets/react_native.png';
   
   const slider = ref(null);
   const currentIndex = ref(0);
@@ -97,7 +98,8 @@
 	{ id: 2, title: "API Pokémon", description: "Exploration des APIs avec un projet Pokémon interactif.", image: pokemonImage, link: "https://erwanmarega.github.io/Api_exo/" },
 	{ id: 3, title: "Calendrier Spotify", description: "Suivi des sorties musicales avec une interface moderne.", image: spotifyImage, link: "https://spotcalendar.vercel.app/" },
 	{ id: 4, title: "Calculatrice iOS", description: "Reproduction fidèle d'une calculatrice iOS.", image: calculatriceImage, link: "https://erwanmarega.github.io/Calculatrice_ios/" },
-	{ id: 5, title: "Figma", description: "Maquette Figma avec animations fluides et interactives.", image: figmaImage, link: "https://www.figma.com/proto/wQ9lPQ2EJPcImz1pcZemxz/Untitled?node-id=2-2&starting-point-node-id=2%3A2&t=Nvfx0PEgLLcEeyQh-1" }
+	{ id: 5, title: "Application Vsj_natation", description: "Application React native + back-end Symfony", image: React_nativeImage, link: "https://github.com/erwanmarega/Vsj_natation_app_new" },
+	{ id: 6, title: "Figma", description: "Maquette Figma avec animations fluides et interactives.", image: figmaImage, link: "https://www.figma.com/proto/wQ9lPQ2EJPcImz1pcZemxz/Untitled?node-id=2-2&starting-point-node-id=2%3A2&t=Nvfx0PEgLLcEeyQh-1" }
   ]);
   
   const handleScroll = (event) => {
