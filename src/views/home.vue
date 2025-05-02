@@ -1,7 +1,7 @@
 <template>
   <main class="relative flex flex-col justify-center items-center min-h-screen  bg-gray-100 text-white overflow-hidden">
     <div class="container flex flex-col justify-center items-center w-full mt-12 px-4">
-      <div class="macbook relative transform hover:scale-105 transition-transform duration-300" aria-label="Animated MacBook display">
+      <div class="macbook relative transform hover:scale-105 transition-transform duration-300" aria-hidden="true" data-v-a3a59b7f="">
         <div class="macbook__topBord">
           <div class="macbook__display">
             <div class="macbook__load"></div>
