@@ -18,7 +18,7 @@
 
       <div class="lg:w-1/2 flex justify-center lg:justify-end">
         <div class="mockup-container relative">
-          <img :src="smartphoneMockup" alt="Smartphone Mockup" class="mockup-image animate-float transition-transform duration-500 hover:scale-105" />
+          <img :src="IpadMockup" alt="Smartphone Mockup" class="mockup-image animate-float transition-transform duration-500 hover:scale-105" />
         </div>
       </div>
     </section>
@@ -27,13 +27,13 @@
 
 <script>
 import ErwanImage from "../assets/Erwan.webp";
-import SmartphoneMockup from "../assets/mockup.webp";
+import IpadMockup from "../assets/IpadMockup.webp";
 
 export default {
   data() {
     return {
       erwanImage: ErwanImage,
-      smartphoneMockup: SmartphoneMockup,
+      IpadMockup: IpadMockup,
     };
   },
 };
@@ -51,10 +51,10 @@ export default {
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0) rotate(12deg);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-15px) rotate(12deg);
+    transform: translateY(-15px) ;
   }
 }
 
@@ -73,7 +73,7 @@ export default {
   bottom: -25px;
   left: 50%;
   transform: translateX(-50%) rotate(12deg);
-  width: 80%;
+  width: 100%;
   height: 25px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.15);
@@ -82,17 +82,18 @@ export default {
 }
 
 .mockup-image {
-  width: 20rem;
-  height: 20rem;
+  width: 18rem;
+  height: 18rem;
   object-fit: contain;
   transform-style: preserve-3d;
-  transform: rotate(12deg);
+ transform: none;
 }
-
 @media (min-width: 1024px) {
   .mockup-image {
-    width: 28rem;
-    height: 28rem;
+    width: 34rem;
+    height: 34rem;
+  transform: none;
   }
 }
+
 </style>
