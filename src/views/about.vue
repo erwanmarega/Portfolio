@@ -17,7 +17,7 @@
         </p>
         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
           <a 
-            :href="CV"
+            :href="CV_Marega"
             target="_blank"
             class="button"
           >
@@ -67,7 +67,7 @@
 import { ref, reactive } from "vue";
 import ErwanImage from "../assets/img_erwan.webp"; 
 import Clique from "../assets/Clique.webp";
-import CV from "../assets/CV_MAREGA_ERWAN.pdf";
+import CV_Marega from "../assets/CV_MAREGA_ERWAN.pdf"
 import Portfolio from "../assets/portfolio_MAREGA.pdf"
 
 export default {
@@ -109,7 +109,7 @@ export default {
       getCardStyle,
       showNextCard,
       Clique,
-      CV,
+      CV_Marega,
       Portfolio,
     };
   },
