@@ -27,7 +27,7 @@
 
 <script>
 import ErwanImage from "../assets/Erwan.png";
-import SmartphoneMockup from "../assets/mockup.png";
+import SmartphoneMockup from "../assets/mockup.webp";
 
 export default {
   data() {
