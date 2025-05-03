@@ -27,7 +27,7 @@
 
 <script>
 import ErwanImage from "../assets/Erwan.webp";
-import IpadMockup from "../assets/IpadMockup.webp";
+import IpadMockup from "../assets/ipadMockup.webp";
 
 export default {
   data() {
