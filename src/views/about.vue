@@ -67,7 +67,7 @@
 import { ref, reactive } from "vue";
 import ErwanImage from "../assets/img_erwan.webp"; 
 import Clique from "../assets/Clique.webp";
-import CV_Marega from "../assets/CV_MAREGA_ERWAN.pdf"
+import CV_Marega from "../assets/CV_MAREGA_Erwan.pdf"
 import Portfolio from "../assets/portfolio_MAREGA.pdf"
 
 export default {
