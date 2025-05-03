@@ -68,15 +68,7 @@
 		  </svg>
 		</button>
   
-		<div class="flex justify-center mt-4 space-x-2">
-		  <button
-			v-for="(creation, index) in creations"
-			:key="index"
-			@click="scrollToIndex(index)"
-			:class="{ 'w-2 h-2 rounded-full transition': true, 'bg-indigo-600': currentIndex === index, 'bg-gray-300': currentIndex !== index }"
-			:aria-label="`Aller au projet ${index + 1}`"
-		  ></button>
-		</div>
+		
 	  </div>
 	</div>
   </template>

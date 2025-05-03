@@ -17,14 +17,14 @@
         </p>
         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4">
           <a 
-            :href="CV_Link"
+            :href="CV"
             target="_blank"
             class="button"
           >
             <span class="text">Téléchargez mon CV !</span>
           </a>
           <a 
-            :href="Portfolio_Link"
+            :href="Portfolio"
             target="_blank"
             class="button"
           >
@@ -67,12 +67,11 @@
 import { ref, reactive } from "vue";
 import ErwanImage from "../assets/img_erwan.webp"; 
 import Clique from "../assets/Clique.webp";
+import CV from "../assets/CV_MAREGA_ERWAN.pdf";
+import Portfolio from "../assets/portfolio_MAREGA.pdf"
 
 export default {
   setup() {
-    const CV_Link = "https://drive.google.com/file/d/10UmUSqv2cg0AVlFwo84XCvrRHwHuxRnU/view?usp=drive_link";
-    const Portfolio_Link = "https://drive.google.com/file/d/1gbwL6-WvAEey_DaKdZSM0f64DIyAMvGa/view?usp=drive_link";
-
     const stackArea = ref(null);
     const erwanImage = ErwanImage; 
     const cards = reactive([ 
@@ -103,8 +102,6 @@ export default {
 
    
     return {
-      CV_Link,
-      Portfolio_Link,
       erwanImage,
       stackArea,
       cards,
@@ -112,6 +109,8 @@ export default {
       getCardStyle,
       showNextCard,
       Clique,
+      CV,
+      Portfolio,
     };
   },
 };
