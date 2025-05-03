@@ -83,13 +83,13 @@
   
   <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
-  import figmaImage from '../assets/Figma.png';
-  import pokemonImage from '../assets/pokemon.png';
-  import spotifyImage from '../assets/spotify.png';
-  import calculatriceImage from '../assets/Calculatrice.png';
-  import adiImage from '../assets/AdiImage.png';
-  import React_nativeImage from '../assets/react_native.png';
-  import Symfony from '../assets/symfony.png';
+  import figmaImage from '../assets/Figma.webp';
+  import pokemonImage from '../assets/pokemon.webp';
+  import spotifyImage from '../assets/spotify.webp';
+  import calculatriceImage from '../assets/Calculatrice.webp';
+  import adiImage from '../assets/AdiImage.webp';
+  import React_nativeImage from '../assets/react_native.webp';
+  import Symfony from '../assets/symfony.webp';
   
   const slider = ref(null);
   const currentIndex = ref(0);

@@ -61,7 +61,7 @@
   </template>
   
   <script>
-  import logoGmail from "../assets/logo_gmail.png";
+  import logoGmail from "../assets/logo_gmail.webp";
   
   export default {
 	data() {

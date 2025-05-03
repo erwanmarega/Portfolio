@@ -65,8 +65,8 @@
 
 <script>
 import { ref, reactive } from "vue";
-import ErwanImage from "../assets/img_erwan.JPG"; 
-import Clique from "../assets/Clique.png";
+import ErwanImage from "../assets/img_erwan.webp"; 
+import Clique from "../assets/Clique.webp";
 
 export default {
   setup() {
