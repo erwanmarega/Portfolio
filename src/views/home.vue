@@ -1,458 +1,98 @@
 <template>
-  <main class="relative flex flex-col justify-center items-center min-h-screen  bg-gray-100 text-white overflow-hidden">
-    <div class="container flex flex-col justify-center items-center w-full mt-12 px-4">
-      <div class="macbook relative transform hover:scale-105 transition-transform duration-300" aria-hidden="true" data-v-a3a59b7f="">
-        <div class="macbook__topBord">
-          <div class="macbook__display">
-            <div class="macbook__load"></div>
-          </div>
-        </div>
-        <div class="macbook__underBord">
-          <div class="macbook__keybord">
-            <div class="keybord">
-              <div class="keybord__touchbar"></div>
-              <ul class="keybord__keyBox">
-                <li class="keybord__key key--01"></li>
-                <li class="keybord__key key--02"></li>
-                <li class="keybord__key key--03"></li>
-                <li class="keybord__key key--04"></li>
-                <li class="keybord__key key--05"></li>
-                <li class="keybord__key key--06"></li>
-                <li class="keybord__key key--07"></li>
-                <li class="keybord__key key--08"></li>
-                <li class="keybord__key key--09"></li>
-                <li class="keybord__key key--10"></li>
-                <li class="keybord__key key--11"></li>
-                <li class="keybord__key key--12"></li>
-                <li class="keybord__key key--13"></li>
-              </ul>
-              <ul class="keybord__keyBox--under">
-                <li class="keybord__key key--14"></li>
-                <li class="keybord__key key--15"></li>
-                <li class="keybord__key key--16"></li>
-                <li class="keybord__key key--17"></li>
-                <li class="keybord__key key--18"></li>
-                <li class="keybord__key key--19"></li>
-                <li class="keybord__key key--20"></li>
-                <li class="keybord__key key--21"></li>
-                <li class="keybord__key key--22"></li>
-                <li class="keybord__key key--23"></li>
-                <li class="keybord__key key--24"></li>
-              </ul>
-            </div>
-          </div>
+  <main class="relative min-h-screen bg-gray-100 flex flex-col font-sans overflow-hidden">
+    <nav class="w-full flex justify-between items-center px-8 py-6 bg-gray-100 backdrop-blur-md ">
+      <div class="flex items-center">
+        <img :src="erwanImage" alt="Erwan Marega Logo" class="w-12 h-12 ring-gray-200/20 rounded-full transition-all hover:ring-2" />
+      </div>
+    </nav>
+
+    <section class="flex flex-col lg:flex-row items-center justify-between px-8 py-20 lg:py-32 flex-1">
+      <div class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0 animate-fade-in">
+        <h1 class="text-5xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-black leading-tight mb-8">
+          Développeur Web Fullstack
+        </h1>
+        <p class="text-gray-600 text-xl mb-10 leading-relaxed">
+          Je conçois des projets web modernes pour apprendre, créer et collaborer.
+        </p>
+      </div>
+
+      <div class="lg:w-1/2 flex justify-center lg:justify-end">
+        <div class="mockup-container relative">
+          <img :src="smartphoneMockup" alt="Smartphone Mockup" class="mockup-image animate-float transition-transform duration-500 hover:scale-105" />
         </div>
       </div>
-    </div>
-
-    <div class="text-center mb-12 mt-8 px-4">
-      <h1
-        class="bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-teal-500 via-purple-500 to-red-500 text-transparent bg-clip-text text-4xl sm:text-5xl md:text-6xl font-bold leading-tight relative"
-        aria-label="Erwan Marega, Back-end Developer"
-      >
-        Erwan Marega
-      </h1>
-      <h2 class="text-xl sm:text-2xl md:text-3xl font-medium mt-2 text-black">
-        Développeur Back-end
-      </h2>
-      
-    </div>
-
-    <div class="absolute top-4 left-4">
-      <img :src="erwanImage" alt="Erwan Marega Logo" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full shadow-md" />
-    </div>
+    </section>
   </main>
 </template>
 
 <script>
 import ErwanImage from "../assets/Erwan.png";
+import SmartphoneMockup from "../assets/mockup.png";
 
 export default {
   data() {
     return {
       erwanImage: ErwanImage,
+      smartphoneMockup: SmartphoneMockup,
     };
   },
 };
 </script>
 
 <style scoped>
-
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: auto;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.macbook {
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(12deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(12deg);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.mockup-container {
   position: relative;
-  width: 228px;
-  height: 260px;
+  perspective: 1000px;
 }
 
-.macbook__topBord {
+.mockup-container::after {
+  content: '';
   position: absolute;
-  z-index: 0;
-  top: 34px;
-  left: 0;
-  width: 128px;
-  height: 116px;
-  border-radius: 6px;
-  transform-origin: center;
-  background: linear-gradient(-135deg, #c8c9c9 52%, #8c8c8c 56%);
-  transform: scale(0) skewY(-30deg);
-  animation: topbord 0.4s 1.7s ease-out forwards;
-}
-
-.macbook__topBord::before {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  top: 8px;
-  left: 6px;
-  width: 100%;
-  height: 100%;
-  border-radius: 6px;
-  background: #000;
-}
-
-.macbook__topBord::after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  bottom: -7px;
-  left: 8px;
-  width: 168px;
-  height: 12px;
-  transform-origin: left bottom;
-  transform: rotate(-42deg) skew(-4deg);
-  background: linear-gradient(-135deg, #c8c9c9 52%, #8c8c8c 56%);
-}
-
-.macbook__display {
-  position: absolute;
-  z-index: 10;
-  top: 17px;
-  left: 12px;
-  width: calc(100% - 12px);
-  height: calc(100% - 18px);
-  background: linear-gradient(45deg, #3ba9ff, #c82aff);
-}
-
-.macbook__display::before {
-  content: "";
-  position: absolute;
-  z-index: 5;
-  top: -9px;
-  left: -6px;
-  width: calc(100% + 12px);
-  height: calc(100% + 18px);
-  border-radius: 6px;
-  background: linear-gradient(60deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 60%);
-}
-
-.macbook__load {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #222;
-  animation: display 0.4s 4.3s ease forwards;
-  opacity: 1;
-}
-
-.macbook__load:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 80px;
-  height: 6px;
-  border-radius: 3px;
-  box-sizing: border-box;
-  border: solid 1px #fff;
-}
-
-.macbook__load:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 18px;
-  bottom: 0;
-  margin: auto;
-  width: 0;
-  height: 6px;
-  border-radius: 3px;
-  background: #fff;
-  animation: load 2s 2s ease-out forwards;
-}
-
-.macbook__underBord {
-  position: relative;
-  left: 42px;
-  bottom: -145px;
-  width: 150px;
-  height: 90px;
-  border-radius: 6px;
-  transform-origin: center;
-  transform: rotate(-30deg) skew(30deg);
-  background: linear-gradient(-45deg, #c8c9c9 61%, #8c8c8c 66%);
-  animation: modal 0.5s 1s ease-out forwards;
-  opacity: 0;
-}
-
-.macbook__underBord::before {
-  content: "";
-  position: absolute;
-  z-index: 3;
-  top: -8px;
-  left: 8px;
-  width: 100%;
-  height: 100%;
-  border-radius: 6px;
-  background: #dcdede;
-}
-
-.macbook__underBord::after {
-  content: "";
-  position: absolute;
-  z-index: 2;
-  top: -8px;
-  left: 12px;
-  width: 170px;
-  height: 15px;
-  transform-origin: top left;
-  background: linear-gradient(-45deg, #c8c9c9 61%, #8c8c8c 66%);
-  transform: rotate(31deg) skew(-16deg);
-}
-
-.macbook__keybord {
-  position: relative;
-  top: 0;
-  left: 16px;
-  z-index: 3;
-  border-radius: 3px;
-  width: calc(100% - 16px);
-  height: 45px;
-  background: #c8c9c9;
-}
-
-.macbook__keybord::before {
-  content: "";
-  position: absolute;
-  bottom: -30px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  width: 40px;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%) rotate(12deg);
+  width: 80%;
   height: 25px;
-  border-radius: 3px;
-  background: #c8c9c9;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.15);
+  filter: blur(15px);
+  z-index: -1;
 }
 
-.keybord {
-  position: relative;
-  top: 2px;
-  left: 2px;
-  display: flex;
-  flex-direction: column;
-  width: calc(100% - 3px);
-  height: calc(100% - 4px);
-}
-
-.keybord__touchbar {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  background: #000;
-}
-
-.keybord__keyBox {
-  display: grid;
-  grid-template-rows: 3fr 1fr;
-  grid-template-columns: repeat(11, 1fr);
-  width: 100%;
-  height: 24px;
-  margin: 1px 0 0 0;
-  padding: 0 0 0 1px;
-  box-sizing: border-box;
-  list-style: none;
-}
-
-.keybord__key {
-  position: relative;
-  width: 8px;
-  height: 7px;
-  margin: 1px;
-  background: #000;
-}
-
-.keybord__keyBox .keybord__key {
-  transform: translate(60px, -60px);
-  animation: key 0.2s 1.4s ease-out forwards;
-  opacity: 0;
-}
-
-.keybord__keyBox .keybord__key::before,
-.keybord__keyBox .keybord__key::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-}
-
-.keybord__key::before {
-  top: 8px;
-  transform: translate(20px, -20px);
-  animation: key1 0.2s 1.5s ease-out forwards;
-}
-
-.keybord__key::after {
-  top: 16px;
-  transform: translate(40px, -40px);
-  animation: key2 0.2s 1.6s ease-out forwards;
-}
-
-.keybord__keyBox .key--12::before {
-  width: 10px;
-}
-
-.keybord__keyBox .key--13::before {
-  height: 10px;
-}
-
-.key--01 { grid-row: 1 / 2; grid-column: 1 / 2; }
-.key--02 { grid-row: 1 / 2; grid-column: 2 / 3; }
-.key--03 { grid-row: 1 / 2; grid-column: 3 / 4; }
-.key--04 { grid-row: 1 / 2; grid-column: 4 / 5; }
-.key--05 { grid-row: 1 / 2; grid-column: 5 / 6; }
-.key--06 { grid-row: 1 / 2; grid-column: 6 / 7; }
-.key--07 { grid-row: 1 / 2; grid-column: 7 / 8; }
-.key--08 { grid-row: 1 / 2; grid-column: 8 / 9; }
-.key--09 { grid-row: 1 / 2; grid-column: 9 / 10; }
-.key--10 { grid-row: 1 / 2; grid-column: 10 / 11; }
-.key--11 { grid-row: 1 / 2; grid-column: 11 / 12; }
-.key--12 { grid-row: 1 / 2; grid-column: 12 / 13; }
-.key--13 { grid-row: 1 / 2; grid-column: 13 / 14; }
-
-.keybord__keyBox--under {
-  margin: 0;
-  padding: 0 0 0 1px;
-  box-sizing: border-box;
-  list-style: none;
-  display: flex;
-}
-
-.keybord__keyBox--under .keybord__key {
-  transform: translate(80px, -80px);
-  animation: key3 0.3s 1.6s linear forwards;
-  opacity: 0;
-}
-
-.key--19 {
-  width: 28px;
-}
-
-@keyframes topbord {
-  0% { transform: scale(0) skewY(-30deg); }
-  30% { transform: scale(1.1) skewY(-30deg); }
-  45% { transform: scale(0.9) skewY(-30deg); }
-  60% { transform: scale(1.05) skewY(-30deg); }
-  75% { transform: scale(0.95) skewY(-30deg); }
-  90% { transform: scale(1.02) skewY(-30deg); }
-  100% { transform: scale(1) skewY(-30deg); }
-}
-
-@keyframes display {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes load {
-  0% { width: 0; }
-  20% { width: 40px; }
-  30% { width: 40px; }
-  60% { width: 60px; }
-  90% { width: 60px; }
-  100% { width: 80px; }
-}
-
-@keyframes modal {
-  0% { transform: scale(0) rotate(-30deg) skew(30deg); opacity: 0; }
-  30% { transform: scale(1.1) rotate(-30deg) skew(30deg); opacity: 1; }
-  45% { transform: scale(0.9) rotate(-30deg) skew(30deg); opacity: 1; }
-  60% { transform: scale(1.05) rotate(-30deg) skew(30deg); opacity: 1; }
-  75% { transform: scale(0.95) rotate(-30deg) skew(30deg); opacity: 1; }
-  90% { transform: scale(1.02) rotate(-30deg) skew(30deg); opacity: 1; }
-  100% { transform: scale(1) rotate(-30deg) skew(30deg); opacity: 1; }
-}
-
-@keyframes key {
-  0% { transform: translate(60px, -60px); opacity: 0; }
-  100% { transform: translate(0px, 0px); opacity: 1; }
-}
-
-@keyframes key1 {
-  0% { transform: translate(20px, -20px); opacity: 0; }
-  100% { transform: translate(0px, 0px); opacity: 1; }
-}
-
-@keyframes key2 {
-  0% { transform: translate(40px, -40px); opacity: 0; }
-  100% { transform: translate(0px, 0px); opacity: 1; }
-}
-
-@keyframes key3 {
-  0% { transform: translate(80px, -80px); opacity: 0; }
-  100% { transform: translate(0px, 0px); opacity: 1; }
-}
-
-@media (min-width: 640px) {
-  .macbook {
-    width: 200px;
-    height: 240px;
-  }
-  .macbook__topBord {
-    width: 168px;
-    height: 152px;
-    top: 44px;
-  }
-  .macbook__underBord {
-    width: 196px;
-    height: 118px;
-    left: 55px;
-    bottom: -190px;
-  }
-  .macbook__keybord {
-    height: 60px;
-  }
+.mockup-image {
+  width: 20rem;
+  height: 20rem;
+  object-fit: contain;
+  transform-style: preserve-3d;
+  transform: rotate(12deg);
 }
 
 @media (min-width: 1024px) {
-  .macbook {
-    width: 360px;
-    height: 408px;
-  }
-  .macbook__topBord {
-    width: 202px;
-    height: 182px;
-    top: 53px;
-  }
-  .macbook__underBord {
-    width: 235px;
-    height: 141px;
-    left: 66px;
-    bottom: -228px;
-  }
-  .macbook__keybord {
-    height: 72px;
+  .mockup-image {
+    width: 28rem;
+    height: 28rem;
   }
 }
 </style>
