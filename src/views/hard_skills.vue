@@ -104,9 +104,9 @@ const competences = ref([
     title: "Développement Front-End",
     description: [
       "Sites statiques en HTML & CSS",
-      "Apps dynamiques avec JavaScript",
+      "Apps dynamiques en JavaScript ou TypeScript",
       "Frameworks comme Vue.js et React",
-      "Interfaces responsives",
+      "Interfaces responsives avec CSS et TypeScript"
     ],
   },
   {
