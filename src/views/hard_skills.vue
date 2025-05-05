@@ -41,6 +41,7 @@
                   <img src="@/assets/Front-end/vue.svg" alt="Vue.js" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
                   <img src="@/assets/Front-end/React_wordmark_light.svg" alt="React" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
                   <img src="@/assets/Front-end/tailwindcss.svg" alt="Tailwind CSS" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
+                  <img src="@/assets/Front-end/typescript.svg" alt="Bootstrap" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
                 </div>
                 <div v-else-if="competence.title === 'Développement Back-End'" class="grid grid-cols-3 gap-3">
                   <img src="@/assets/Back-end/docker.svg" alt="Docker" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
