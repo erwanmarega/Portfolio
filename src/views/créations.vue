@@ -82,11 +82,13 @@
   import adiImage from '../assets/AdiImage.webp';
   import React_nativeImage from '../assets/react_native.webp';
   import Symfony from '../assets/symfony.webp';
+  import PersonaUI from '../assets/personaUI.webp';
   
   const slider = ref(null);
   const currentIndex = ref(0);
   
   const creations = ref([
+	{ id: 0, title: "PersonaUI", description: "Création de persona grâce à l'IA", image: PersonaUI, link: "https://persona-ui-lyart.vercel.app/" },
 	{ id: 1, title: "Refonte ADI", description: "Refonte du site de la société ADI.", image: adiImage, link: "https://agencementimmo.vercel.app/" },
 	{ id: 2, title: "Symfony Vsj_natation", description: "L'architecture de mon application back-end symfony", image: Symfony, link: "https://github.com/erwanmarega/Vsj_backend" },
 	{ id: 3, title: "Calendrier Spotify", description: "Suivi des sorties musicales avec une interface moderne.", image: spotifyImage, link: "https://spotcalendar.vercel.app/" },
