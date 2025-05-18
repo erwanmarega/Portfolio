@@ -82,7 +82,7 @@
   import adiImage from '../assets/AdiImage.webp';
   import React_nativeImage from '../assets/react_native.webp';
   import Symfony from '../assets/symfony.webp';
-  import PersonaUI from '../assets/personaUI.webp';
+  import PersonaUI from '../assets/PersonaUI.webp';
   
   const slider = ref(null);
   const currentIndex = ref(0);
