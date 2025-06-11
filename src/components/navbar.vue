@@ -1,5 +1,5 @@
 <template>
-  <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-900/30 via-gray-800/20 to-gray-900/30 backdrop-blur-2xl p-3 rounded-xl shadow-2xl z-20 border border-gray-700/20 transition-all duration-500 hover:shadow-neon max-w-md w-auto mx-4 animate-float flex justify-center items-center">
+  <nav class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-900/30 via-gray-800/20 to-gray-900/30 backdrop-blur-2xl p-3 rounded-xl shadow-2xl z-20 border border-gray-700/20 transition-all duration-500 hover:shadow-neon w-auto max-w-md mx-auto animate-float flex justify-center items-center">
     <ul class="flex justify-center items-center gap-3 sm:gap-5 m-0 p-0 list-none">
       <li v-for="item in navItems" :key="item.id" class="group relative">
         <a
