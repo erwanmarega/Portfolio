@@ -27,7 +27,7 @@
           Développeur web en formation, passionné par la création de sites
           internet et la gestion de projets digitaux. Actuellement en Mastère
           Dev Manager Full Stack au sein de l'Efrei, en alternance au sein de
-          Cegedim Business Services en tant que Ingénieur Développement Fronts.
+          Cegedim Business Services en tant que Ingénieur Développement Front.
         </p>
         <div
           class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mt-4"
