@@ -1,135 +1,207 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-100 to-blue-50 text-gray-900 py-16 px-4 sm:px-6 lg:px-8">
-    <header class="mb-12 text-center">
-      <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 animate-fade-in">
-                Compétences
+  <div class="min-h-screen bg-gray-100 text-gray-900 py-20 px-4 sm:px-6 lg:px-8">
+    <header class="mb-16 text-center">
+      <h1
+        class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 animate-fade-in tracking-tight"
+      >
+        Compétences
       </h1>
+      <p
+        class="mt-6 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto animate-fade-in-delay font-light"
+      >
+        Technologies et outils que je maîtrise au quotidien.
+      </p>
     </header>
 
-    <div class="w-full flex justify-center items-center">
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl">
-        <div
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <article
           v-for="(competence, index) in competences"
           :key="competence.title"
-          class="card-container perspective-1000"
+          class="group"
+          :style="{ animationDelay: `${index * 100}ms` }"
         >
           <div
-            class="card relative w-72 h-[22rem] transform-style-preserve-3d transition-transform duration-700 ease-in-out"
-            :class="{ 'rotate-y-180': flippedCardIndex === index }"
-            :style="{ transitionDelay: `${index * 150}ms` }"
+            class="bg-white rounded-2xl p-8 h-full shadow-sm border border-gray-100 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-500 hover:-translate-y-1 card-animate"
           >
-            <div class="card-face card-front absolute w-full h-full backface-hidden rounded-xl shadow-lg bg-gradient-to-br from-white/80 to-indigo-50/50 backdrop-blur-md border border-indigo-200/50 p-4 flex flex-col justify-between animate-fade-in hover:shadow-2xl hover:scale-105 transition-all duration-300">
-              <div>
-                <div class="flex items-center gap-3 mb-4">
-                  <div class="icon bg-gradient-to-r from-indigo-600 to-purple-500 p-3 rounded-full flex items-center justify-center transition-transform duration-300 hover:rotate-12">
-                    <svg v-if="competence.title === 'Développement Front-End'" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2l-9 4.5v12L12 22l9-4.5v-12L12 2zm-7 5.5h14v9H5v-9z"/>
-                    </svg>
-                    <svg v-else-if="competence.title === 'Développement Back-End'" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2a10 10 0 00-10 10c0 4.41 2.87 8.14 6.84 9.49.5.1.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.1-1.46-1.1-1.46-.9-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.28.1-2.67 0 0 .84-.27 2.75 1.02A9.58 9.58 0 0112 6.8c.85.004 1.71.11 2.52.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.39.2 2.42.1 2.67.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.56.83.56 1.67v2.48c0 .27.18.58.69.48A10 10 0 0022 12 10 10 0 0012 2z"/>
-                    </svg>
-                    <svg v-else class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M3 3h18v18H3V3zm16 16V5H5v14h14zm-2-2H7v-2h10v2zm0-4H7v-2h10v2zm0-4H7v-2h10v2z"/>
-                    </svg>
-                  </div>
-                  <h2 class="text-lg font-semibold text-gray-800 uppercase truncate">{{ competence.title }}</h2>
-                </div>
-                <div v-if="competence.title === 'Développement Front-End'" class="grid grid-cols-3 gap-3">
-                  <img src="@/assets/Front-end/html5.svg" alt="HTML" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Front-end/css_old.svg" alt="CSS" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Front-end/javascript.svg" alt="JavaScript" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Front-end/vue.svg" alt="Vue.js" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Front-end/React_wordmark_light.svg" alt="React" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Front-end/tailwindcss.svg" alt="Tailwind CSS" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Front-end/typescript.svg" alt="Bootstrap" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                </div>
-                <div v-else-if="competence.title === 'Développement Back-End'" class="grid grid-cols-3 gap-3">
-                  <img src="@/assets/Back-end/docker.svg" alt="Docker" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Back-end/mysql.svg" alt="MySQL" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Back-end/nodejs.svg" alt="Node.js" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Back-end/php.svg" alt="PHP" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Back-end/symfony.png" alt="Symfony" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                </div>
-                <div v-else-if="competence.title === 'Outils et Méthodologies'" class="grid grid-cols-3 gap-3">
-                  <img src="@/assets/Gestion de projet/agile.png" alt="Agile" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Gestion de projet/git.svg" alt="Git" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Gestion de projet/github-light.svg" alt="Github" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Gestion de projet/gitlab.svg" alt="Gitlab" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                  <img src="@/assets/Gestion de projet/kanban.png" alt="Kanban" class="w-8 h-8 object-contain transition-transform duration-300 hover:scale-125" />
-                </div>
+            <!-- Header -->
+            <div class="flex items-center gap-4 mb-6">
+              <div
+                class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                :class="competence.iconBg"
+              >
+                <component :is="competence.icon" class="w-6 h-6 text-white" />
               </div>
-              <div class="flex justify-center">
-                <button
-                  class="mt-2 px-4 py-2 text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-500 rounded-lg hover:from-indigo-700 hover:to-purple-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 shadow-md hover:shadow-lg"
-                  @click="flipCard(index)"
-                  :aria-label="`Voir les détails de ${competence.title}`"
-                >
-                  Lire Plus
-                </button>
+              <div>
+                <h2 class="text-xl font-semibold text-gray-900">
+                  {{ competence.title }}
+                </h2>
+                <p class="text-sm text-gray-500">{{ competence.subtitle }}</p>
               </div>
             </div>
-            <div class="card-face card-back absolute w-full h-full backface-hidden rounded-xl shadow-lg bg-gradient-to-br from-indigo-600 to-purple-500 text-white p-4 transform rotate-y-180 border border-indigo-600 flex flex-col justify-between">
-              <div>
-                <h3 class="text-lg font-semibold mb-3 text-white">Détails</h3>
-                <ul class="list-disc pl-5 space-y-2 text-sm">
-                  <li v-for="(detail, idx) in competence.description" :key="idx">
-                    {{ detail }}
-                  </li>
-                </ul>
+
+            <!-- Technologies -->
+            <div class="grid grid-cols-2 gap-3">
+              <div
+                v-for="tech in competence.technologies"
+                :key="tech.name"
+                class="flex items-center gap-3 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-gray-200 hover:bg-gray-100/80 transition-all duration-300"
+              >
+                <div class="w-8 h-8 flex items-center justify-center flex-shrink-0">
+                  <img
+                    :src="tech.icon"
+                    :alt="tech.name"
+                    class="w-6 h-6 object-contain"
+                  />
+                </div>
+                <span class="text-sm font-medium text-gray-700">{{ tech.name }}</span>
               </div>
-              <div class="flex justify-center">
-                <button
-                  class="mt-2 px-4 py-2 text-sm font-bold text-indigo-600 bg-white rounded-lg hover:bg-gray-100 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-md hover:shadow-lg"
-                  @click="flipCard(-1)"
-                  aria-label="Retourner la carte"
+            </div>
+
+            <!-- Details -->
+            <div class="mt-6 pt-6 border-t border-gray-100">
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="detail in competence.details"
+                  :key="detail"
+                  class="px-3 py-1 text-xs font-medium rounded-full"
+                  :class="competence.tagClass"
                 >
-                  Retour
-                </button>
+                  {{ detail }}
+                </span>
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, h } from "vue";
 
-const flippedCardIndex = ref(-1);
+// Import icons
+import htmlIcon from "@/assets/Front-end/html5.svg";
+import cssIcon from "@/assets/Front-end/css_old.svg";
+import jsIcon from "@/assets/Front-end/javascript.svg";
+import vueIcon from "@/assets/Front-end/vue.svg";
+import reactIcon from "@/assets/Front-end/React_wordmark_light.svg";
+import tailwindIcon from "@/assets/Front-end/tailwindcss.svg";
+import tsIcon from "@/assets/Front-end/typescript.svg";
+import dockerIcon from "@/assets/Back-end/docker.svg";
+import mysqlIcon from "@/assets/Back-end/mysql.svg";
+import nodeIcon from "@/assets/Back-end/nodejs.svg";
+import phpIcon from "@/assets/Back-end/php.svg";
+import symfonyIcon from "@/assets/Back-end/symfony.png";
+import gitIcon from "@/assets/Gestion de projet/git.svg";
+import githubIcon from "@/assets/Gestion de projet/github-light.svg";
+import gitlabIcon from "@/assets/Gestion de projet/gitlab.svg";
+import agileIcon from "@/assets/Gestion de projet/agile.png";
+import kanbanIcon from "@/assets/Gestion de projet/kanban.png";
+
+// SVG Icon components
+const CodeIcon = {
+  render() {
+    return h(
+      "svg",
+      { fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" },
+      [
+        h("path", {
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "stroke-width": "2",
+          d: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4",
+        }),
+      ]
+    );
+  },
+};
+
+const ServerIcon = {
+  render() {
+    return h(
+      "svg",
+      { fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" },
+      [
+        h("path", {
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "stroke-width": "2",
+          d: "M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01",
+        }),
+      ]
+    );
+  },
+};
+
+const ToolIcon = {
+  render() {
+    return h(
+      "svg",
+      { fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" },
+      [
+        h("path", {
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "stroke-width": "2",
+          d: "M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z",
+        }),
+        h("path", {
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round",
+          "stroke-width": "2",
+          d: "M15 12a3 3 0 11-6 0 3 3 0 016 0z",
+        }),
+      ]
+    );
+  },
+};
 
 const competences = ref([
   {
-    title: "Développement Front-End",
-    description: [
-      "Sites statiques en HTML & CSS",
-      "Apps dynamiques en JavaScript ou TypeScript",
-      "Frameworks comme Vue.js et React",
-      "Interfaces responsives avec CSS et TypeScript"
+    title: "Front-End",
+    subtitle: "Interfaces modernes",
+    icon: CodeIcon,
+    iconBg: "bg-gradient-to-br from-indigo-500 to-purple-600",
+    tagClass: "bg-indigo-50 text-indigo-600",
+    technologies: [
+      { name: "Vue.js", icon: vueIcon },
+      { name: "React", icon: reactIcon },
+      { name: "TypeScript", icon: tsIcon },
+      { name: "Tailwind CSS", icon: tailwindIcon },
     ],
+    details: ["Responsive", "SPA", "SSR", "Animations"],
   },
   {
-    title: "Développement Back-End",
-    description: [
-      "Serveurs Node.js et Express",
-      "Bases de données SQL/NoSQL",
-      "API RESTful",
+    title: "Back-End",
+    subtitle: "Serveurs & APIs",
+    icon: ServerIcon,
+    iconBg: "bg-gradient-to-br from-emerald-500 to-teal-600",
+    tagClass: "bg-emerald-50 text-emerald-600",
+    technologies: [
+      { name: "Node.js", icon: nodeIcon },
+      { name: "Symfony", icon: symfonyIcon },
+      { name: "MySQL", icon: mysqlIcon },
+      { name: "Docker", icon: dockerIcon },
     ],
+    details: ["REST API", "GraphQL", "SQL", "CI/CD"],
   },
   {
-    title: "Outils et Méthodologies",
-    description: [
-      "Git et GitHub",
-      "Agile (Scrum, Kanban)",
-      "CI/CD avec GitLab",
+    title: "Outils",
+    subtitle: "Workflow & Gestion",
+    icon: ToolIcon,
+    iconBg: "bg-gradient-to-br from-amber-500 to-orange-600",
+    tagClass: "bg-amber-50 text-amber-600",
+    technologies: [
+      { name: "Git", icon: gitIcon },
+      { name: "GitHub", icon: githubIcon },
+      { name: "GitLab", icon: gitlabIcon },
+      { name: "Agile", icon: agileIcon },
     ],
+    details: ["Scrum", "Kanban", "Code Review", "Testing"],
   },
 ]);
-
-const flipCard = (index) => {
-  flippedCardIndex.value = flippedCardIndex.value === index ? -1 : index;
-};
 </script>
 
 <style scoped>
@@ -144,44 +216,29 @@ const flipCard = (index) => {
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out;
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.card {
-  transform-style: preserve-3d;
-  position: relative;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
-.card-face {
-  transition: transform 0.7s ease-in-out;
-}
-
-.transform-style-preserve-3d {
-  transform-style: preserve-3d;
-}
-
-.card-container {
-  width: 288px;
-  height: 352px;
-}
-
-@media (max-width: 640px) {
-  .card-container {
-    width: 280px;
-    height: 340px;
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-fade-in-delay {
+  opacity: 0;
+  animation: fade-in 0.8s ease-out 0.15s forwards;
+}
+
+.card-animate {
+  animation: fade-up 0.6s ease-out forwards;
+  animation-delay: inherit;
+  opacity: 0;
 }
 </style>
