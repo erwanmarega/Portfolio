@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@erwanmarega/git-agent": "^1.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -23,7 +24,7 @@
     "gsap": "^3.12.7",
     "lottie-web": "^5.12.2",
     "next-themes": "^0.3.0",
-    "nodemailer": "^6.9.16",
+    "nodemailer": "^7.0.13",
     "particles.js": "^2.0.0",
     "path": "^0.12.7",
     "react-icon-cloud": "^4.1.4",
