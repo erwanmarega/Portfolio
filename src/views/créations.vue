@@ -178,6 +178,13 @@ const creations = ref([
     image: Symfony,
     link: "https://github.com/erwanmarega/Vsj_backend",
   },
+  {
+    id: 9,
+    title: "Test projet",
+    description: "L'architecture de mon application back-end Symfony.",
+    image: Symfony,
+    link: "https://github.com/erwanmarega/Vsj_backend",
+  },
 ]);
 </script>
 
