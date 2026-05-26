@@ -1,32 +1,16 @@
 <template>
-  <div id="app">
+  <div id="app" class="lg:pl-56">
     <navbar />
     <StaticChatbot />
-  
-    <div class="section" id="home">
-      <home />
-    </div>
-    <div class="section" id="about">
-      <about />
-    </div>
-    <div class="section" id="education">
-      <education />
-    </div>
-    <div class="section" id="hard-skills">
-      <Hard_skills />
-    </div>
-    <div class="section" id="veille">
-      <veille />
-    </div>
-    <div class="section" id="texte">
-      <Text />
-    </div>
-    <div class="section" id="creations">
-      <Créations />
-    </div>
-    <div class="section" id="contact">
-      <Contact />
-    </div>
+
+    <div class="section" id="home"><home /></div>
+    <div class="section" id="about"><about /></div>
+    <div class="section" id="education"><education /></div>
+    <div class="section" id="hard-skills"><Hard_skills /></div>
+    <div class="section" id="veille"><veille /></div>
+    <div class="section" id="texte"><Text /></div>
+    <div class="section" id="creations"><Créations /></div>
+    <div class="section" id="contact"><Contact /></div>
   </div>
 </template>
 
@@ -41,22 +25,31 @@ import StaticChatbot from './components/StaticChatbot.vue';
 import veille from './views/veille.vue';
 import Text from './views/Text.vue';
 import education from './views/education.vue';
+
 </script>
+
+<style>
+html, body {
+  background: #f3f2ff;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
+}
+</style>
 
 <style scoped>
 html, body {
-  overflow-x: hidden;  
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
 }
 
 .section {
-  max-width: 100vw;    
-  overflow-x: hidden;   
   position: relative;
-
+  max-width: 100vw;
+  overflow-x: hidden;
 }
-
 
 
 </style>

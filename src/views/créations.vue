@@ -1,235 +1,247 @@
 <template>
-  <div
-    class="min-h-screen bg-gray-100 text-gray-900 py-20 px-4 sm:px-6 lg:px-8"
-  >
-    <header class="mb-16 text-center">
-      <h1
-        class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 animate-fade-in tracking-tight"
-      >
+  <div class="min-h-screen bg-white flex flex-col px-6 pt-12 pb-8 overflow-hidden">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight animate-fade-in">
         Mes Créations
       </h1>
-      <p
-        class="mt-6 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto animate-fade-in-delay font-light"
-      >
+      <p class="mt-4 text-lg text-gray-500 font-light animate-fade-in-delay">
         Explorez mes projets, conçus avec créativité et expertise technique.
       </p>
-    </header>
+    </div>
 
-    <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article
+    <div class="flex-1 flex flex-col relative">
+      <div class="absolute top-0 right-0 flex items-baseline gap-1 z-10">
+        <span class="text-[2rem] font-bold text-gray-900 leading-none">{{ String(activeIndex + 1).padStart(2, "0") }}</span>
+        <span class="text-base text-gray-300 mx-0.5">/</span>
+        <span class="text-base text-gray-400">{{ String(creations.length).padStart(2, "0") }}</span>
+      </div>
+
+      <div class="flex-1 flex items-center justify-center gap-5 py-4 relative" ref="trackRef">
+        <button
+          class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center text-gray-700 transition-all duration-200 hover:border-gray-700 hover:bg-gray-50 hover:scale-110 disabled:opacity-20 disabled:cursor-default disabled:hover:scale-100"
+          @click="prev"
+          :disabled="activeIndex === 0"
+          aria-label="Précédent"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center text-gray-700 transition-all duration-200 hover:border-gray-700 hover:bg-gray-50 hover:scale-110 disabled:opacity-20 disabled:cursor-default disabled:hover:scale-100"
+          @click="next"
+          :disabled="activeIndex === creations.length - 1"
+          aria-label="Suivant"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+        <div
           v-for="(creation, index) in creations"
           :key="creation.id"
-          class="group"
-          :style="{ animationDelay: `${index * 100}ms` }"
+          class="card-slide flex-shrink-0"
+          :class="[
+            index === activeIndex
+              ? 'w-[55%] opacity-100 cursor-default z-10'
+              : index < activeIndex
+                ? 'prev w-[18%] opacity-40 -translate-x-2.5 scale-[0.92] cursor-pointer'
+                : 'next w-[18%] opacity-40 translate-x-2.5 scale-[0.92] cursor-pointer'
+          ]"
+          @click="index !== activeIndex && goTo(index)"
         >
-          <a
-            :href="creation.link"
-            target="_blank"
-            class="block h-full"
-            :aria-label="`Voir le projet ${creation.title}`"
+          <div
+            class="bg-white rounded-[20px] overflow-hidden border border-gray-100 h-full"
+            :class="index === activeIndex
+              ? 'grid grid-cols-2 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
+              : 'flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.08)]'"
           >
             <div
-              class="relative bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:shadow-gray-200/50 hover:-translate-y-1 h-full card-animate"
+              class="relative overflow-hidden"
+              :class="index === activeIndex ? 'min-h-[320px]' : 'aspect-[4/5]'"
             >
-              <div class="relative overflow-hidden aspect-[16/10]">
-                <img
-                  :src="creation.image"
-                  :alt="creation.title"
-                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div
-                  class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                ></div>
-                <div
-                  class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0"
+              <img
+                :src="creation.image"
+                :alt="creation.title"
+                class="card-img w-full h-full object-cover"
+                :class="index === activeIndex ? 'hover:scale-[1.04]' : ''"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+              <Transition name="cta-fade">
+                <a
+                  v-if="index === activeIndex"
+                  :href="creation.link"
+                  target="_blank"
+                  class="absolute bottom-5 left-5 inline-flex items-center gap-2 bg-white text-gray-900 px-[18px] py-2.5 rounded-full text-sm font-semibold no-underline transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)]"
+                  @click.stop
                 >
-                  <span
-                    class="inline-flex items-center justify-center w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full shadow-lg"
-                  >
-                    <svg
-                      class="w-5 h-5 text-gray-700"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                      />
-                    </svg>
-                  </span>
-                </div>
-              </div>
-              <div class="p-6">
-                <h2
-                  class="text-xl font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300"
-                >
-                  {{ creation.title }}
-                </h2>
-                <p
-                  class="mt-3 text-gray-500 text-sm leading-relaxed line-clamp-2"
-                >
-                  {{ creation.description }}
-                </p>
-                <div
-                  class="mt-4 flex items-center text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
-                >
-                  <span>Découvrir</span>
-                  <svg
-                    class="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
+                  Voir le projet
+                </a>
+              </Transition>
+            </div>
+
+            <Transition name="content-fade">
+              <div v-if="index === activeIndex" :key="activeIndex" class="p-8 flex flex-col justify-center gap-3">
+                <div class="w-10 h-0.5 rounded-sm" :style="`background: ${creation.accent};`"></div>
+                <h2 class="text-2xl font-bold text-gray-900 leading-tight">{{ creation.title }}</h2>
+                <p class="text-sm text-gray-500 leading-relaxed">{{ creation.description }}</p>
+                <div class="flex flex-wrap gap-2 mt-1">
+                  <span
+                    v-for="tag in creation.tags"
+                    :key="tag"
+                    class="px-3 py-1 rounded-full text-xs font-medium border"
+                    :style="`color: ${creation.accent}; border-color: ${creation.accent}40; background: ${creation.accent}12;`"
+                  >{{ tag }}</span>
                 </div>
               </div>
-            </div>
-          </a>
-        </article>
+            </Transition>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-center gap-2 pt-6 pb-2">
+        <button
+          v-for="(_, i) in creations"
+          :key="i"
+          class="h-2 rounded-full border-none cursor-pointer transition-all duration-300 p-0"
+          :class="i === activeIndex ? 'w-6 rounded-[4px]' : 'w-2 bg-gray-200'"
+          :style="i === activeIndex ? `background: ${creations[activeIndex].accent};` : ''"
+          @click="goTo(i)"
+          :aria-label="`Projet ${i + 1}`"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import Fkfolio from "../assets/fkfolio.webp";
-import pokemonImage from "../assets/pokemon.webp";
+import { ref, onMounted, onUnmounted } from "vue";
 import spotifyImage from "../assets/spotify.webp";
-import calculatriceImage from "../assets/Calculatrice.webp";
 import adiImage from "../assets/AdiImage.webp";
-import React_nativeImage from "../assets/react_native.webp";
-import Symfony from "../assets/symfony.webp";
 import PersonaUI from "../assets/PersonaUI.webp";
 import GitAgent from "../assets/git-agent.webp";
+import Postulo from "../assets/Postulo.webp";
 
 const creations = ref([
   {
     id: 0,
-    title: "Git Agent",
+    title: "Postulo",
     description:
-      "Assistant CLI intelligent qui génère automatiquement des messages de commit, suggère des noms de branches, et s'intègre avec Jira et GitHub.",
-    image: GitAgent,
-    link: "https://git-agent-steel.vercel.app/",
+      "Postulo connecte vos étudiants à votre tableau de bord. Vous voyez leurs candidatures au fil de l'eau, sans leur envoyer un seul message. Pour les CFA et écoles en recherche d'alternance.",
+    image: Postulo,
+    link: "https://postulo.fr",
+    accent: "#6366f1",
+    tags: ["IA", "CLI", "GitHub", "Node.js"],
   },
   {
     id: 1,
-    title: "PersonaUI",
-    description: "Création de persona grâce à l'IA.",
-    image: PersonaUI,
-    link: "https://persona-ui-lyart.vercel.app/",
+    title: "Git Agent",
+    description:
+      "Assistant CLI intelligent qui génère automatiquement des messages de commit, suggère des noms de branches, et s'intègre avec Jira et GitHub pour un workflow de développement optimisé.",
+    image: GitAgent,
+    link: "https://git-agent-steel.vercel.app/",
+    accent: "#6366f1",
+    tags: ["IA", "CLI", "GitHub", "Node.js"],
   },
   {
     id: 2,
-    title: "Refonte ADI",
-    description: "Refonte du site de la société ADI.",
-    image: adiImage,
-    link: "https://agencementimmo.vercel.app/",
+    title: "PersonaUI",
+    description:
+      "Création de personas UX grâce à l'intelligence artificielle. Génère des personas détaillés et exportables en PDF pour vos projets UX.",
+    image: PersonaUI,
+    link: "https://persona-ui-lyart.vercel.app/",
+    accent: "#8b5cf6",
+    tags: ["IA", "Vue.js", "UX", "PDF"],
   },
   {
     id: 3,
-    title: "Fkfolio",
-    description: "Création portfolio Feryel Khelifi.",
-    image: Fkfolio,
-    link: "https://www.fkfolio.com/",
+    title: "Refonte ADI",
+    description:
+      "Refonte complète du site de la société ADI spécialisée dans l'agencement immobilier. Design moderne et responsive.",
+    image: adiImage,
+    link: "https://agencementimmo.vercel.app/",
+    accent: "#06b6d4",
+    tags: ["Vue.js", "Tailwind", "Refonte", "Responsive"],
   },
   {
     id: 4,
     title: "Calendrier Spotify",
-    description: "Suivi des sorties musicales avec une interface moderne.",
+    description:
+      "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify. Visualisez les nouvelles sorties de vos artistes préférés.",
     image: spotifyImage,
     link: "https://spotcalendar.vercel.app/",
-  },
-  {
-    id: 5,
-    title: "Application Vsj_natation",
-    description: "Application React native + back-end Symfony.",
-    image: React_nativeImage,
-    link: "https://github.com/erwanmarega/Vsj_natation_app_new",
-  },
-  {
-    id: 6,
-    title: "API Pokémon",
-    description: "Exploration des APIs avec un projet Pokémon interactif.",
-    image: pokemonImage,
-    link: "https://erwanmarega.github.io/Api_exo/",
-  },
-  {
-    id: 7,
-    title: "Calculatrice iOS",
-    description: "Reproduction fidèle d'une calculatrice iOS.",
-    image: calculatriceImage,
-    link: "https://erwanmarega.github.io/Calculatrice_ios/",
-  },
-  {
-    id: 8,
-    title: "Symfony Vsj_natation",
-    description: "L'architecture de mon application back-end Symfony.",
-    image: Symfony,
-    link: "https://github.com/erwanmarega/Vsj_backend",
+    accent: "#1db954",
+    tags: ["Spotify API", "Vue.js", "Music", "Calendar"],
   },
 ]);
+
+const activeIndex = ref(0);
+
+const goTo = (index) => {
+  activeIndex.value = index;
+};
+
+const prev = () => {
+  if (activeIndex.value > 0) activeIndex.value--;
+};
+
+const next = () => {
+  if (activeIndex.value < creations.value.length - 1) activeIndex.value++;
+};
+
+const onKeydown = (e) => {
+  if (e.key === "ArrowLeft") prev();
+  if (e.key === "ArrowRight") next();
+};
+
+onMounted(() => window.addEventListener("keydown", onKeydown));
+onUnmounted(() => window.removeEventListener("keydown", onKeydown));
 </script>
 
 <style scoped>
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fade-in-delay {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  50% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; }
+  40% { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
+.animate-fade-in-delay { animation: fade-in-delay 1.2s ease-out forwards; }
+
+.card-slide {
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              filter 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes card-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.card-slide.prev,
+.card-slide.next {
+  filter: blur(1.5px);
 }
 
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out forwards;
+.card-img {
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.animate-fade-in-delay {
-  animation: fade-in-delay 1.2s ease-out forwards;
+.card-slide.prev ~ .card-slide.prev,
+.card-slide.next ~ .card-slide.next {
+  display: none;
 }
 
-.card-animate {
-  animation: card-fade-up 0.6s ease-out forwards;
-  animation-delay: inherit;
-  opacity: 0;
-}
+.content-fade-enter-active { transition: opacity 0.45s ease 0.25s, transform 0.45s ease 0.25s; }
+.content-fade-leave-active { transition: opacity 0.3s ease, transform 0.3s ease; }
+.content-fade-enter-from { opacity: 0; transform: translateY(10px); }
+.content-fade-leave-to { opacity: 0; transform: translateY(-6px); }
+
+.cta-fade-enter-active { transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s; }
+.cta-fade-leave-active { transition: opacity 0.25s ease, transform 0.25s ease; }
+.cta-fade-enter-from { opacity: 0; transform: translateY(6px); }
+.cta-fade-leave-to { opacity: 0; transform: translateY(-4px); }
 </style>

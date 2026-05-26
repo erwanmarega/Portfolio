@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-100 text-gray-900 py-20 px-4 sm:px-6 lg:px-8">
-    <header class="mb-16 text-center">
+  <div ref="el" class="min-h-screen bg-white text-gray-900 py-20 px-4 sm:px-6 lg:px-8">
+    <header ref="headerEl" class="mb-16 text-center">
       <h1
         class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 animate-fade-in tracking-tight"
       >
@@ -18,13 +18,12 @@
         <article
           v-for="(competence, index) in competences"
           :key="competence.title"
-          class="group"
+          class="group skill-card"
           :style="{ animationDelay: `${index * 100}ms` }"
         >
           <div
             class="bg-white rounded-2xl p-8 h-full shadow-sm border border-gray-100 hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-500 hover:-translate-y-1 card-animate"
           >
-            <!-- Header -->
             <div class="flex items-center gap-4 mb-6">
               <div
                 class="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
@@ -40,7 +39,6 @@
               </div>
             </div>
 
-            <!-- Technologies -->
             <div class="grid grid-cols-2 gap-3">
               <div
                 v-for="tech in competence.technologies"
@@ -58,7 +56,6 @@
               </div>
             </div>
 
-            <!-- Details -->
             <div class="mt-6 pt-6 border-t border-gray-100">
               <div class="flex flex-wrap gap-2">
                 <span
@@ -80,8 +77,9 @@
 
 <script setup>
 import { ref, h } from "vue";
+import gsap from "gsap";
+import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 
-// Import icons
 import htmlIcon from "@/assets/Front-end/html5.svg";
 import cssIcon from "@/assets/Front-end/css_old.svg";
 import jsIcon from "@/assets/Front-end/javascript.svg";
@@ -100,7 +98,6 @@ import gitlabIcon from "@/assets/Gestion de projet/gitlab.svg";
 import agileIcon from "@/assets/Gestion de projet/agile.png";
 import kanbanIcon from "@/assets/Gestion de projet/kanban.png";
 
-// SVG Icon components
 const CodeIcon = {
   render() {
     return h(
@@ -158,6 +155,9 @@ const ToolIcon = {
   },
 };
 
+const el = ref(null);
+const headerEl = ref(null);
+
 const competences = ref([
   {
     title: "Front-End",
@@ -202,6 +202,17 @@ const competences = ref([
     details: ["Scrum", "Kanban", "Code Review", "Testing"],
   },
 ]);
+
+useEnterAnimation(el, () => {
+  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+  gsap.set(headerEl.value, { opacity: 0, y: -30 });
+  tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 });
+
+  const articles = el.value.querySelectorAll(".skill-card");
+  gsap.set(articles, { opacity: 0, y: 50 });
+  tl.to(articles, { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 }, "-=0.4");
+});
 </script>
 
 <style scoped>

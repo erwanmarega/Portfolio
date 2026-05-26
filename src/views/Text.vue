@@ -1,6 +1,7 @@
 <template>
   <div
-    class="relative min-h-screen bg-gray-100 flex items-center justify-center overflow-hidden"
+    ref="el"
+    class="relative min-h-screen bg-white flex items-center justify-center overflow-hidden"
   >
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
@@ -20,6 +21,7 @@
 
     <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
       <div
+        ref="badgeEl"
         class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-gray-200/50 mb-8 animate-fade-down"
       >
         <span class="relative flex h-2 w-2">
@@ -37,11 +39,13 @@
 
       <h1 class="mb-6">
         <span
+          ref="span1El"
           class="block text-5xl sm:text-6xl lg:text-8xl font-bold text-gray-900 animate-fade-up tracking-tight"
         >
           Mes
         </span>
         <span
+          ref="span2El"
           class="block text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text animate-fade-up-delay tracking-tight"
         >
           Projets
@@ -49,13 +53,14 @@
       </h1>
 
       <p
+        ref="paraEl"
         class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-12 animate-fade-up-delay-2 font-light leading-relaxed"
       >
         Une collection de réalisations web alliant design moderne, performance
         et expérience utilisateur.
       </p>
 
-      <div class="animate-fade-up-delay-3">
+      <div ref="btnEl" class="animate-fade-up-delay-3">
         <a
           href="#creations"
           class="group inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition-all duration-300 hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-1"
@@ -81,7 +86,7 @@
         class="mt-20 grid grid-cols-3 gap-8 max-w-lg mx-auto animate-fade-up-delay-4"
       >
         <div class="text-center">
-          <div class="text-3xl sm:text-4xl font-bold text-gray-900">9+</div>
+          <div class="text-3xl sm:text-4xl font-bold text-gray-900">6+</div>
           <div class="text-sm text-gray-500 mt-1">Projets</div>
         </div>
         <div class="text-center">
@@ -107,7 +112,31 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import gsap from "gsap";
+import { useEnterAnimation } from "../composables/useEnterAnimation.js";
+
+const el = ref(null);
+const badgeEl = ref(null);
+const span1El = ref(null);
+const span2El = ref(null);
+const paraEl = ref(null);
+const btnEl = ref(null);
+
+useEnterAnimation(el, () => {
+  const tl = gsap.timeline({ defaults: { ease: "power2.out", duration: 0.8 } });
+
+  gsap.set(badgeEl.value, { opacity: 0, y: -20 });
+  tl.to(badgeEl.value, { opacity: 1, y: 0 });
+
+  gsap.set([span1El.value, span2El.value], { opacity: 0, y: 40 });
+  tl.to([span1El.value, span2El.value], { opacity: 1, y: 0, stagger: 0.15 }, "-=0.4");
+
+  gsap.set([paraEl.value, btnEl.value], { opacity: 0, y: 30 });
+  tl.to([paraEl.value, btnEl.value], { opacity: 1, y: 0, stagger: 0.12 }, "-=0.4");
+});
+</script>
 
 <style scoped>
 @keyframes fade-down {
