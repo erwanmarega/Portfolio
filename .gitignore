@@ -28,3 +28,4 @@ coverage
 .env
 
 *.tsbuildinfo
+CLAUDE.md
