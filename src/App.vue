@@ -8,7 +8,6 @@
     <div class="section" id="education"><education /></div>
     <div class="section" id="hard-skills"><Hard_skills /></div>
     <div class="section" id="veille"><veille /></div>
-    <div class="section" id="texte"><Text /></div>
     <div class="section" id="creations"><Créations /></div>
     <div class="section" id="contact"><Contact /></div>
   </div>
@@ -23,7 +22,6 @@ import Créations from './views/créations.vue';
 import Contact from './views/contact.vue';
 import StaticChatbot from './components/StaticChatbot.vue';
 import veille from './views/veille.vue';
-import Text from './views/Text.vue';
 import education from './views/education.vue';
 
 </script>

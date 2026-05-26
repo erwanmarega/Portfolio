@@ -37,16 +37,16 @@
         >
       </div>
 
-      <h1 class="mb-6">
+      <h1 class="mb-6 flex flex-row gap-3 justify-center">
         <span
           ref="span1El"
-          class="block text-5xl sm:text-6xl lg:text-8xl font-bold text-gray-900 animate-fade-up tracking-tight"
+          class=" text-6xl sm:text-6xl lg:text-6xl font-bold text-gray-900 animate-fade-up tracking-tight"
         >
           Mes
         </span>
         <span
           ref="span2El"
-          class="block text-5xl sm:text-6xl lg:text-8xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text animate-fade-up-delay tracking-tight"
+          class=" text-6xl sm:text-6xl lg:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text animate-fade-up-delay tracking-tight"
         >
           Projets
         </span>
@@ -54,7 +54,7 @@
 
       <p
         ref="paraEl"
-        class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-12 animate-fade-up-delay-2 font-light leading-relaxed"
+        class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-16 animate-fade-up-delay-2 font-light leading-relaxed"
       >
         Une collection de réalisations web alliant design moderne, performance
         et expérience utilisateur.
