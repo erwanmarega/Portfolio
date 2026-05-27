@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" class="h-full bg-white flex flex-col justify-center px-12 py-10 gap-8 overflow-hidden">
+  <div ref="el" class="h-full bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-12 py-10 gap-8 overflow-hidden">
 
     <header ref="headerEl" class="text-center">
       <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none animate-fade-in">
@@ -10,7 +10,7 @@
       </p>
     </header>
 
-    <div class="grid grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <a
         v-for="(item, index) in techList"
         :key="index"

@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="lg:pl-56">
     <navbar />
-    <StaticChatbot />
 
     <div class="section" id="home"><home /></div>
     <div class="section" id="about"><about /></div>
@@ -20,7 +19,6 @@ import about from './views/about.vue';
 import Hard_skills from './views/hard_skills.vue';
 import Créations from './views/créations.vue';
 import Contact from './views/contact.vue';
-import StaticChatbot from './components/StaticChatbot.vue';
 import veille from './views/veille.vue';
 import education from './views/education.vue';
 

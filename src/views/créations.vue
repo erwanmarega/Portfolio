@@ -19,15 +19,15 @@
         </div>
 
         <h1 class="mb-6 flex flex-row gap-3 justify-center">
-          <span ref="span1El" class="text-6xl sm:text-6xl lg:text-6xl font-bold text-gray-900 tracking-tight">Mes</span>
-          <span ref="span2El" class="text-6xl sm:text-6xl lg:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text tracking-tight">Projets</span>
+          <span ref="span1El" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">Mes</span>
+          <span ref="span2El" class="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text tracking-tight">Projets</span>
         </h1>
 
         <p ref="paraEl" class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-16 font-light leading-relaxed">
           Une collection de réalisations web alliant design moderne, performance et expérience utilisateur.
         </p>
 
-        <div ref="statsEl" class="grid grid-cols-3 gap-8 max-w-lg mx-auto">
+        <div ref="statsEl" class="grid grid-cols-3 gap-4 sm:gap-8 max-w-xs sm:max-w-lg mx-auto">
           <div class="text-center">
             <div class="text-3xl sm:text-4xl font-bold text-gray-900">6+</div>
             <div class="text-sm text-gray-500 mt-1">Projets</div>
@@ -52,7 +52,7 @@
           <span class="text-base text-gray-400">{{ String(creations.length).padStart(2, "0") }}</span>
         </div>
 
-        <div class="flex items-center justify-center relative overflow-hidden mt-12 h-[420px]" ref="trackRef">
+        <div class="flex items-center justify-center relative overflow-hidden mt-12 h-[540px] sm:h-[480px] md:h-[420px]" ref="trackRef">
           <button
             class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white border border-gray-200 shadow-md flex items-center justify-center text-gray-700 transition-all duration-200 hover:border-gray-700 hover:bg-gray-50 hover:scale-110 disabled:opacity-20 disabled:cursor-default disabled:hover:scale-100"
             @click="prev"
@@ -80,20 +80,20 @@
             class="card-slide flex-shrink-0 h-full"
             :class="[
               index === activeIndex
-                ? 'w-[55%] opacity-100 cursor-default z-10'
+                ? 'w-[88%] sm:w-[72%] md:w-[55%] opacity-100 cursor-default z-10'
                 : index < activeIndex
-                  ? 'prev w-[18%] opacity-40 -translate-x-2.5 scale-[0.92] cursor-pointer'
-                  : 'next w-[18%] opacity-40 translate-x-2.5 scale-[0.92] cursor-pointer'
+                  ? 'prev hidden md:flex w-[18%] opacity-40 -translate-x-2.5 scale-[0.92] cursor-pointer'
+                  : 'next hidden md:flex w-[18%] opacity-40 translate-x-2.5 scale-[0.92] cursor-pointer'
             ]"
             @click="index !== activeIndex && goTo(index)"
           >
             <div
               class="bg-white rounded-[20px] overflow-hidden border border-gray-100 h-full"
               :class="index === activeIndex
-                ? 'grid grid-cols-2 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
+                ? 'flex flex-col md:grid md:grid-cols-2 shadow-[0_20px_60px_rgba(0,0,0,0.12)]'
                 : 'flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.08)]'"
             >
-              <div class="relative overflow-hidden" :class="index === activeIndex ? '' : 'aspect-[4/5]'">
+              <div class="relative overflow-hidden" :class="index === activeIndex ? 'aspect-video md:aspect-auto md:h-full' : 'aspect-[4/5]'">
                 <img
                   :src="creation.image"
                   :alt="creation.title"
@@ -118,7 +118,7 @@
               </div>
 
               <Transition name="content-fade">
-                <div v-if="index === activeIndex" :key="activeIndex" class="p-8 flex flex-col justify-center gap-3">
+                <div v-if="index === activeIndex" :key="activeIndex" class="p-5 md:p-8 flex flex-col justify-center gap-3 overflow-y-auto">
                   <div class="w-10 h-0.5 rounded-sm" :style="`background: ${creation.accent};`"></div>
                   <h2 class="text-2xl font-bold text-gray-900 leading-tight">{{ creation.title }}</h2>
                   <p class="text-sm text-gray-500 leading-relaxed">{{ creation.description }}</p>

@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" class="h-full bg-white flex flex-col justify-center px-12 py-10 gap-8 overflow-hidden">
+  <div ref="el" class="h-full bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-12 py-10 gap-8 overflow-hidden">
 
     <header ref="headerEl" class="text-center">
       <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none animate-fade-in">
@@ -12,9 +12,9 @@
 
     <div class="relative">
 
-      <div class="absolute top-4 left-[16.6%] right-[16.6%] h-0.5 bg-gradient-to-r from-amber-400 via-indigo-500 to-emerald-500 rounded-full" />
+      <div class="hidden lg:block absolute top-4 left-[16.6%] right-[16.6%] h-0.5 bg-gradient-to-r from-amber-400 via-indigo-500 to-emerald-500 rounded-full" />
 
-      <div class="grid grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <div
           v-for="(item, index) in educationList"
           :key="index"

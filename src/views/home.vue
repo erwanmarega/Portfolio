@@ -7,7 +7,7 @@
 
     <section class="flex flex-col lg:flex-row items-center justify-between px-8 py-20 lg:py-32 flex-1 relative z-10">
       <div ref="textBlock" class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
-        <h1 class="text-5xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-black leading-tight mb-8">
+        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-black leading-tight mb-8">
           Développeur Web Fullstack
         </h1>
         <p class="text-gray-600 text-xl leading-relaxed">
