@@ -221,7 +221,7 @@ const creations = ref([
     title: "Calendrier Spotify",
     description: "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify. Visualisez les nouvelles sorties de vos artistes préférés.",
     image: spotifyImage,
-    link: "https://spotcalendar.vercel.app/",
+    link: "https://spotcalendar.fr",
     accent: "#1db954",
     tags: ["Spotify API", "Vue.js", "Music", "Calendar"],
   },
