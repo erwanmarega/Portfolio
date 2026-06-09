@@ -19,8 +19,7 @@
         </div>
 
         <h1 class="mb-6 flex flex-row gap-3 justify-center">
-          <span ref="span1El" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">Mes</span>
-          <span ref="span2El" class="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 text-transparent bg-clip-text tracking-tight">Projets</span>
+          <span ref="span1El" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight">Mes projets</span>
         </h1>
 
         <p ref="paraEl" class="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-16 font-light leading-relaxed">
@@ -29,7 +28,7 @@
 
         <div ref="statsEl" class="grid grid-cols-3 gap-4 sm:gap-8 max-w-xs sm:max-w-lg mx-auto">
           <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold text-gray-900">6+</div>
+            <div class="text-3xl sm:text-4xl font-bold text-gray-900">5</div>
             <div class="text-sm text-gray-500 mt-1">Projets</div>
           </div>
           <div class="text-center">
@@ -182,12 +181,12 @@ useEnterAnimation(el, () => {
 const creations = ref([
   {
     id: 0,
-    title: "Postulo",
-    description: "Postulo connecte vos étudiants à votre tableau de bord. Vous voyez leurs candidatures au fil de l'eau, sans leur envoyer un seul message. Pour les CFA et écoles en recherche d'alternance.",
-    image: Postulo,
-    link: "https://postulo.fr",
-    accent: "#6366f1",
-    tags: ["IA", "CLI", "GitHub", "Node.js"],
+    title: "Calendrier Spotify",
+    description: "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify. Visualisez les nouvelles sorties de vos artistes préférés.",
+    image: spotifyImage,
+    link: "https://spotcalendar.fr",
+    accent: "#1db954",
+    tags: ["Spotify API", "Vue.js", "Music", "Calendar"],
   },
   {
     id: 1,
@@ -218,12 +217,12 @@ const creations = ref([
   },
   {
     id: 4,
-    title: "Calendrier Spotify",
-    description: "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify. Visualisez les nouvelles sorties de vos artistes préférés.",
-    image: spotifyImage,
-    link: "https://spotcalendar.fr",
-    accent: "#1db954",
-    tags: ["Spotify API", "Vue.js", "Music", "Calendar"],
+    title: "Postulo",
+    description: "Postulo connecte vos étudiants à votre tableau de bord. Vous voyez leurs candidatures au fil de l'eau, sans leur envoyer un seul message. Pour les CFA et écoles en recherche d'alternance.",
+    image: Postulo,
+    link: "https://postulo.fr",
+    accent: "#6366f1",
+    tags: ["IA", "CLI", "GitHub", "Node.js"],
   },
 ]);
 
