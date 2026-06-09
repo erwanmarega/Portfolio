@@ -1,26 +1,22 @@
 <template>
-  <div id="app" class="lg:pl-56">
-    <navbar />
-
-    <div class="section" id="home"><home /></div>
-    <div class="section" id="about"><about /></div>
-    <div class="section" id="education"><education /></div>
-    <div class="section" id="hard-skills"><Hard_skills /></div>
-    <div class="section" id="veille"><veille /></div>
-    <div class="section" id="creations"><Créations /></div>
+    <div class="section" id="home"><Home /></div>
+    <div class="section" id="about"><About /></div>
+    <div class="section" id="education"><Education /></div>
+    <div class="section" id="hard-skills"><HardSkills /></div>
+    <div class="section" id="veille"><Veille /></div>
+    <div class="section" id="creations"><Creations /></div>
     <div class="section" id="contact"><Contact /></div>
-  </div>
+
 </template>
 
 <script setup>
-import navbar from './components/navbar.vue';
-import home from './views/home.vue';
-import about from './views/about.vue';
-import Hard_skills from './views/hard_skills.vue';
-import Créations from './views/créations.vue';
-import Contact from './views/contact.vue';
-import veille from './views/veille.vue';
-import education from './views/education.vue';
+import Home from './views/Home.vue';
+import About from './views/About.vue';
+import HardSkills from './views/HardSkills.vue';
+import Creations from './views/Creations.vue';
+import Contact from './views/Contact.vue';
+import Veille from './views/Veille.vue';
+import Education from './views/Education.vue';
 
 </script>
 
