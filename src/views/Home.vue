@@ -27,9 +27,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
-import ParticleCanvas from '../components/ParticleCanvas.vue'
 import erwanImage from '../assets/Erwan.webp'
-import ipadMockup from '../assets/ipadMockup.webp'
+import ipadMockup from '../assets/ipad-mockup.webp'
 
 const el = ref(null)
 const textBlock = ref(null)
