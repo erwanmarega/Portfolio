@@ -1,16 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/home.vue';
-import About from '@/views/about.vue';
-import HardSkills from '@/views/hard_skills.vue';
-import Outils from '@/views/outils.vue';
-import Creations from '@/views/créations.vue';
-import Contact from '@/views/contact.vue';
+import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
+import HardSkills from '@/views/HardSkills.vue';
+import Creations from '@/views/Creations.vue';
+import Contact from '@/views/Contact.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: About },
   { path: '/hard-skills', name: 'HardSkills', component: HardSkills },
-  { path: '/outils', name: 'Outils', component: Outils },
   { path: '/creations', name: 'Creations', component: Creations },
   { path: '/contact', name: 'Contact', component: Contact },
 ];
