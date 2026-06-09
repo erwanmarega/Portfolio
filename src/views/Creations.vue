@@ -157,10 +157,10 @@ import { ref, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 import spotifyImage from "../assets/spotify.webp";
-import adiImage from "../assets/AdiImage.webp";
-import PersonaUI from "../assets/PersonaUI.webp";
+import adiImage from "../assets/adi-image.webp";
+import PersonaUI from "../assets/persona-ui.webp";
 import GitAgent from "../assets/git-agent.webp";
-import Postulo from "../assets/Postulo.webp";
+import Postulo from "../assets/postulo.webp";
 
 const el = ref(null);
 const badgeEl = ref(null);

@@ -80,23 +80,23 @@ import { ref, h } from "vue";
 import gsap from "gsap";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 
-import htmlIcon from "@/assets/Front-end/html5.svg";
-import cssIcon from "@/assets/Front-end/css_old.svg";
-import jsIcon from "@/assets/Front-end/javascript.svg";
-import vueIcon from "@/assets/Front-end/vue.svg";
-import reactIcon from "@/assets/Front-end/React_wordmark_light.svg";
-import tailwindIcon from "@/assets/Front-end/tailwindcss.svg";
-import tsIcon from "@/assets/Front-end/typescript.svg";
-import dockerIcon from "@/assets/Back-end/docker.svg";
-import mysqlIcon from "@/assets/Back-end/mysql.svg";
-import nodeIcon from "@/assets/Back-end/nodejs.svg";
-import phpIcon from "@/assets/Back-end/php.svg";
-import symfonyIcon from "@/assets/Back-end/symfony.png";
-import gitIcon from "@/assets/Gestion de projet/git.svg";
-import githubIcon from "@/assets/Gestion de projet/github-light.svg";
-import gitlabIcon from "@/assets/Gestion de projet/gitlab.svg";
-import agileIcon from "@/assets/Gestion de projet/agile.png";
-import kanbanIcon from "@/assets/Gestion de projet/kanban.png";
+import htmlIcon from "@/assets/front-end/html5.svg";
+import cssIcon from "@/assets/front-end/css-old.svg";
+import jsIcon from "@/assets/front-end/javascript.svg";
+import vueIcon from "@/assets/front-end/vue.svg";
+import reactIcon from "@/assets/front-end/react-wordmark-light.svg";
+import tailwindIcon from "@/assets/front-end/tailwindcss.svg";
+import tsIcon from "@/assets/front-end/typescript.svg";
+import dockerIcon from "@/assets/back-end/docker.svg";
+import mysqlIcon from "@/assets/back-end/mysql.svg";
+import nodeIcon from "@/assets/back-end/nodejs.svg";
+import phpIcon from "@/assets/back-end/php.svg";
+import symfonyIcon from "@/assets/back-end/symfony.png";
+import gitIcon from "@/assets/gestion-de-projet/git.svg";
+import githubIcon from "@/assets/gestion-de-projet/github-light.svg";
+import gitlabIcon from "@/assets/gestion-de-projet/gitlab.svg";
+import agileIcon from "@/assets/gestion-de-projet/agile.png";
+import kanbanIcon from "@/assets/gestion-de-projet/kanban.png";
 
 const CodeIcon = {
   render() {

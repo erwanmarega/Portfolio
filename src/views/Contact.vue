@@ -61,7 +61,7 @@
   </template>
   
   <script>
-  import logoGmail from "../assets/logo_gmail.webp";
+  import logoGmail from "../assets/logo-gmail.webp";
   
   export default {
 	data() {
@@ -94,7 +94,7 @@
 			message: this.message,
 		  };
   
-		  const response = await fetch("https://ewmnode.onrender.com/send-email", {
+		  const response = await fetch(`${API_URL}/send-email`, {
 			method: "POST",
 			headers: {
 			  "Content-Type": "application/json",

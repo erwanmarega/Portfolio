@@ -1,29 +1,29 @@
 import { onMounted, onUnmounted } from 'vue'
 
 export function useEnterAnimation(elRef, animateFn) {
-  let animated = false
-  let sectionIndex = 0
-
-  const check = () => {
-    const vh = window.innerHeight
-    if (window.scrollY / vh >= sectionIndex - 0.15 && !animated) {
-      animated = true
-      animateFn()
-      window.removeEventListener('scroll', check)
-    }
-  }
+  let observer = null
 
   onMounted(() => {
-    const sectionEl = elRef.value?.closest('.section') || elRef.value
-    const sections = document.querySelectorAll('.section')
-    sectionIndex = Array.from(sections).indexOf(sectionEl)
-    if (sectionIndex <= 0) {
+    const target = elRef.value?.closest('.section') || elRef.value
+    if (!target) {
       animateFn()
       return
     }
-    check()
-    window.addEventListener('scroll', check, { passive: true })
+
+    // fire once the section enters the viewport — works for scroll, fast scroll,
+    // anchor jumps, and reloads landing mid-page
+    observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          animateFn()
+          observer.disconnect()
+          observer = null
+        }
+      },
+      { threshold: 0, rootMargin: '0px 0px -15% 0px' }
+    )
+    observer.observe(target)
   })
 
-  onUnmounted(() => window.removeEventListener('scroll', check))
+  onUnmounted(() => observer?.disconnect())
 }
