@@ -4,9 +4,10 @@ import router from './router';
 import './assets/main.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBots } from '@fortawesome/free-brands-svg-icons';
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faBots);
+library.add(faBots, faTriangleExclamation);
 
 const app = createApp(App);
 

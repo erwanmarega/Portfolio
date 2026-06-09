@@ -5,6 +5,15 @@
       <img :src="erwanImage" alt="Erwan Marega Logo" class="w-12 h-12 rounded-full object-cover transition-all hover:ring-2 ring-gray-200/20" />
     </nav>
 
+    <div ref="banner" class="relative z-10 mx-8 mb-2">
+      <div class="flex items-center gap-3 rounded-xl border border-amber-300 bg-amber-50 px-5 py-3 text-amber-800 shadow-sm">
+        <font-awesome-icon :icon="['fas', 'triangle-exclamation']" class="text-lg text-amber-500 animate-pulse" />
+        <p class="text-sm sm:text-base font-medium">
+          Ce portfolio est actuellement en cours de travaux — certaines sections évoluent encore.
+        </p>
+      </div>
+    </div>
+
     <section class="flex flex-col lg:flex-row items-center justify-between px-8 py-20 lg:py-32 flex-1 relative z-10">
       <div ref="textBlock" class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0">
         <h1 class="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-black leading-tight mb-8">
@@ -31,12 +40,14 @@ import erwanImage from '../assets/erwan.webp'
 import ipadMockup from '../assets/ipad-mockup.webp'
 
 const el = ref(null)
+const banner = ref(null)
 const textBlock = ref(null)
 const mockupBlock = ref(null)
 
 onMounted(() => {
   gsap.timeline({ defaults: { ease: 'power3.out' } })
-    .from(textBlock.value.children, { y: 60, opacity: 0, duration: 0.9, stagger: 0.15 })
+    .from(banner.value, { y: -30, opacity: 0, duration: 0.6 })
+    .from(textBlock.value.children, { y: 60, opacity: 0, duration: 0.9, stagger: 0.15 }, '-=0.2')
     .from(mockupBlock.value, { x: 80, opacity: 0, duration: 1 }, '-=0.6')
 })
 </script>
