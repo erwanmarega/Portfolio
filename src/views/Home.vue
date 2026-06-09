@@ -27,7 +27,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
-import erwanImage from '../assets/Erwan.webp'
+import erwanImage from '../assets/erwan.webp'
 import ipadMockup from '../assets/ipad-mockup.webp'
 
 const el = ref(null)
