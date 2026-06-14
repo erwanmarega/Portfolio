@@ -1,46 +1,57 @@
 <template>
-  <div ref="el" class="h-full bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-12 py-10 gap-8 overflow-hidden">
+  <div ref="el" class="h-full bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-10 gap-8 overflow-hidden">
 
-    <header ref="headerEl" class="text-center">
-      <h1 class="text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none animate-fade-in">
-        Veille Technologique
-      </h1>
-      <p class="mt-2 text-sm text-gray-400 italic animate-fade-in-delay">
+    <header ref="headerEl" class="flex items-end justify-between gap-4 border-b border-gray-200 pb-5">
+      <div>
+        <p class="text-xs font-mono uppercase tracking-[0.3em] text-indigo-500 mb-2 animate-fade-in">
+          // sources
+        </p>
+        <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none animate-fade-in">
+          Veille Technologique
+        </h1>
+      </div>
+      <p class="hidden sm:block text-sm text-gray-400 italic max-w-xs text-right animate-fade-in-delay">
         Les sources que je consulte pour rester à jour.
       </p>
     </header>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="flex flex-col">
       <a
         v-for="(item, index) in techList"
         :key="index"
         :href="item.link"
         target="_blank"
-        class="veille-card group flex flex-col gap-3 bg-white border border-gray-100 rounded-2xl p-5 no-underline transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-        :style="`border-left: 3px solid ${item.accent};`"
+        class="veille-row group relative flex items-center gap-4 sm:gap-8 py-5 px-3 sm:px-6 no-underline border-b border-gray-200 overflow-hidden"
+        :style="{ '--accent': item.accent }"
       >
-        <div class="flex items-center justify-between">
-          <span
-            class="text-xs font-semibold px-3 py-1 rounded-full border"
-            :style="`color: ${item.accent}; background: ${item.accent}18; border-color: ${item.accent}40;`"
-          >
-            {{ item.category }}
-          </span>
+        <span class="veille-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+        <span class="relative z-10 font-mono text-sm w-8 shrink-0 text-gray-300 group-hover:text-[color:var(--accent)] transition-colors duration-300">
+          {{ String(index + 1).padStart(2, "0") }}
+        </span>
+
+        <div class="relative z-10 flex-1 min-w-0">
+          <div class="flex items-center gap-3">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-500 group-hover:text-gray-900 transition-colors duration-300 group-hover:translate-x-1 transform-gpu">
+              {{ item.title }}
+            </h3>
+            <span
+              class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border border-gray-200 text-gray-400 group-hover:border-[color:var(--accent)] group-hover:text-[color:var(--accent)] transition-colors duration-300"
+            >
+              {{ item.category }}
+            </span>
+          </div>
+          <p class="text-sm text-gray-500 mt-0 max-h-0 opacity-0 group-hover:max-h-12 group-hover:mt-2 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+            {{ item.description }}
+          </p>
         </div>
 
-        <h3 class="text-base font-bold text-gray-900">{{ item.title }}</h3>
-
-        <p class="text-xs text-gray-500 leading-relaxed flex-1">{{ item.description }}</p>
-
-        <div
-          class="flex items-center gap-1.5 text-xs font-semibold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
-          :style="`color: ${item.accent};`"
+        <svg
+          class="relative z-10 w-5 h-5 shrink-0 text-gray-300 group-hover:text-[color:var(--accent)] -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24"
         >
-          <span>Consulter</span>
-          <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-          </svg>
-        </div>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8M17 7V16" />
+        </svg>
       </a>
     </div>
   </div>
@@ -100,14 +111,14 @@ const techList = ref([
 ]);
 
 useEnterAnimation(el, () => {
-  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
   gsap.set(headerEl.value, { opacity: 0, y: -30 });
   tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 });
 
-  const cards = el.value.querySelectorAll(".veille-card");
-  gsap.set(cards, { opacity: 0, y: 50 });
-  tl.to(cards, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, "-=0.4");
+  const rows = el.value.querySelectorAll(".veille-row");
+  gsap.set(rows, { opacity: 0, x: -40 });
+  tl.to(rows, { opacity: 1, x: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
 });
 </script>
 
@@ -118,4 +129,8 @@ useEnterAnimation(el, () => {
 }
 .animate-fade-in { animation: fade-in 0.7s ease-out forwards; }
 .animate-fade-in-delay { opacity: 0; animation: fade-in 0.7s ease-out 0.15s forwards; }
+
+.veille-fill {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 75%);
+}
 </style>
