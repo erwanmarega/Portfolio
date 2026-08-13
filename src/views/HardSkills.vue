@@ -16,6 +16,13 @@
           v-for="(item, index) in competences"
           :key="index"
           class="flex flex-col items-center gap-4"
+    <div class="max-w-6xl mx-auto">
+      <div class="skills-grid grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <article
+          v-for="(competence, index) in competences"
+          :key="competence.title"
+          class="group skill-card"
+          :style="{ animationDelay: `${index * 100}ms` }"
         >
           <div
             class="w-8 h-8 rounded-full border-4 border-white shadow-md flex-shrink-0 z-10 skill-dot"
@@ -212,6 +219,45 @@ useEnterAnimation(el, () => {
   reveal(0);
   reveal(1);
   reveal(2);
+  const articles = el.value.querySelectorAll(".skill-card");
+  gsap.set(articles, { opacity: 0, y: 50 });
+  tl.to(articles, { opacity: 1, y: 0, duration: 0.7, stagger: 0.15 }, "-=0.4");
+
+  // Effet tilt 3D au survol des cartes
+  articles.forEach((article) => {
+    const card = article.querySelector("div");
+    if (!card) return;
+
+    article.addEventListener("mousemove", (e) => {
+      const rect = article.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rotateX = ((y - cy) / cy) * -4;
+      const rotateY = ((x - cx) / cx) * 4;
+
+      gsap.to(card, {
+        rotateX,
+        rotateY,
+        scale: 1.02,
+        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+        duration: 0.3,
+        ease: "power2.out",
+      });
+    });
+
+    article.addEventListener("mouseleave", () => {
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1,
+        boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+        duration: 0.4,
+        ease: "power2.out",
+      });
+    });
+  });
 });
 </script>
 
@@ -228,5 +274,13 @@ useEnterAnimation(el, () => {
 }
 .tech-chip:hover {
   transform: translateY(-3px) scale(1.03);
+}
+
+.skills-grid {
+  perspective: 1000px;
+}
+
+.skill-card > div {
+  transform-style: preserve-3d;
 }
 </style>

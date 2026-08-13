@@ -12,15 +12,15 @@
 
         <div ref="statsEl" class="grid grid-cols-3 gap-4 sm:gap-8 max-w-xs sm:max-w-lg mx-auto">
           <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold text-gray-900">5</div>
+            <div ref="statProjects" class="text-3xl sm:text-4xl font-bold text-gray-900">0</div>
             <div class="text-sm text-gray-500 mt-1">Projets</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold text-gray-900">5+</div>
+            <div ref="statTech" class="text-3xl sm:text-4xl font-bold text-gray-900">0</div>
             <div class="text-sm text-gray-500 mt-1">Technologies</div>
           </div>
           <div class="text-center">
-            <div class="text-3xl sm:text-4xl font-bold text-gray-900">2+</div>
+            <div ref="statYears" class="text-3xl sm:text-4xl font-bold text-gray-900">0</div>
             <div class="text-sm text-gray-500 mt-1">Années</div>
           </div>
         </div>

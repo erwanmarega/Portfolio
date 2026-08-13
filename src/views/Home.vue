@@ -36,6 +36,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { gsap } from 'gsap'
+import ParticleCanvas from '../components/ParticleCanvas.vue'
 import erwanImage from '../assets/erwan.webp'
 import ipadMockup from '../assets/ipad-mockup.webp'
 

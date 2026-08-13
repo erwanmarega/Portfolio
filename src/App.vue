@@ -1,7 +1,7 @@
 <template>
     <div class="section" id="home"><Home /></div>
     <div class="section" id="about"><About /></div>
-    <div class="section" id="education"><Education /></div>
+    <TerminalPortal />
     <div class="section" id="hard-skills"><HardSkills /></div>
     <div class="section" id="veille"><Veille /></div>
     <div class="section" id="creations"><Creations /></div>
@@ -16,7 +16,7 @@ import HardSkills from './views/HardSkills.vue';
 import Creations from './views/Creations.vue';
 import Contact from './views/Contact.vue';
 import Veille from './views/Veille.vue';
-import Education from './views/Education.vue';
+import TerminalPortal from './components/TerminalPortal.vue';
 
 </script>
 

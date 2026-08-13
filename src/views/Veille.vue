@@ -119,6 +119,21 @@ useEnterAnimation(el, () => {
   const rows = el.value.querySelectorAll(".veille-row");
   gsap.set(rows, { opacity: 0, x: -40 });
   tl.to(rows, { opacity: 1, x: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
+
+  // Micro-interactions au survol
+  cards.forEach((card) => {
+    const arrow = card.querySelector("svg");
+
+    card.addEventListener("mouseenter", () => {
+      gsap.to(card, { y: -6, scale: 1.02, duration: 0.25, ease: "power2.out" });
+      if (arrow) gsap.to(arrow, { x: 4, duration: 0.25, ease: "power2.out" });
+    });
+
+    card.addEventListener("mouseleave", () => {
+      gsap.to(card, { y: 0, scale: 1, duration: 0.25, ease: "power2.out" });
+      if (arrow) gsap.to(arrow, { x: 0, duration: 0.25, ease: "power2.out" });
+    });
+  });
 });
 </script>
 
