@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div ref="el" class="w-full min-h-screen bg-white pt-28 sm:pt-40 pb-12 px-4 sm:px-8 lg:px-14">
 
     <header ref="headerEl" class="text-center mb-12">
@@ -10,17 +10,11 @@
       </p>
     </header>
 
-    <div class="relative px-4 sm:px-8 lg:px-14">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          v-for="(item, index) in competences"
-          :key="index"
-          class="flex flex-col items-center gap-4"
     <div class="max-w-6xl mx-auto">
       <div class="skills-grid grid grid-cols-1 lg:grid-cols-3 gap-8">
         <article
-          v-for="(competence, index) in competences"
-          :key="competence.title"
+          v-for="(item, index) in competences"
+          :key="item.title"
           class="group skill-card"
           :style="{ animationDelay: `${index * 100}ms` }"
         >
@@ -85,7 +79,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </div>
