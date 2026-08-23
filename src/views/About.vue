@@ -18,7 +18,8 @@
               Erwan Marega
             </h1>
             <p class="text-base sm:text-xl text-gray-500 mt-1">
-              Je code des apps web. J'aime voyager et profiter de la vie.
+              Je code des apps web. J'aime apprendre et de m'intéresser sur tous
+              les sujets.
             </p>
           </div>
         </div>
@@ -97,7 +98,7 @@
                 Mastère
               </div>
               <h3 class="font-bold text-gray-900 text-lg leading-snug mb-2">
-                Dev Manager Full Stack @ Efrei ?
+                Dev Manager Full Stack @ Efrei
               </h3>
               <p class="text-gray-500 leading-relaxed text-sm line-clamp-3">
                 En alternance chez Cegedim Business Services comme Ingénieur
@@ -147,7 +148,7 @@ import ImgBoat from "../assets/about-boat.webp";
 import ImgCity from "../assets/about-city.webp";
 import ImgBeach from "../assets/about-beach.webp";
 import ImgRome from "../assets/about-rome.webp";
-import CV_Marega from "../assets/cv-marega-erwan.pdf";
+import CV_Marega from "../assets/CV_Marega.pdf";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 
 library.add(faFileArrowDown, faArrowUpRightFromSquare, faBookmark);

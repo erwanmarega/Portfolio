@@ -24,6 +24,9 @@ import TerminalPortal from './components/TerminalPortal.vue';
 html, body {
   background: #f3f2ff;
   scrollbar-width: none;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 html::-webkit-scrollbar, body::-webkit-scrollbar {
   display: none;
@@ -31,17 +34,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 </style>
 
 <style scoped>
-html, body {
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-}
-
 .section {
   position: relative;
   max-width: 100vw;
   overflow-x: hidden;
 }
-
-
 </style>
