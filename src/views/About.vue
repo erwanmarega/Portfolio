@@ -18,8 +18,8 @@
               Erwan Marega
             </h1>
             <p class="text-base sm:text-xl text-gray-500 mt-1">
-              Je code des apps web. J'aime apprendre et de m'intéresser sur tous
-              les sujets.
+              Je code des apps web. J'aime apprendre et m'intéresser à tous les
+              sujets.
             </p>
           </div>
         </div>
@@ -100,9 +100,12 @@
               <h3 class="font-bold text-gray-900 text-lg leading-snug mb-2">
                 Dev Manager Full Stack @ Efrei
               </h3>
-              <p class="text-gray-500 leading-relaxed text-sm line-clamp-3">
-                En alternance chez Cegedim Business Services comme Ingénieur
-                Développement Front…
+              <p class="text-gray-500 leading-relaxed text-sm">
+                Développeur web en formation, passionné par la création de sites
+                internet et la gestion de projets digitaux. En Mastère Dev
+                Manager Full Stack à l'Efrei, je suis actuellement en alternance
+                pendant 2 ans en tant qu'Ingénieur Développement de septembre
+                2025 à juillet 2027.
               </p>
               <div
                 class="flex items-center gap-1.5 text-gray-700 text-sm font-medium mt-auto pt-4"
