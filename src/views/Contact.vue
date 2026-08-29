@@ -119,7 +119,7 @@
         </div>
 
         <p ref="footerLeft" class="text-sm text-gray-400 font-light">
-          &copy; 2025 Erwan Marega | Tous droits réservés
+          &copy; 2026 Erwan Marega | Tous droits réservés
         </p>
       </div>
 
