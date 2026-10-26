@@ -3,7 +3,7 @@
     ref="el"
     class="relative min-h-screen bg-white flex flex-col font-sans overflow-hidden"
   >
-    <ParticleCanvas />
+    <SharkCanvas />
 
     <!-- Navbar -->
     <nav
@@ -61,14 +61,18 @@
         <h1
           class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1] mb-6"
         >
-          <span class="text-gray-900">Développeur Web Fullstack</span>
+          <SharkText
+            ><span class="text-gray-900">Développeur Web Fullstack</span></SharkText
+          >
         </h1>
 
         <p
           class="text-gray-600 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
         >
-          Je conçois des applications web modernes et performantes. Passionné
-          par Vue.js, Node.js et l'expérience utilisateur.
+          <SharkText
+            >Je conçois des applications web modernes et performantes. Passionné
+            par Vue.js, Node.js et l'expérience utilisateur.</SharkText
+          >
         </p>
 
         <div
@@ -96,33 +100,30 @@
           class="flex items-center justify-center lg:justify-start gap-8 sm:gap-10"
         >
           <div class="text-center lg:text-left">
-            <div
-              ref="statProjects"
-              class="text-2xl sm:text-3xl font-bold text-gray-900"
-            >
-              0
+            <div class="text-2xl sm:text-3xl font-bold text-gray-900">
+              <SharkText>{{ stats.projects }}</SharkText>
             </div>
-            <div class="text-xs sm:text-sm text-gray-500">Projets</div>
+            <div class="text-xs sm:text-sm text-gray-500">
+              <SharkText>Projets</SharkText>
+            </div>
           </div>
           <div class="w-px h-10 bg-gray-200" />
           <div class="text-center lg:text-left">
-            <div
-              ref="statTech"
-              class="text-2xl sm:text-3xl font-bold text-gray-900"
-            >
-              0
+            <div class="text-2xl sm:text-3xl font-bold text-gray-900">
+              <SharkText>{{ stats.tech }}</SharkText>
             </div>
-            <div class="text-xs sm:text-sm text-gray-500">Technologies</div>
+            <div class="text-xs sm:text-sm text-gray-500">
+              <SharkText>Technologies</SharkText>
+            </div>
           </div>
           <div class="w-px h-10 bg-gray-200" />
           <div class="text-center lg:text-left">
-            <div
-              ref="statYears"
-              class="text-2xl sm:text-3xl font-bold text-gray-900"
-            >
-              0
+            <div class="text-2xl sm:text-3xl font-bold text-gray-900">
+              <SharkText>{{ stats.years }}</SharkText>
             </div>
-            <div class="text-xs sm:text-sm text-gray-500">Années</div>
+            <div class="text-xs sm:text-sm text-gray-500">
+              <SharkText>Années</SharkText>
+            </div>
           </div>
         </div>
       </div>
@@ -160,7 +161,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { gsap } from "gsap";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -169,7 +170,8 @@ import {
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-import ParticleCanvas from "../components/ParticleCanvas.vue";
+import SharkCanvas from "../components/SharkCanvas.vue";
+import SharkText from "../components/SharkText.vue";
 import erwanImage from "../assets/erwan.webp";
 import ipadMockup from "../assets/ipad-mockup.webp";
 
@@ -184,29 +186,20 @@ const statsEl = ref(null);
 const mockupBlock = ref(null);
 const scrollIndicator = ref(null);
 
-const statProjects = ref(null);
-const statTech = ref(null);
-const statYears = ref(null);
+const stats = reactive({ projects: 0, tech: 0, years: 0 });
 
 const animateStats = () => {
-  const targets = [
-    { el: statProjects.value, value: 5 },
-    { el: statTech.value, value: 12 },
-    { el: statYears.value, value: 3 },
-  ];
-
-  targets.forEach(({ el, value }) => {
-    if (!el) return;
-    gsap.fromTo(
-      el,
-      { innerText: 0 },
-      {
-        innerText: value,
-        duration: 1.5,
-        ease: "power2.out",
-        snap: { innerText: 1 },
-      }
-    );
+  const targets = { projects: 5, tech: 12, years: 3 };
+  Object.entries(targets).forEach(([key, value]) => {
+    const counter = { v: 0 };
+    gsap.to(counter, {
+      v: value,
+      duration: 1.5,
+      ease: "power2.out",
+      onUpdate: () => {
+        stats[key] = Math.round(counter.v);
+      },
+    });
   });
 };
 
