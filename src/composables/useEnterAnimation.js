@@ -1,7 +1,11 @@
 import { onMounted, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function useEnterAnimation(elRef, animateFn) {
-  let observer = null
+  let trigger = null
 
   onMounted(() => {
     const target = elRef.value?.closest('.section') || elRef.value
@@ -10,20 +14,17 @@ export function useEnterAnimation(elRef, animateFn) {
       return
     }
 
-    // fire once the section enters the viewport — works for scroll, fast scroll,
-    // anchor jumps, and reloads landing mid-page
-    observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          animateFn()
-          observer.disconnect()
-          observer = null
-        }
-      },
-      { threshold: 0, rootMargin: '0px 0px -15% 0px' }
-    )
-    observer.observe(target)
+    // ScrollTrigger rather than IntersectionObserver: positions are recomputed
+    // once images and pinned sections (SharkPortal, Creations) are laid out, so
+    // the entrance doesn't fire on load while a section is briefly in view.
+    // Still fires on fast scroll, anchor jumps and reloads landing mid-page.
+    trigger = ScrollTrigger.create({
+      trigger: target,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => animateFn(),
+    })
   })
 
-  onUnmounted(() => observer?.disconnect())
+  onUnmounted(() => trigger?.kill())
 }

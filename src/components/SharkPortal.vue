@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, provide, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Education from "@/views/Education.vue";
@@ -24,6 +24,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 const portalSection = ref(null);
 const innerWorld = ref(null);
+
+// lets Education start its entrance animation once the zoom is readable
+const portalOpen = ref(false);
+provide("portalOpen", portalOpen);
 
 let trigger = null;
 
@@ -40,6 +44,9 @@ onMounted(() => {
       pin: true,
       scrub: true,
       anticipatePin: 1,
+      onUpdate: (self) => {
+        if (!portalOpen.value && self.progress > 0.75) portalOpen.value = true;
+      },
       onLeaveBack: () => {
         gsap.set(inner, { scale: 0.05, opacity: 0 });
       },
