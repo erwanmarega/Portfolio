@@ -1,6 +1,5 @@
 import { onMounted, onUnmounted } from "vue";
 
-// Overlay elements whose clip-path is cut to the solid shark cells.
 const targets = new Set();
 const lastClip = new WeakMap();
 const rects = [];
@@ -53,7 +52,6 @@ function buildClip(rect, canvasRect, cell, cols, rows, isSolid) {
 
 export function applySharkMask({ canvasRect, cell, cols, rows, isSolid }) {
   if (!targets.size) return;
-  // Read every rect first, then write every style, to avoid layout thrashing.
   rects.length = 0;
   for (const el of targets) rects.push(el.getBoundingClientRect());
   let i = 0;

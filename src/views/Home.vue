@@ -5,7 +5,6 @@
   >
     <SharkCanvas />
 
-    <!-- Navbar -->
     <nav
       ref="navEl"
       class="w-full flex items-center justify-between px-6 sm:px-8 lg:px-12 py-5 relative z-20"
@@ -50,7 +49,6 @@
       </div>
     </nav>
 
-    <!-- Hero -->
     <section
       class="flex flex-col lg:flex-row items-center justify-between px-6 sm:px-8 lg:px-12 py-12 sm:py-16 lg:py-24 flex-1 relative z-10 max-w-7xl mx-auto w-full"
     >
@@ -145,7 +143,6 @@
       </div>
     </section>
 
-    <!-- Scroll indicator -->
     <div
       ref="scrollIndicator"
       class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-gray-400"
