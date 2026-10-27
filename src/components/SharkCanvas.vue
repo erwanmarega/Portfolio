@@ -290,13 +290,13 @@ function rasterize(s) {
 }
 
 function resize() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // Rendered at DPR 1 and scaled by CSS: the ASCII grid tolerates it.
   const rect = canvas.getBoundingClientRect();
   W = rect.width;
   H = rect.height;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  canvas.width = W;
+  canvas.height = H;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
 
   cols = Math.ceil(W / CELL);
   rows = Math.ceil(H / CELL);
@@ -306,20 +306,74 @@ function resize() {
 }
 
 function populate() {
-  const count = 3;
+  const count = W < 640 ? 2 : 3;
   sharks.length = 0;
   for (let i = 0; i < count; i++) sharks.push(createShark(i, count));
   sharks.forEach(buildSpine);
 }
 
+// Glyph atlas: each (color, glyph) is rendered once, opacity is applied with globalAlpha.
+const GLYPH_COLORS = {
+  light: { rgb: [255, 240, 248], chars: RAMP },
+  fin: { rgb: COLORS.fin, chars: RAMP },
+  eye: { rgb: COLORS.eye, chars: [')'] },
+  finGlyph: { rgb: [255, 228, 240], chars: ['#', '%'] },
+  white: { rgb: [255, 255, 255], chars: ['o'] },
+  back: { rgb: COLORS.back, chars: ['.', "'"] },
+  dash: { rgb: [30, 40, 55], chars: ['-'] },
+};
+const GLYPH_PAD = 1;
+const atlas = {};
+
+function buildAtlas() {
+  const size = CELL + GLYPH_PAD * 2;
+  for (const [name, { rgb, chars }] of Object.entries(GLYPH_COLORS)) {
+    atlas[name] = {};
+    for (const ch of chars) {
+      const g = document.createElement('canvas');
+      g.width = g.height = size;
+      const gc = g.getContext('2d');
+      gc.font = `${Math.round(CELL * 0.78)}px ${FONT}`;
+      gc.textAlign = 'center';
+      gc.textBaseline = 'middle';
+      gc.fillStyle = rgba(rgb, 1);
+      gc.fillText(ch, size / 2, size / 2);
+      atlas[name][ch] = g;
+    }
+  }
+}
+
+// Body fill colors, quantized on the tone (32 levels).
+const BODY_STEPS = 32;
+const BODY_LUT = Array.from({ length: BODY_STEPS + 1 }, (_, i) => {
+  const [r, g, b] = mix(COLORS.belly, COLORS.back, Math.pow(i / BODY_STEPS, 0.8));
+  return `rgb(${r}, ${g}, ${b})`;
+});
+const FIN_FILL = rgba(COLORS.fin, 1);
+const EYE_FILL = rgba(COLORS.eye, 1);
+
+let colSin, rowSin, diagSin;
+
 function draw(t) {
+  ctx.globalAlpha = 1;
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, W, H);
 
-  ctx.font = `${Math.round(CELL * 0.78)}px ${FONT}`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
   const tick = Math.floor(t * 4);
+  let fill = '#fff';
+  const setFill = (f) => { if (f !== fill) { ctx.fillStyle = f; fill = f; } };
+  const glyph = (g, x, y, a) => {
+    ctx.globalAlpha = a;
+    ctx.drawImage(g, x - GLYPH_PAD, y - GLYPH_PAD);
+  };
+
+  // The wave term is separable: per-column, per-row and per-diagonal sines.
+  if (!colSin || colSin.length < cols) colSin = new Float32Array(cols);
+  if (!rowSin || rowSin.length < rows) rowSin = new Float32Array(rows);
+  if (!diagSin || diagSin.length < cols + rows) diagSin = new Float32Array(cols + rows);
+  for (let c = 0; c < cols; c++) colSin[c] = Math.sin(c * 0.31 + t * 0.6);
+  for (let r = 0; r < rows; r++) rowSin[r] = Math.sin(r * 0.43 - t * 0.4);
+  for (let i = 0; i < cols + rows; i++) diagSin[i] = Math.sin(i * 0.17 + t * 0.8);
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
@@ -333,40 +387,39 @@ function draw(t) {
         // Countershading: pale pink belly, hot pink back.
         const n = hash(c, r, tick);
         const v = Math.max(0, Math.min(1, value[idx] + (n - 0.5) * 0.12));
-        ctx.fillStyle = rgba(mix(COLORS.belly, COLORS.back, Math.pow(v, 0.8)), 0.35 + a * 0.6);
+        setFill(BODY_LUT[Math.round(v * BODY_STEPS)]);
+        ctx.globalAlpha = 0.35 + a * 0.6;
         ctx.fillRect(x + 1, y + 1, CELL - 1, CELL - 1);
         if (k === KIND.gill) {
-          ctx.fillStyle = rgba(COLORS.eye, 0.55 * a);
-          ctx.fillText(')', x + CELL / 2, y + CELL / 2);
+          glyph(atlas.eye[')'], x, y, 0.55 * a);
         } else {
-          ctx.fillStyle = v > 0.55 ? `rgba(255, 240, 248, ${0.35 + v * 0.3})` : rgba(COLORS.fin, 0.3 + v * 0.3);
-          ctx.fillText(RAMP[Math.min(RAMP.length - 1, Math.floor(v * RAMP.length))], x + CELL / 2, y + CELL / 2);
+          const ch = RAMP[Math.min(RAMP.length - 1, Math.floor(v * RAMP.length))];
+          if (v > 0.55) glyph(atlas.light[ch], x, y, 0.35 + v * 0.3);
+          else glyph(atlas.fin[ch], x, y, 0.3 + v * 0.3);
         }
       } else if (k === KIND.fin) {
-        ctx.fillStyle = rgba(COLORS.fin, 0.3 + a * 0.6);
+        setFill(FIN_FILL);
+        ctx.globalAlpha = 0.3 + a * 0.6;
         ctx.fillRect(x + 1, y + 1, CELL - 1, CELL - 1);
-        ctx.fillStyle = `rgba(255, 228, 240, ${0.4 * a})`;
-        ctx.fillText(hash(c, r, 5) < 0.5 ? '#' : '%', x + CELL / 2, y + CELL / 2);
+        glyph(atlas.finGlyph[hash(c, r, 5) < 0.5 ? '#' : '%'], x, y, 0.4 * a);
       } else if (k === KIND.eye) {
-        ctx.fillStyle = rgba(COLORS.eye, 0.5 + a * 0.5);
+        setFill(EYE_FILL);
+        ctx.globalAlpha = 0.5 + a * 0.5;
         ctx.fillRect(x + 1, y + 1, CELL - 1, CELL - 1);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-        ctx.fillText('o', x + CELL / 2, y + CELL / 2);
+        glyph(atlas.white.o, x, y, 0.9);
       } else if (k === KIND.halo) {
         if (hash(c, r, tick >> 1) < 0.45) {
-          ctx.fillStyle = rgba(COLORS.back, 0.3 * a);
-          ctx.fillText(hash(c, r, 3) < 0.7 ? '.' : "'", x + CELL / 2, y + CELL / 2);
+          glyph(atlas.back[hash(c, r, 3) < 0.7 ? '.' : "'"], x, y, 0.3 * a);
         }
       } else {
-        const w = Math.sin(c * 0.31 + t * 0.6) * Math.sin(r * 0.43 - t * 0.4)
-                + Math.sin((c + r) * 0.17 + t * 0.8);
+        const w = colSin[c] * rowSin[r] + diagSin[c + r];
         if (w > 1.55 && hash(c, r, 11) < 0.35) {
-          ctx.fillStyle = `rgba(30, 40, 55, ${(w - 1.55) * 0.6})`;
-          ctx.fillText('-', x + CELL / 2, y + CELL / 2);
+          glyph(atlas.dash['-'], x, y, (w - 1.55) * 0.6);
         }
       }
     }
   }
+  ctx.globalAlpha = 1;
 }
 
 // Cells drawn as filled squares (everything except empty and halo).
@@ -375,9 +428,20 @@ function isSolid(idx) {
   return k !== KIND.empty && k !== KIND.halo;
 }
 
+// Frame cap: ~30 fps (~15 fps with reduced motion); dt stays based on real elapsed time.
+const FRAME_MS = 1000 / (reducedMotion ? 15 : 30);
+const MAX_DT = reducedMotion ? 0.1 : 0.05;
 let last = performance.now();
+let inView = true;
+let pageVisible = true;
+let observer = null;
+
 function loop(now) {
-  const dt = Math.min((now - last) / 1000, 0.05);
+  rafId = requestAnimationFrame(loop);
+  const elapsed = now - last;
+  // Small tolerance so refresh-rate jitter does not skip an extra frame.
+  if (elapsed < FRAME_MS - 4) return;
+  const dt = Math.min(elapsed / 1000, MAX_DT);
   last = now;
   value.fill(0);
   kind.fill(0);
@@ -385,7 +449,23 @@ function loop(now) {
   for (const s of [...sharks].sort((a, b) => a.depth - b.depth)) rasterize(s);
   draw(now / 1000);
   applySharkMask({ canvasRect: canvas.getBoundingClientRect(), cell: CELL, cols, rows, isSolid });
+}
+
+function start() {
+  if (rafId !== null || !inView || !pageVisible) return;
+  last = performance.now();
   rafId = requestAnimationFrame(loop);
+}
+
+function stop() {
+  if (rafId === null) return;
+  cancelAnimationFrame(rafId);
+  rafId = null;
+}
+
+function onVisibility() {
+  pageVisible = !document.hidden;
+  if (pageVisible) start(); else stop();
 }
 
 function onResize() {
@@ -407,10 +487,16 @@ function onPointerLeave() {
 onMounted(() => {
   canvas = canvasEl.value;
   ctx = canvas.getContext("2d");
+  buildAtlas();
   resize();
   populate();
-  last = performance.now();
-  rafId = requestAnimationFrame(loop);
+
+  observer = new IntersectionObserver(([entry]) => {
+    inView = entry.isIntersecting;
+    if (inView) start(); else stop();
+  });
+  observer.observe(canvas);
+  document.addEventListener("visibilitychange", onVisibility);
 
   window.addEventListener("resize", onResize);
   window.addEventListener("pointermove", onPointerMove);
@@ -418,7 +504,10 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  cancelAnimationFrame(rafId);
+  stop();
+  observer?.disconnect();
+  observer = null;
+  document.removeEventListener("visibilitychange", onVisibility);
   clearSharkMask();
   window.removeEventListener("resize", onResize);
   window.removeEventListener("pointermove", onPointerMove);
