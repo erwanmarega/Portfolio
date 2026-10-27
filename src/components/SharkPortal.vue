@@ -8,7 +8,7 @@
       class="absolute left-1/2 top-1/2 z-20 h-screen w-screen -translate-x-1/2 -translate-y-1/2 overflow-y-auto bg-white opacity-0"
       style="transform: translate(-50%, -50%) scale(0.05)"
     >
-      <Education />
+      <Journey />
     </div>
   </section>
 </template>
@@ -17,7 +17,7 @@
 import { ref, provide, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Education from "@/views/Education.vue";
+import Journey from "@/views/Journey.vue";
 import { chase } from "@/lib/sharkChase";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,7 +25,7 @@ gsap.registerPlugin(ScrollTrigger);
 const portalSection = ref(null);
 const innerWorld = ref(null);
 
-// lets Education start its entrance animation once the zoom is readable
+// lets Journey start its entrance animation once the zoom is readable
 const portalOpen = ref(false);
 provide("portalOpen", portalOpen);
 

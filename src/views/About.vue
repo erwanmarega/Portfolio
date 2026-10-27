@@ -39,12 +39,12 @@
       >
         <div class="flex flex-col gap-4 sm:gap-5">
           <a
-            href="#créations"
+            href="#projects"
             class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] h-64 lg:h-[360px]"
           >
           </a>
           <a
-            href="#créations"
+            href="#projects"
             class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] flex-1"
           >
             <img
@@ -59,7 +59,7 @@
 
         <div class="flex flex-col gap-4 sm:gap-5">
           <a
-            href="#créations"
+            href="#projects"
             class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] h-64 lg:h-[360px]"
           >
             <img
@@ -72,7 +72,7 @@
           </a>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 flex-1">
             <a
-              href="#créations"
+              href="#projects"
               class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] min-h-[200px]"
             >
               <img
@@ -121,7 +121,7 @@
         </div>
 
         <a
-          href="#créations"
+          href="#projects"
           class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] h-64 lg:h-auto"
         >
           <img
@@ -146,12 +146,12 @@ import {
   faArrowUpRightFromSquare,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
-import ImgErwan from "../assets/img-erwan.webp";
-import ImgBoat from "../assets/about-boat.webp";
-import ImgCity from "../assets/about-city.webp";
-import ImgBeach from "../assets/about-beach.webp";
-import ImgRome from "../assets/about-rome.webp";
-import CV_Marega from "../assets/CV_Marega.pdf";
+import ImgErwan from "../assets/images/profile.webp";
+import ImgBoat from "../assets/images/about/boat.webp";
+import ImgCity from "../assets/images/about/city.webp";
+import ImgBeach from "../assets/images/about/beach.webp";
+import ImgRome from "../assets/images/about/rome.webp";
+import CV_Marega from "../assets/docs/cv-erwan-marega.pdf";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 
 library.add(faFileArrowDown, faArrowUpRightFromSquare, faBookmark);

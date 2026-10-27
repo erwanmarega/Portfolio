@@ -1,7 +1,7 @@
 <template>
   <section
     ref="el"
-    aria-labelledby="parcours-title"
+    aria-labelledby="journey-title"
     class="no-scrollbar min-h-screen bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-8 gap-5 sm:gap-6"
   >
     <header
@@ -9,7 +9,7 @@
       class="relative flex items-end justify-between gap-4 pb-5"
     >
       <span
-        class="edu-rule absolute left-0 right-0 bottom-0 h-px bg-gray-200 origin-left"
+        class="journey-rule absolute left-0 right-0 bottom-0 h-px bg-gray-200 origin-left"
         aria-hidden="true"
       />
       <div>
@@ -17,7 +17,7 @@
           // expérience & formation
         </p>
         <h1
-          id="parcours-title"
+          id="journey-title"
           class="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none"
         >
           Parcours
@@ -29,7 +29,7 @@
     </header>
 
     <div class="flex flex-col gap-4 sm:gap-5">
-      <div v-for="group in groups" :key="group.label" class="edu-group">
+      <div v-for="group in groups" :key="group.label" class="journey-group">
         <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-1">
           {{ group.label }}
         </h2>
@@ -38,7 +38,7 @@
           <li
             v-for="item in group.items"
             :key="item.title"
-            class="edu-row group flex flex-col sm:flex-row gap-1 sm:gap-8 py-3 border-b border-gray-100 last:border-b-0"
+            class="journey-row group flex flex-col sm:flex-row gap-1 sm:gap-8 py-3 border-b border-gray-100 last:border-b-0"
           >
             <span
               class="font-mono text-sm text-gray-400 sm:w-28 shrink-0 sm:pt-0.5 transition-colors duration-300 group-hover:text-indigo-500"
@@ -76,7 +76,7 @@
                 <li
                   v-for="tag in item.tags"
                   :key="tag"
-                  class="edu-tag text-[11px] font-medium text-gray-500 border border-gray-200 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-gray-300 group-hover:text-gray-700"
+                  class="journey-tag text-[11px] font-medium text-gray-500 border border-gray-200 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-gray-300 group-hover:text-gray-700"
                 >
                   {{ tag }}
                 </li>
@@ -157,13 +157,13 @@ const buildTimeline = (paused = false) => {
     { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
   )
     .fromTo(
-      headerEl.value.querySelector(".edu-rule"),
+      headerEl.value.querySelector(".journey-rule"),
       { scaleX: 0 },
       { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
       0
     )
     .fromTo(
-      el.value.querySelectorAll(".edu-group > h2, .edu-row"),
+      el.value.querySelectorAll(".journey-group > h2, .journey-row"),
       { opacity: 0, x: -12 },
       {
         opacity: 1,
@@ -175,7 +175,7 @@ const buildTimeline = (paused = false) => {
       "-=0.4"
     )
     .fromTo(
-      el.value.querySelectorAll(".edu-tag"),
+      el.value.querySelectorAll(".journey-tag"),
       { opacity: 0, scale: 0.9 },
       {
         opacity: 1,

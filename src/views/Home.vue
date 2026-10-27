@@ -78,7 +78,7 @@
           class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-10"
         >
           <a
-            href="#creations"
+            href="#projects"
             class="inline-flex items-center gap-2 bg-gray-900 text-white text-base font-semibold rounded-full px-7 py-3.5 transition-all hover:bg-black hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-0.5"
           >
             <font-awesome-icon :icon="['fas', 'rocket']" class="w-4 h-4" />
@@ -169,8 +169,8 @@ import {
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import SharkCanvas from "../components/SharkCanvas.vue";
 import SharkText from "../components/SharkText.vue";
-import erwanImage from "../assets/erwan.webp";
-import ipadMockup from "../assets/ipad-mockup.webp";
+import erwanImage from "../assets/images/logo.webp";
+import ipadMockup from "../assets/images/ipad-mockup.webp";
 
 library.add(faPaperPlane, faEnvelope, faRocket, faGithub, faLinkedinIn);
 

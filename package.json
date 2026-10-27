@@ -34,7 +34,6 @@
     "typewriter-effect": "^2.21.0",
     "vanilla-tilt": "^1.8.1",
     "vue": "^3.4.29",
-    "vue-router": "^4.4.5",
     "vueperslides": "^3.5.1"
   },
   "devDependencies": {

@@ -21,10 +21,10 @@
         :key="index"
         :href="item.link"
         target="_blank"
-        class="veille-row group relative flex items-center gap-4 sm:gap-8 py-5 px-3 sm:px-6 no-underline border-b border-gray-200 overflow-hidden"
+        class="watch-row group relative flex items-center gap-4 sm:gap-8 py-5 px-3 sm:px-6 no-underline border-b border-gray-200 overflow-hidden"
         :style="{ '--accent': item.accent }"
       >
-        <span class="veille-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span class="watch-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         <span class="relative z-10 font-mono text-sm w-8 shrink-0 text-gray-300 group-hover:text-[color:var(--accent)] transition-colors duration-300">
           {{ String(index + 1).padStart(2, "0") }}
@@ -116,7 +116,7 @@ useEnterAnimation(el, () => {
   gsap.set(headerEl.value, { opacity: 0, y: -30 });
   tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 });
 
-  const rows = el.value.querySelectorAll(".veille-row");
+  const rows = el.value.querySelectorAll(".watch-row");
   gsap.set(rows, { opacity: 0, x: -40 });
   tl.to(rows, { opacity: 1, x: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
 });
@@ -130,7 +130,7 @@ useEnterAnimation(el, () => {
 .animate-fade-in { animation: fade-in 0.7s ease-out forwards; }
 .animate-fade-in-delay { opacity: 0; animation: fade-in 0.7s ease-out 0.15s forwards; }
 
-.veille-fill {
+.watch-fill {
   background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 75%);
 }
 </style>

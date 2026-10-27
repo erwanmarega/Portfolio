@@ -53,15 +53,15 @@
       <div ref="horizontalTrack" class="horizontal-track flex h-screen">
         <!-- Slide projet : image pleine page + overlay sombre + infos -->
         <article
-          v-for="(creation, index) in creations"
-          :key="creation.id"
+          v-for="(project, index) in projects"
+          :key="project.id"
           class="project-slide relative flex-shrink-0 w-screen h-screen"
-          :style="{ '--accent': creation.accent }"
+          :style="{ '--accent': project.accent }"
         >
           <!-- Image de fond -->
           <img
-            :src="creation.image"
-            :alt="creation.title"
+            :src="project.image"
+            :alt="project.title"
             class="absolute inset-0 w-full h-full object-cover"
           />
 
@@ -72,7 +72,7 @@
           <div
             class="absolute inset-0"
             :style="{
-              background: `linear-gradient(to top, ${creation.accent}30 0%, transparent 60%)`,
+              background: `linear-gradient(to top, ${project.accent}30 0%, transparent 60%)`,
             }"
           />
 
@@ -84,31 +84,31 @@
               <div class="flex items-center gap-4 mb-5">
                 <span
                   class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
-                  :style="{ backgroundColor: creation.accent }"
+                  :style="{ backgroundColor: project.accent }"
                 >
-                  {{ creation.category }}
+                  {{ project.category }}
                 </span>
                 <span class="font-mono text-sm text-white/60">
                   {{ String(index + 1).padStart(2, "0") }} /
-                  {{ String(creations.length).padStart(2, "0") }}
+                  {{ String(projects.length).padStart(2, "0") }}
                 </span>
               </div>
 
               <h2
                 class="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-5 leading-tight"
               >
-                {{ creation.title }}
+                {{ project.title }}
               </h2>
 
               <p
                 class="text-lg lg:text-xl text-white/80 leading-relaxed mb-8 max-w-2xl"
               >
-                {{ creation.description }}
+                {{ project.description }}
               </p>
 
               <div class="flex flex-wrap gap-2 mb-10">
                 <span
-                  v-for="tag in creation.tags"
+                  v-for="tag in project.tags"
                   :key="tag"
                   class="px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm"
                   :style="{
@@ -122,11 +122,11 @@
               </div>
 
               <a
-                :href="creation.link"
+                :href="project.link"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium transition-all hover:scale-105 hover:shadow-lg"
-                :style="{ backgroundColor: creation.accent }"
+                :style="{ backgroundColor: project.accent }"
               >
                 Voir le projet
                 <font-awesome-icon
@@ -142,7 +142,7 @@
       <!-- Indicateur de progression -->
       <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         <button
-          v-for="(_, index) in creations"
+          v-for="(_, index) in projects"
           :key="index"
           type="button"
           class="progress-dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"
@@ -211,18 +211,18 @@
           class="project-grid grid grid-cols-1 sm:grid-cols-2 gap-6"
         >
           <a
-            v-for="(creation, index) in creations"
-            :key="creation.id"
-            :href="creation.link"
+            v-for="(project, index) in projects"
+            :key="project.id"
+            :href="project.link"
             target="_blank"
             rel="noopener noreferrer"
             class="proj-card group relative flex flex-col bg-white rounded-3xl border border-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] overflow-hidden"
-            :style="{ '--accent': creation.accent }"
+            :style="{ '--accent': project.accent }"
           >
             <div class="relative h-52 overflow-hidden">
               <img
-                :src="creation.image"
-                :alt="creation.title"
+                :src="project.image"
+                :alt="project.title"
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
               <div
@@ -248,30 +248,30 @@
                 <span
                   class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-white bg-white/20 backdrop-blur-sm border border-white/20 mb-2"
                 >
-                  {{ creation.category }}
+                  {{ project.category }}
                 </span>
                 <h2
                   class="text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-sm"
                 >
-                  {{ creation.title }}
+                  {{ project.title }}
                 </h2>
               </div>
             </div>
 
             <div class="flex flex-col flex-1 p-5 gap-3">
               <p class="text-sm text-gray-600 leading-relaxed line-clamp-3">
-                {{ creation.description }}
+                {{ project.description }}
               </p>
 
               <div class="flex flex-wrap gap-1.5 mt-auto pt-2">
                 <span
-                  v-for="tag in creation.tags"
+                  v-for="tag in project.tags"
                   :key="tag"
                   class="px-2.5 py-1 rounded-full text-[11px] font-medium border"
                   :style="{
-                    color: creation.accent,
-                    borderColor: `${creation.accent}40`,
-                    backgroundColor: `${creation.accent}10`,
+                    color: project.accent,
+                    borderColor: `${project.accent}40`,
+                    backgroundColor: `${project.accent}10`,
                   }"
                 >
                   {{ tag }}
@@ -281,7 +281,7 @@
 
             <div
               class="h-1 w-0 group-hover:w-full transition-all duration-500 ease-out"
-              :style="{ background: creation.accent }"
+              :style="{ background: project.accent }"
             />
           </a>
         </div>
@@ -297,11 +297,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import spotifyImage from "../assets/spotify.png";
-import adiImage from "../assets/adi-image.webp";
-import Hovly from "../assets/hovly.png";
-import GitAgent from "../assets/git-agent.webp";
-import Postulo from "../assets/postulo.webp";
+import spotifyImage from "../assets/images/projects/spotify.webp";
+import adiImage from "../assets/images/projects/adi.webp";
+import Hovly from "../assets/images/projects/hovly.webp";
+import GitAgent from "../assets/images/projects/git-agent.webp";
+import Postulo from "../assets/images/projects/postulo.webp";
 import AsciiPortal from "../components/AsciiPortal.vue";
 
 library.add(faArrowUpRightFromSquare);
@@ -322,7 +322,7 @@ const statTech = ref(null);
 const statYears = ref(null);
 const activeSlide = ref(0);
 
-const creations = ref([
+const projects = ref([
   {
     id: 0,
     title: "Calendrier Spotify",
@@ -381,13 +381,13 @@ const creations = ref([
 
 const uniqueTechnologies = computed(() => {
   const techs = new Set();
-  creations.value.forEach((c) => c.tags.forEach((t) => techs.add(t)));
+  projects.value.forEach((c) => c.tags.forEach((t) => techs.add(t)));
   return techs.size;
 });
 
 const animateStats = () => {
   const targets = [
-    { el: statProjects.value, value: creations.value.length },
+    { el: statProjects.value, value: projects.value.length },
     { el: statTech.value, value: uniqueTechnologies.value },
     { el: statYears.value, value: 3 },
   ];

@@ -80,24 +80,24 @@ import { ref } from "vue";
 import gsap from "gsap";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 
-import vueIcon from "@/assets/front-end/vue.svg";
-import reactIcon from "@/assets/front-end/react.svg";
-import tailwindIcon from "@/assets/front-end/tailwindcss.svg";
-import tsIcon from "@/assets/front-end/typescript.svg";
-import dockerIcon from "@/assets/back-end/docker.svg";
-import mysqlIcon from "@/assets/back-end/mysql.svg";
-import nodeIcon from "@/assets/back-end/nodejs.svg";
-import symfonyIcon from "@/assets/back-end/symfony.png";
-import gitIcon from "@/assets/gestion-de-projet/git.svg";
-import githubIcon from "@/assets/gestion-de-projet/github-light.svg";
-import gitlabIcon from "@/assets/gestion-de-projet/gitlab.svg";
-import supabaseIcon from "@/assets/back-end/supabase.svg";
-import railwayIcon from "@/assets/back-end/railway.svg";
-import powerbiIcon from "@/assets/data/powerbi.svg";
-import excelIcon from "@/assets/data/excel.svg";
-import claudeIcon from "@/assets/ia/claude.svg";
-import openaiIcon from "@/assets/ia/openai.svg";
-import cursorIcon from "@/assets/ia/cursor.svg";
+import vueIcon from "@/assets/icons/frontend/vue.svg";
+import reactIcon from "@/assets/icons/frontend/react.svg";
+import tailwindIcon from "@/assets/icons/frontend/tailwind.svg";
+import tsIcon from "@/assets/icons/frontend/typescript.svg";
+import dockerIcon from "@/assets/icons/backend/docker.svg";
+import mysqlIcon from "@/assets/icons/backend/mysql.svg";
+import nodeIcon from "@/assets/icons/backend/nodejs.svg";
+import symfonyIcon from "@/assets/icons/backend/symfony.png";
+import gitIcon from "@/assets/icons/tools/git.svg";
+import githubIcon from "@/assets/icons/tools/github.svg";
+import gitlabIcon from "@/assets/icons/tools/gitlab.svg";
+import supabaseIcon from "@/assets/icons/backend/supabase.svg";
+import railwayIcon from "@/assets/icons/tools/railway.svg";
+import powerbiIcon from "@/assets/icons/data/powerbi.svg";
+import excelIcon from "@/assets/icons/data/excel.svg";
+import claudeIcon from "@/assets/icons/ai/claude.svg";
+import codexIcon from "@/assets/icons/ai/codex.svg";
+import cursorIcon from "@/assets/icons/ai/cursor.svg";
 
 const el = ref(null);
 const headerEl = ref(null);
@@ -141,7 +141,7 @@ const competences = [
     subtitle: "Développement assisté",
     technologies: [
       { name: "Claude", icon: claudeIcon },
-      { name: "Codex", icon: openaiIcon },
+      { name: "Codex", icon: codexIcon },
       { name: "Cursor", icon: cursorIcon },
     ],
     details: ["Agents", "Prompt engineering", "Code review IA"],
