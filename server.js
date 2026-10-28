@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 
 // Charge les variables d'environnement AVANT toute autre initialisation.
 dotenv.config();
@@ -68,6 +68,9 @@ transporter.verify((err) => {
 const app = express();
 
 app.disable("x-powered-by");
+// Render sits one reverse-proxy hop in front of the app: without this, req.ip
+// is the proxy's address and every visitor shares the same rate-limit bucket.
+app.set("trust proxy", 1);
 app.use(helmet());
 
 app.use(
@@ -104,7 +107,12 @@ const emailLimiter = rateLimit({
   max: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  keyGenerator: (req) => req.ip || req.socket.remoteAddress || "global",
+  // ipKeyGenerator groups IPv6 addresses by subnet so one client can't rotate
+  // through its /64 to bypass the limit
+  keyGenerator: (req) => {
+    const ip = req.ip || req.socket.remoteAddress;
+    return ip ? ipKeyGenerator(ip) : "global";
+  },
   handler: (_req, res) => {
     res.status(429).json({ error: "Trop de requêtes. Réessayez dans 15 minutes." });
   },
