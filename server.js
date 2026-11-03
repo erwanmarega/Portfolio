@@ -5,17 +5,11 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 
-// Charge les variables d'environnement AVANT toute autre initialisation.
 dotenv.config();
 
 const PORT = process.env.PORT || 10000;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
-// ---------------------------------------------------------------------------
-// Configuration SMTP
-// ---------------------------------------------------------------------------
-
-// Rétrocompatibilité : préfère GMAIL_* mais accepte les anciens USER/PASS.
 const GMAIL_USER = process.env.GMAIL_USER || process.env.USER;
 const GMAIL_PASS = process.env.GMAIL_PASS || process.env.PASS;
 
@@ -23,10 +17,6 @@ if (!GMAIL_USER || !GMAIL_PASS) {
   console.error("Erreur: GMAIL_USER / GMAIL_PASS manquants dans l'environnement.");
   process.exit(1);
 }
-
-// ---------------------------------------------------------------------------
-// Origines autorisées
-// ---------------------------------------------------------------------------
 
 const allowedOrigins = [
   "https://www.ewmdev.com",
@@ -37,10 +27,6 @@ const allowedOrigins = [
 if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
-
-// ---------------------------------------------------------------------------
-// Transporter Nodemailer
-// ---------------------------------------------------------------------------
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -61,15 +47,9 @@ transporter.verify((err) => {
   }
 });
 
-// ---------------------------------------------------------------------------
-// Express & middlewares
-// ---------------------------------------------------------------------------
-
 const app = express();
 
 app.disable("x-powered-by");
-// Render sits one reverse-proxy hop in front of the app: without this, req.ip
-// is the proxy's address and every visitor shares the same rate-limit bucket.
 app.set("trust proxy", 1);
 app.use(helmet());
 
@@ -90,25 +70,17 @@ app.use(
 
 app.use(express.json({ limit: "10kb" }));
 
-// Simple logging des requêtes entrantes.
 app.use((req, _res, next) => {
   const ip = req.ip || req.socket.remoteAddress || "inconnu";
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path} — IP: ${ip}`);
   next();
 });
 
-// ---------------------------------------------------------------------------
-// Rate limiting
-// ---------------------------------------------------------------------------
-
-// Limiter global par IP : 5 emails / 15 min.
 const emailLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
   standardHeaders: true,
   legacyHeaders: false,
-  // ipKeyGenerator groups IPv6 addresses by subnet so one client can't rotate
-  // through its /64 to bypass the limit
   keyGenerator: (req) => {
     const ip = req.ip || req.socket.remoteAddress;
     return ip ? ipKeyGenerator(ip) : "global";
@@ -118,7 +90,6 @@ const emailLimiter = rateLimit({
   },
 });
 
-// Stockage en mémoire pour le rate limiting par email (10 emails / heure).
 const emailSendTracker = new Map();
 const EMAIL_RATE_WINDOW_MS = 60 * 60 * 1000;
 const EMAIL_RATE_MAX = 10;
@@ -145,17 +116,12 @@ const checkEmailRateLimit = (email) => {
   return { allowed: true };
 };
 
-// ---------------------------------------------------------------------------
-// Validation & sanitization
-// ---------------------------------------------------------------------------
-
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Supprime les caractères dangereux pour les headers et tronque proprement.
 const sanitizeString = (value, maxLength) => {
   let cleaned = String(value ?? "")
-    .replace(/[\r\n]/g, " ") // empêche l'injection de headers
-    .replace(/[<>]/g, "") // retire < > pour éviter le HTML brut
+    .replace(/[\r\n]/g, " ")
+    .replace(/[<>]/g, "")
     .trim();
   return cleaned.slice(0, maxLength);
 };
@@ -180,10 +146,6 @@ const validateContactPayload = (body) => {
 
   return { nom, prenom, email, message, errors };
 };
-
-// ---------------------------------------------------------------------------
-// Templates d'emails
-// ---------------------------------------------------------------------------
 
 const escapeHtml = (text) =>
   text
@@ -276,10 +238,6 @@ const senderConfirmationTemplate = ({ prenom }) => `
 </html>
 `;
 
-// ---------------------------------------------------------------------------
-// Routes
-// ---------------------------------------------------------------------------
-
 app.get("/", (_req, res) => {
   res.json({ status: "ok", env: NODE_ENV, timestamp: new Date().toISOString() });
 });
@@ -306,7 +264,6 @@ app.post("/send-email", emailLimiter, async (req, res) => {
   }
 
   try {
-    // Email reçu par le propriétaire du portfolio.
     const ownerMail = await transporter.sendMail({
       from: `"Portfolio Erwan Marega" <${GMAIL_USER}>`,
       to: GMAIL_USER,
@@ -316,7 +273,6 @@ app.post("/send-email", emailLimiter, async (req, res) => {
       html: ownerEmailTemplate({ prenom, nom, email, message, ip, userAgent }),
     });
 
-    // Accusé de réception à l'expéditeur.
     await transporter.sendMail({
       from: `"Erwan Marega" <${GMAIL_USER}>`,
       to: email,
@@ -330,7 +286,6 @@ app.post("/send-email", emailLimiter, async (req, res) => {
   } catch (error) {
     console.error("Erreur lors de l'envoi de l'email:", error);
 
-    // En cas d'erreur SMTP, on réinitialise le compteur pour permettre un nouvel essai.
     const record = emailSendTracker.get(email);
     if (record) {
       record.count = Math.max(0, record.count - 1);
@@ -341,10 +296,6 @@ app.post("/send-email", emailLimiter, async (req, res) => {
   }
 });
 
-// ---------------------------------------------------------------------------
-// Gestion des erreurs
-// ---------------------------------------------------------------------------
-
 app.use((err, _req, res, _next) => {
   if (err.message === "Origine non autorisée par CORS") {
     console.error(err.message);
@@ -353,10 +304,6 @@ app.use((err, _req, res, _next) => {
   console.error(err);
   res.status(500).json({ error: "Erreur serveur." });
 });
-
-// ---------------------------------------------------------------------------
-// Démarrage
-// ---------------------------------------------------------------------------
 
 const server = app.listen(PORT, () => {
   console.log(`Serveur en cours d'exécution sur le port ${PORT} (${NODE_ENV})`);

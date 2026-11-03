@@ -2,39 +2,43 @@
   <section
     ref="el"
     aria-labelledby="contact-title"
-    class="contact-section bg-white p-3 sm:p-6"
+    class="contact-section relative py-16 sm:py-24 lg:py-32"
   >
-    <div
-      class="term-window rounded-2xl bg-white border border-gray-100 overflow-hidden flex flex-col"
-      style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 24px 80px rgba(0, 0, 0, 0.1)"
-    >
+    <div ref="termEl" class="lane-grid lg:items-stretch">
       <div
-        class="h-10 shrink-0 bg-gray-50/80 border-b border-gray-100 flex items-center gap-2 px-4"
+        class="lane-left term-window rounded-2xl bg-surface-strong border border-line/15 overflow-hidden flex flex-col"
+        style="box-shadow: 0 0 0 1px rgb(var(--ink) / 0.04), 0 24px 80px rgb(0 0 0 / 0.5)"
+      >
+      <div
+        class="h-10 shrink-0 bg-surface border-b border-line/15 flex items-center gap-2 px-4"
       >
         <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
         <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
         <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
-        <span class="ml-auto font-mono text-xs text-gray-400" aria-hidden="true">
-          erwan@portfolio — contact
+        <span class="ml-auto font-mono text-xs text-ink-muted" aria-hidden="true">
+          erwan@portfolio — bienvenue
         </span>
       </div>
 
-      <div
-        ref="termEl"
-        class="flex-1 px-5 py-8 sm:px-10 sm:py-12 lg:px-16 font-mono text-[13px] sm:text-sm leading-relaxed text-gray-500"
-      >
-        <div class="max-w-3xl space-y-6">
+        <div
+          class="flex-1 flex flex-col px-5 py-8 sm:px-8 sm:py-10 font-mono text-[13px] sm:text-sm leading-relaxed text-ink-soft"
+        >
+          <div class="space-y-6">
           <div class="term-line">
             <p class="prompt">
-              <span class="text-emerald-500">erwan@portfolio</span><span class="text-gray-400">:~$ </span>
-              <span class="text-gray-800">cat bienvenue.txt</span>
+              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
+              <span class="text-ink">cat bienvenue.txt</span>
             </p>
-            <h2
+            <AsciiDecodeText
+              tag="h2"
               id="contact-title"
-              class="mt-2 text-base sm:text-lg font-bold text-gray-800"
-            >
-              Parlons de votre prochain projet.
-            </h2>
+              data-tower-anchor="contact"
+              text="Parlons de votre prochain projet."
+              :start="titleReady"
+              :delay="0.4"
+              :duration="1.5"
+              class="mt-2 text-base sm:text-lg font-bold text-ink"
+            />
             <p class="mt-1">
               Vous avez une idée, une question ou un projet en tête ? Je vous
               réponds sous 24h.
@@ -43,8 +47,8 @@
 
           <div class="term-line">
             <p class="prompt">
-              <span class="text-emerald-500">erwan@portfolio</span><span class="text-gray-400">:~$ </span>
-              <span class="text-gray-800">ls liens/</span>
+              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
+              <span class="text-ink">ls liens/</span>
             </p>
             <ul class="mt-2 space-y-1">
               <li class="link-row">
@@ -78,12 +82,43 @@
             </ul>
           </div>
 
+          </div>
+          <div class="term-line mt-auto pt-10">
+            <p class="prompt" aria-hidden="true">
+              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
+              <span class="term-cursor" />
+            </p>
+            <p class="mt-3 text-xs text-ink-muted">
+              # &copy; {{ year }} Erwan Marega — Tous droits réservés
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="lane-right term-window rounded-2xl bg-surface-strong border border-line/15 overflow-hidden flex flex-col"
+        style="box-shadow: 0 0 0 1px rgb(var(--ink) / 0.04), 0 24px 80px rgb(0 0 0 / 0.5)"
+      >
+      <div
+        class="h-10 shrink-0 bg-surface border-b border-line/15 flex items-center gap-2 px-4"
+      >
+        <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
+        <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
+        <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
+        <span class="ml-auto font-mono text-xs text-ink-muted" aria-hidden="true">
+          erwan@portfolio — contact
+        </span>
+      </div>
+
+        <div
+          class="flex-1 px-5 py-8 sm:px-8 sm:py-10 font-mono text-[13px] sm:text-sm leading-relaxed text-ink-soft"
+        >
           <form novalidate @submit.prevent="submitForm" class="term-line">
             <p class="prompt">
-              <span class="text-emerald-500">erwan@portfolio</span><span class="text-gray-400">:~$ </span>
-              <span class="text-gray-800">./contact</span>
+              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
+              <span class="text-ink">./contact</span>
             </p>
-            <p class="mt-2 mb-3 text-gray-400">
+            <p class="mt-2 mb-3 text-ink-muted">
               # Remplissez les champs puis envoyez, je vous réponds sous 24h.
             </p>
 
@@ -145,7 +180,7 @@
             </div>
 
             <button type="submit" :disabled="isLoading" class="term-submit">
-              <span class="text-emerald-500" aria-hidden="true">❯</span>
+              <span class="text-brand-text" aria-hidden="true">❯</span>
               {{ isLoading ? "envoi…" : "Envoyer" }}
               <span aria-hidden="true">⏎</span>
             </button>
@@ -155,28 +190,19 @@
               aria-live="polite"
               class="min-h-[1.5rem] pt-2 break-words"
             >
-              <p v-if="isLoading" class="text-gray-500">
+              <p v-if="isLoading" class="text-ink-soft">
                 <span class="term-spinner" aria-hidden="true">⠋</span>
                 envoi en cours…
               </p>
-              <p v-else-if="messageError" class="text-red-500">
+              <p v-else-if="messageError" class="text-red-400">
                 ✗ {{ errorMessage }}
               </p>
-              <p v-else-if="messageSent" class="text-emerald-500">
+              <p v-else-if="messageSent" class="text-emerald-400">
                 ✓ message envoyé — je vous réponds vite
               </p>
             </div>
           </form>
 
-          <div class="term-line">
-            <p class="prompt" aria-hidden="true">
-              <span class="text-emerald-500">erwan@portfolio</span><span class="text-gray-400">:~$ </span>
-              <span class="term-cursor" />
-            </p>
-            <p class="mt-3 text-xs text-gray-400">
-              # &copy; {{ year }} Erwan Marega — Tous droits réservés
-            </p>
-          </div>
         </div>
       </div>
     </div>
@@ -187,6 +213,7 @@
 import { ref, onUnmounted } from "vue";
 import gsap from "gsap";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
+import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
 const el = ref(null);
 const termEl = ref(null);
@@ -242,7 +269,10 @@ const validateClient = () => {
   return true;
 };
 
+const titleReady = ref(false);
+
 useEnterAnimation(el, () => {
+  titleReady.value = true;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !termEl.value) return;
 
@@ -329,16 +359,6 @@ onUnmounted(() => {
 });
 </script>
 <style scoped>
-.term-window {
-  min-height: calc(100vh - 1.5rem);
-  min-height: calc(100svh - 1.5rem);
-}
-@media (min-width: 640px) {
-  .term-window {
-    min-height: calc(100vh - 3rem);
-    min-height: calc(100svh - 3rem);
-  }
-}
 .prompt {
   overflow-wrap: anywhere;
 }
@@ -353,7 +373,7 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 .term-link {
-  color: #059669;
+  color: rgb(var(--brand-text));
   border-radius: 0.25rem;
   overflow-wrap: anywhere;
 }
@@ -362,7 +382,7 @@ onUnmounted(() => {
   text-decoration: underline;
 }
 .term-link:focus-visible {
-  outline: 2px solid #10b981;
+  outline: 2px solid rgb(var(--brand));
   outline-offset: 2px;
 }
 
@@ -372,7 +392,7 @@ onUnmounted(() => {
   gap: 0.125rem;
 }
 .term-label {
-  color: #6b7280;
+  color: rgb(var(--ink-muted));
   white-space: nowrap;
   padding-top: 0.5rem;
 }
@@ -386,16 +406,16 @@ onUnmounted(() => {
   border-radius: 0.5rem;
   outline: none;
   font: inherit;
-  color: #1f2937;
-  caret-color: #10b981;
+  color: rgb(var(--ink));
+  caret-color: rgb(var(--brand));
   transition: background-color 0.15s;
 }
 .term-input::placeholder {
-  color: #9ca3af;
+  color: rgb(var(--ink-muted) / 0.75);
 }
 .term-input:focus-visible {
-  background: rgba(16, 185, 129, 0.08);
-  box-shadow: inset 0 -2px 0 #10b981;
+  background: rgb(var(--brand) / 0.1);
+  box-shadow: inset 0 -2px 0 rgb(var(--brand));
 }
 @media (min-width: 640px) {
   .term-row {
@@ -413,16 +433,16 @@ onUnmounted(() => {
   padding: 0.5rem 0.75rem;
   margin: 0.75rem 0 0 -0.75rem;
   border-radius: 0.5rem;
-  color: #1f2937;
+  color: rgb(var(--ink));
   font: inherit;
   font-weight: 600;
   transition: background-color 0.15s;
 }
 .term-submit:hover:not(:disabled) {
-  background: #f3f4f6;
+  background: rgb(var(--surface));
 }
 .term-submit:focus-visible {
-  outline: 2px solid #10b981;
+  outline: 2px solid rgb(var(--brand));
   outline-offset: 2px;
 }
 .term-submit:disabled {
@@ -438,7 +458,7 @@ onUnmounted(() => {
   width: 0.55em;
   height: 1.1em;
   vertical-align: text-bottom;
-  background: #1f2937;
+  background: rgb(var(--ink));
   animation: term-cursor 1.1s steps(1) infinite;
 }
 @keyframes term-blink {

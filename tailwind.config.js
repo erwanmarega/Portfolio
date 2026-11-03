@@ -1,12 +1,18 @@
-/** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 export default {
     darkMode: ["class"],
     content: [
     "./index.html",
+    "./404.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['Geist', ...defaultTheme.fontFamily.sans],
+  			mono: ['"Geist Mono"', ...defaultTheme.fontFamily.mono]
+  		},
   		zIndex: {
   			'60': '60'
   		},
@@ -16,6 +22,22 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			page: 'rgb(var(--page) / <alpha-value>)',
+  			surface: {
+  				DEFAULT: 'rgb(var(--surface) / <alpha-value>)',
+  				strong: 'rgb(var(--surface-strong) / <alpha-value>)'
+  			},
+  			ink: {
+  				DEFAULT: 'rgb(var(--ink) / <alpha-value>)',
+  				soft: 'rgb(var(--ink-soft) / <alpha-value>)',
+  				muted: 'rgb(var(--ink-muted) / <alpha-value>)'
+  			},
+  			brand: {
+  				DEFAULT: 'rgb(var(--brand) / <alpha-value>)',
+  				text: 'rgb(var(--brand-text) / <alpha-value>)'
+  			},
+  			line: 'rgb(var(--line) / <alpha-value>)',
+  			paper: 'rgb(var(--paper) / <alpha-value>)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

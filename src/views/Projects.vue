@@ -1,338 +1,222 @@
 <template>
-  <div ref="el" class="bg-white">
-    <!-- Section Portal (intro pleine page) -->
+  <div ref="el">
     <section
-      ref="portalSection"
-      class="relative h-screen w-full overflow-hidden bg-white flex items-center justify-center"
+      aria-labelledby="projects-title"
+      class="relative py-24 lg:py-32"
     >
-      <div
-        ref="portalWrapper"
-        class="portal-wrapper relative w-screen h-screen overflow-hidden"
+      <header
+        ref="headerEl"
+        class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
       >
-        <AsciiPortal>
-          <div class="flex flex-col items-center">
-            <span
-              class="text-white/70 text-xs sm:text-sm font-mono uppercase tracking-widest mb-3"
-            >
-              Portfolio
-            </span>
-            <h2
-              class="text-white text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              Projets
-            </h2>
-          </div>
-        </AsciiPortal>
-      </div>
-
-      <div
-        class="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 text-sm font-medium flex flex-col items-center gap-2 z-20"
-      >
-        <span>Découvrir</span>
-        <svg
-          class="w-5 h-5 animate-bounce"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+        <h2
+          id="projects-title"
+          data-tower-anchor="projects"
+          class="text-3xl font-bold tracking-tight text-paper"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
-      </div>
-    </section>
+          Projets
+          <sup class="ml-2 align-super font-mono text-xs font-normal text-brand-text">
+            ({{ String(projects.length).padStart(2, "0") }})
+          </sup>
+        </h2>
+        <p class="max-w-[360px] text-sm leading-relaxed text-paper/50 sm:text-right">
+          Du SaaS aux outils pour développeurs. Clique sur un nom pour ouvrir le projet.
+        </p>
+      </header>
 
-    <!-- Section horizontale (desktop) -->
-    <section
-      ref="horizontalSection"
-      class="hidden lg:block relative bg-white overflow-hidden"
-    >
-      <div ref="horizontalTrack" class="horizontal-track flex h-screen">
-        <!-- Slide projet : image pleine page + overlay sombre + infos -->
-        <article
+      <div
+        class="mt-14 hidden grid-cols-[56px_1fr_220px_64px] border-b border-line/15 pb-4 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:grid"
+        aria-hidden="true"
+      >
+        <span>N°</span>
+        <span>Projet</span>
+        <span>Catégorie</span>
+        <span></span>
+      </div>
+
+      <ol ref="listEl" class="mt-10 border-t border-line/15 lg:mt-0 lg:border-t-0">
+        <li
           v-for="(project, index) in projects"
           :key="project.id"
-          class="project-slide relative flex-shrink-0 w-screen h-screen"
-          :style="{ '--accent': project.accent }"
+          class="project-row border-b border-line/15"
         >
-          <!-- Image de fond -->
-          <img
-            :src="project.image"
-            :alt="project.title"
-            class="absolute inset-0 w-full h-full object-cover"
-          />
-
-          <!-- Overlay sombre avec dégradé -->
           <div
-            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"
-          />
-          <div
-            class="absolute inset-0"
-            :style="{
-              background: `linear-gradient(to top, ${project.accent}30 0%, transparent 60%)`,
-            }"
-          />
-
-          <!-- Contenu du projet -->
-          <div
-            class="absolute bottom-0 left-0 w-full p-12 lg:p-16 xl:p-24 flex flex-col justify-end"
+            class="grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-x-2 py-5 lg:grid-cols-[56px_minmax(0,1fr)_220px_64px] lg:gap-x-0 lg:py-6"
           >
-            <div class="max-w-4xl">
-              <div class="flex items-center gap-4 mb-5">
-                <span
-                  class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
-                  :style="{ backgroundColor: project.accent }"
-                >
-                  {{ project.category }}
-                </span>
-                <span class="font-mono text-sm text-white/60">
-                  {{ String(index + 1).padStart(2, "0") }} /
-                  {{ String(projects.length).padStart(2, "0") }}
-                </span>
-              </div>
+            <span
+              class="font-mono text-xs transition-colors duration-300"
+              :class="openIndex === index ? 'text-brand-text' : 'text-paper/50'"
+            >
+              {{ String(index + 1).padStart(2, "0") }}
+            </span>
 
-              <h2
-                class="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-5 leading-tight"
+            <div class="min-w-0">
+              <button
+                type="button"
+                :id="`project-title-${project.id}`"
+                :aria-expanded="openIndex === index"
+                :aria-controls="`project-panel-${project.id}`"
+                class="project-title block max-w-full text-left font-sans font-extrabold leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+                :class="openIndex === index ? 'is-open' : 'is-closed'"
+                @click="openIndex = index"
               >
                 {{ project.title }}
-              </h2>
-
+              </button>
               <p
-                class="text-lg lg:text-xl text-white/80 leading-relaxed mb-8 max-w-2xl"
+                class="mt-2 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:hidden"
               >
-                {{ project.description }}
+                {{ project.category }} · {{ project.altitude }} m
               </p>
+            </div>
 
-              <div class="flex flex-wrap gap-2 mb-10">
-                <span
-                  v-for="tag in project.tags"
-                  :key="tag"
-                  class="px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm"
-                  :style="{
-                    color: 'white',
-                    borderColor: 'rgba(255,255,255,0.3)',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                  }"
-                >
-                  {{ tag }}
-                </span>
-              </div>
+            <div class="hidden font-mono text-xs uppercase lg:block">
+              <p class="tracking-widest text-paper/80">{{ project.category }}</p>
+              <p class="mt-2 normal-case text-paper/50">{{ project.altitude }} m</p>
+            </div>
 
+            <div class="flex justify-end">
               <a
                 :href="project.link"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium transition-all hover:scale-105 hover:shadow-lg"
-                :style="{ backgroundColor: project.accent }"
+                :aria-label="`Ouvrir ${project.title} (nouvel onglet)`"
+                class="flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-page focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand lg:h-[52px] lg:w-[52px]"
+                :class="
+                  openIndex === index
+                    ? 'border-ink bg-ink text-page'
+                    : 'border-line/25 text-paper'
+                "
               >
-                Voir le projet
-                <font-awesome-icon
-                  :icon="['fas', 'arrow-up-right-from-square']"
-                  class="w-4 h-4"
-                />
+                <svg viewBox="0 0 16 16" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
               </a>
             </div>
           </div>
-        </article>
-      </div>
-
-      <!-- Indicateur de progression -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        <button
-          v-for="(_, index) in projects"
-          :key="index"
-          type="button"
-          class="progress-dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"
-          :class="{ 'w-8 bg-gray-900': activeSlide === index }"
-          @click="goToSlide(index)"
-          :aria-label="`Projet ${index + 1}`"
-        />
-      </div>
-    </section>
-
-    <!-- Fallback mobile : grille verticale -->
-    <section
-      ref="contentSection"
-      class="lg:hidden relative bg-white pt-20 sm:pt-28 pb-20 px-4 sm:px-8"
-    >
-      <div class="max-w-6xl mx-auto">
-        <header ref="headerEl" class="text-center mb-12">
-          <h1
-            class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none"
-          >
-            Mes projets
-          </h1>
-          <p
-            class="mt-4 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto font-light leading-relaxed"
-          >
-            Une collection de réalisations web alliant design moderne,
-            performance et expérience utilisateur.
-          </p>
 
           <div
-            ref="statsEl"
-            class="flex flex-wrap justify-center gap-8 sm:gap-12 mt-10"
+            :id="`project-panel-${project.id}`"
+            role="region"
+            :aria-labelledby="`project-title-${project.id}`"
+            :inert="openIndex !== index"
+            class="project-panel grid lg:pl-[56px]"
+            :class="{ 'is-open': openIndex === index }"
+            @transitionend="onPanelEnd"
           >
-            <div class="text-center">
+            <div class="min-h-0 overflow-hidden">
               <div
-                ref="statProjects"
-                class="text-3xl sm:text-4xl font-bold text-gray-900"
+                class="grid gap-10 pb-12 pt-2 lg:grid-cols-[minmax(0,620px)_minmax(0,1fr)] lg:gap-16 lg:pb-14"
               >
-                0
+                <div class="relative pb-3.5 pr-3.5">
+                  <div
+                    class="absolute inset-0 left-3.5 top-3.5 rounded-xl border border-brand/60"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    class="relative overflow-hidden rounded-xl border border-line/15 bg-surface shadow-2xl shadow-black/50"
+                  >
+                    <div class="flex h-9 items-center gap-3 border-b border-line/15 bg-page px-3">
+                      <span class="flex gap-1.5">
+                        <span class="h-2.5 w-2.5 rounded-full bg-paper/20"></span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-paper/20"></span>
+                        <span class="h-2.5 w-2.5 rounded-full bg-paper/20"></span>
+                      </span>
+                      <span class="min-w-0 truncate font-mono text-[11px] text-paper/50">
+                        {{ hostname(project.link) }}
+                      </span>
+                    </div>
+                    <img
+                      :src="project.image"
+                      :alt="`Capture d'écran du projet ${project.title}`"
+                      loading="lazy"
+                      class="aspect-[16/10] w-full object-cover object-top"
+                    />
+                  </div>
+                </div>
+
+                <div class="min-w-0">
+                  <p class="max-w-[460px] text-xl leading-snug text-paper sm:text-2xl">
+                    {{ project.description }}
+                  </p>
+
+                  <dl
+                    class="mt-8 grid max-w-[460px] grid-cols-[4.5rem_1fr] items-center gap-y-3 border-t border-line/15 pt-6"
+                  >
+                    <dt class="font-mono text-[11px] uppercase tracking-widest text-paper/50">
+                      Stack
+                    </dt>
+                    <dd class="flex flex-wrap gap-2">
+                      <span
+                        v-for="tag in project.tags"
+                        :key="tag"
+                        class="rounded-full border border-line/20 px-3 py-1 font-mono text-xs text-paper/80"
+                      >
+                        {{ tag }}
+                      </span>
+                    </dd>
+                    <dt class="font-mono text-[11px] uppercase tracking-widest text-paper/50">
+                      Site
+                    </dt>
+                    <dd class="min-w-0 break-all font-mono text-sm text-paper/80">
+                      {{ hostname(project.link) }}
+                    </dd>
+                  </dl>
+
+                  <a
+                    :href="project.link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-page transition-colors duration-300 hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                  >
+                    Voir le projet
+                    <svg viewBox="0 0 16 16" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+                    <span class="sr-only">(nouvel onglet)</span>
+                  </a>
+                </div>
               </div>
-              <div class="text-sm text-gray-500 mt-1">Projets</div>
-            </div>
-            <div class="text-center">
-              <div
-                ref="statTech"
-                class="text-3xl sm:text-4xl font-bold text-gray-900"
-              >
-                0
-              </div>
-              <div class="text-sm text-gray-500 mt-1">Technologies</div>
-            </div>
-            <div class="text-center">
-              <div
-                ref="statYears"
-                class="text-3xl sm:text-4xl font-bold text-gray-900"
-              >
-                0
-              </div>
-              <div class="text-sm text-gray-500 mt-1">Années</div>
             </div>
           </div>
-        </header>
+        </li>
+      </ol>
 
-        <div
-          ref="gridEl"
-          class="project-grid grid grid-cols-1 sm:grid-cols-2 gap-6"
-        >
-          <a
-            v-for="(project, index) in projects"
-            :key="project.id"
-            :href="project.link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="proj-card group relative flex flex-col bg-white rounded-3xl border border-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] overflow-hidden"
-            :style="{ '--accent': project.accent }"
-          >
-            <div class="relative h-52 overflow-hidden">
-              <img
-                :src="project.image"
-                :alt="project.title"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
-              />
-
-              <span
-                class="absolute top-4 left-4 font-mono text-xs text-white/80 bg-black/20 backdrop-blur-sm px-2 py-1 rounded-lg"
-              >
-                {{ String(index + 1).padStart(2, "0") }}
-              </span>
-
-              <span
-                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center text-white opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'arrow-up-right-from-square']"
-                  class="w-3.5 h-3.5"
-                />
-              </span>
-
-              <div class="absolute bottom-4 left-4 right-4">
-                <span
-                  class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-white bg-white/20 backdrop-blur-sm border border-white/20 mb-2"
-                >
-                  {{ project.category }}
-                </span>
-                <h2
-                  class="text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-sm"
-                >
-                  {{ project.title }}
-                </h2>
-              </div>
-            </div>
-
-            <div class="flex flex-col flex-1 p-5 gap-3">
-              <p class="text-sm text-gray-600 leading-relaxed line-clamp-3">
-                {{ project.description }}
-              </p>
-
-              <div class="flex flex-wrap gap-1.5 mt-auto pt-2">
-                <span
-                  v-for="tag in project.tags"
-                  :key="tag"
-                  class="px-2.5 py-1 rounded-full text-[11px] font-medium border"
-                  :style="{
-                    color: project.accent,
-                    borderColor: `${project.accent}40`,
-                    backgroundColor: `${project.accent}10`,
-                  }"
-                >
-                  {{ tag }}
-                </span>
-              </div>
-            </div>
-
-            <div
-              class="h-1 w-0 group-hover:w-full transition-all duration-500 ease-out"
-              :style="{ background: project.accent }"
-            />
-          </a>
-        </div>
-      </div>
+      <footer
+        class="flex items-center justify-between gap-4 pt-6 font-mono text-[11px] uppercase tracking-widest text-paper/50"
+      >
+        <span>Index — {{ String(projects.length).padStart(2, "0") }} projets</span>
+        <span>
+          Altitude actuelle :
+          <span class="ml-1 text-brand-text">{{ projects[openIndex].altitude }} M</span>
+        </span>
+      </footer>
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import spotifyImage from "../assets/images/projects/spotify.webp";
 import adiImage from "../assets/images/projects/adi.webp";
 import Hovly from "../assets/images/projects/hovly.webp";
 import GitAgent from "../assets/images/projects/git-agent.webp";
 import Postulo from "../assets/images/projects/postulo.webp";
-import AsciiPortal from "../components/AsciiPortal.vue";
 
-library.add(faArrowUpRightFromSquare);
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 const el = ref(null);
-const portalSection = ref(null);
-const portalWrapper = ref(null);
-const horizontalSection = ref(null);
-const horizontalTrack = ref(null);
-const contentSection = ref(null);
 const headerEl = ref(null);
-const statsEl = ref(null);
-const gridEl = ref(null);
-
-const statProjects = ref(null);
-const statTech = ref(null);
-const statYears = ref(null);
-const activeSlide = ref(0);
+const listEl = ref(null);
+const openIndex = ref(0);
 
 const projects = ref([
   {
     id: 0,
-    title: "Calendrier Spotify",
+    title: "SpotCalendar",
     description:
       "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify.",
     image: spotifyImage,
     link: "https://spotcalendar.fr",
-    accent: "#1db954",
     tags: ["Spotify API", "Vue.js", "Music"],
     category: "Web App",
+    altitude: 57,
   },
   {
     id: 1,
@@ -341,9 +225,9 @@ const projects = ref([
       "Assistant CLI qui génère messages de commit, noms de branches, et s'intègre à Jira et GitHub.",
     image: GitAgent,
     link: "https://git-agent-steel.vercel.app/",
-    accent: "#6366f1",
     tags: ["IA", "CLI", "Node.js"],
     category: "Outil",
+    altitude: 115,
   },
   {
     id: 2,
@@ -351,20 +235,20 @@ const projects = ref([
     description: "Crée ton tableau de bord immobilier en moins d'une minute.",
     image: Hovly,
     link: "https://hovly-production.up.railway.app/",
-    accent: "#ffd02f",
     tags: ["IA", "Vue.js", "UX", "PDF"],
     category: "SaaS",
+    altitude: 180,
   },
   {
     id: 3,
-    title: "Refonte ADI",
+    title: "ADI",
     description:
       "Refonte complète du site de la société ADI, spécialisée dans l'agencement immobilier.",
     image: adiImage,
     link: "https://agencementimmo.vercel.app/",
-    accent: "#06b6d4",
     tags: ["Vue.js", "Tailwind", "Responsive"],
     category: "Refonte",
+    altitude: 276,
   },
   {
     id: 4,
@@ -373,322 +257,105 @@ const projects = ref([
       "Connecte vos étudiants à votre tableau de bord. Pour les CFA et écoles en recherche d'alternance.",
     image: Postulo,
     link: "https://postulo.fr",
-    accent: "#841EFA",
     tags: ["SaaS", "Vue.js", "Dashboard"],
     category: "SaaS",
+    altitude: 320,
   },
 ]);
 
-const uniqueTechnologies = computed(() => {
-  const techs = new Set();
-  projects.value.forEach((c) => c.tags.forEach((t) => techs.add(t)));
-  return techs.size;
-});
+const hostname = (link) => new URL(link).hostname.replace(/^www\./, "");
 
-const animateStats = () => {
-  const targets = [
-    { el: statProjects.value, value: projects.value.length },
-    { el: statTech.value, value: uniqueTechnologies.value },
-    { el: statYears.value, value: 3 },
-  ];
-
-  targets.forEach(({ el, value }) => {
-    if (!el) return;
-    gsap.fromTo(
-      el,
-      { innerText: 0 },
-      {
-        innerText: value,
-        duration: 1.5,
-        ease: "power2.out",
-        snap: { innerText: 1 },
-      }
-    );
-  });
-};
-
-const getTiles = () =>
-  Array.from(gridEl.value?.querySelectorAll(".proj-card") ?? []);
-
-const animateCardsEnter = () => {
-  const tiles = getTiles();
-  if (!tiles.length) return;
-
-  gsap.fromTo(
-    tiles,
-    { rotationY: -90, opacity: 0, scale: 0.9 },
-    {
-      rotationY: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 0.7,
-      stagger: 0.08,
-      ease: "power3.out",
-    }
-  );
-};
-
-const attachTilt = () => {
-  const tiles = getTiles();
-  tiles.forEach((card) => {
-    if (card.dataset.tiltAttached) return;
-    card.dataset.tiltAttached = "true";
-
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-      const rotateX = ((y - cy) / cy) * -6;
-      const rotateY = ((x - cx) / cx) * 6;
-
-      gsap.to(card, {
-        rotateX,
-        rotateY,
-        y: -8,
-        scale: 1.02,
-        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.18)",
-        duration: 0.3,
-        ease: "power2.out",
-      });
-    });
-
-    card.addEventListener("mouseleave", () => {
-      gsap.to(card, {
-        rotateX: 0,
-        rotateY: 0,
-        y: 0,
-        scale: 1,
-        boxShadow: "0 2px 16px rgba(0, 0, 0, 0.06)",
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    });
-  });
-};
-
-const animateContent = () => {
-  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-  gsap.set(headerEl.value, { opacity: 0, y: -30 });
-  gsap.set(statsEl.value, { opacity: 0, y: 20 });
-
-  tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 })
-    .to(statsEl.value, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-    .add(() => animateStats(), "-=0.4")
-    .add(() => {
-      animateCardsEnter();
-      attachTilt();
-    }, "-=0.8");
-};
-
-let portalTrigger = null;
-let contentTrigger = null;
-let horizontalTriggers = [];
-let matchMediaInstance = null;
-let scrollBlockers = [];
-
-const addScrollBlocker = (type, handler, options = {}) => {
-  window.addEventListener(type, handler, options);
-  scrollBlockers.push({ type, handler, options });
-};
-
-const removeScrollBlockers = () => {
-  scrollBlockers.forEach(({ type, handler, options }) => {
-    window.removeEventListener(type, handler, options);
-  });
-  scrollBlockers = [];
-};
-
-const blockWheelAtEnd = (e) => {
-  const tween = horizontalTriggers[0];
-  if (!tween?.scrollTrigger) return;
-  if (tween.scrollTrigger.progress >= 0.995 && e.deltaY > 0) {
-    e.preventDefault();
+const onPanelEnd = (event) => {
+  if (event.target === event.currentTarget && event.propertyName === "grid-template-rows") {
+    ScrollTrigger.refresh();
   }
 };
 
-let touchStartY = 0;
-const blockTouchStart = (e) => {
-  touchStartY = e.touches[0]?.clientY ?? 0;
-};
-const blockTouchMoveAtEnd = (e) => {
-  const tween = horizontalTriggers[0];
-  if (!tween?.scrollTrigger) return;
-  const currentY = e.touches[0]?.clientY ?? touchStartY;
-  const deltaY = touchStartY - currentY;
-  if (tween.scrollTrigger.progress >= 0.995 && deltaY > 0) {
-    e.preventDefault();
-  }
-  touchStartY = currentY;
-};
-
-const goToSlide = (index) => {
-  if (!horizontalTrack.value) return;
-  const slides = gsap.utils.toArray(".project-slide", horizontalTrack.value);
-  if (!slides[index]) return;
-
-  const st = horizontalTriggers[0];
-  if (st && st.scrollTrigger) {
-    const progress = index / (slides.length - 1);
-    const scrollTo =
-      st.scrollTrigger.start +
-      progress * (st.scrollTrigger.end - st.scrollTrigger.start);
-    gsap.to(window, {
-      scrollTo: { y: scrollTo, autoKill: false },
-      duration: 0.8,
-      ease: "power2.inOut",
-    });
-  }
-};
+let ctx = null;
 
 onMounted(() => {
-  const portal = portalWrapper.value;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reducedMotion) return;
 
-  gsap.set(portal, { willChange: "transform, opacity" });
+  ctx = gsap.context(() => {
+    const rows = listEl.value.querySelectorAll(".project-row");
+    gsap.set([headerEl.value, rows], { opacity: 0, y: 24 });
 
-  // Portal scroll effect — plein écran sans border-radius
-  const portalTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: portalSection.value,
-      start: "top top",
-      end: "+=120%",
-      pin: true,
-      scrub: 1,
-      anticipatePin: 1,
-      onLeaveBack: () => {
-        gsap.set(portal, { scale: 1, opacity: 1 });
-      },
-      onLeave: () => {
-        gsap.set(portal, { willChange: "auto" });
-      },
-    },
-  });
-
-  portalTl.fromTo(
-    portal,
-    { scale: 1, opacity: 1 },
-    { scale: 1.15, opacity: 0, ease: "power2.inOut" },
-    0
-  );
-
-  portalTrigger = portalTl.scrollTrigger;
-
-  // Animation du contenu mobile quand il entre dans la vue
-  contentTrigger = ScrollTrigger.create({
-    trigger: contentSection.value,
-    start: "top 75%",
-    once: true,
-    onEnter: animateContent,
-  });
-
-  // Scroll horizontal — uniquement sur desktop
-  matchMediaInstance = gsap.matchMedia();
-  matchMediaInstance.add("(min-width: 1024px)", () => {
-    const slides = gsap.utils.toArray(".project-slide", horizontalTrack.value);
-    if (!slides.length) return;
-
-    gsap.set(horizontalTrack.value, { willChange: "transform" });
-
-    const maxScroll = () => horizontalTrack.value.scrollWidth - window.innerWidth;
-
-    const horizontalTween = gsap.to(horizontalTrack.value, {
-      x: () => -maxScroll(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: horizontalSection.value,
-        start: "top top",
-        end: () => "+=" + maxScroll(),
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const newIndex = Math.round(self.progress * (slides.length - 1));
-          if (newIndex !== activeSlide.value) {
-            activeSlide.value = newIndex;
-          }
-        },
-        onLeave: () => {
-          gsap.set(horizontalTrack.value, { willChange: "auto" });
-        },
-        onLeaveBack: () => {
-          activeSlide.value = 0;
-        },
-      },
+    ScrollTrigger.create({
+      trigger: headerEl.value,
+      start: "top 85%",
+      once: true,
+      onEnter: () =>
+        gsap.to(headerEl.value, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }),
     });
 
-    horizontalTriggers.push(horizontalTween);
-
-    // Bloque le scroll vers le bas après le dernier slide
-    addScrollBlocker("wheel", blockWheelAtEnd, { passive: false });
-    addScrollBlocker("touchstart", blockTouchStart, { passive: true });
-    addScrollBlocker("touchmove", blockTouchMoveAtEnd, { passive: false });
-
-    return () => {
-      removeScrollBlockers();
-    };
-  });
+    ScrollTrigger.create({
+      trigger: listEl.value,
+      start: "top 85%",
+      once: true,
+      onEnter: () =>
+        gsap.to(rows, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          stagger: 0.1,
+          clearProps: "transform,opacity",
+        }),
+    });
+  }, el.value);
 });
 
 onUnmounted(() => {
-  if (portalTrigger) {
-    portalTrigger.kill();
-    portalTrigger = null;
-  }
-  if (contentTrigger) {
-    contentTrigger.kill();
-    contentTrigger = null;
-  }
-  horizontalTriggers.forEach((t) => {
-    if (t.scrollTrigger) t.scrollTrigger.kill();
-    t.kill();
-  });
-  horizontalTriggers = [];
-  if (matchMediaInstance) {
-    matchMediaInstance.revert();
-    matchMediaInstance = null;
-  }
-  removeScrollBlockers();
-  ScrollTrigger.getAll().forEach((t) => {
-    if (
-      t.trigger === portalSection.value ||
-      t.trigger === contentSection.value ||
-      t.trigger === horizontalSection.value
-    ) {
-      t.kill();
-    }
-  });
+  ctx?.revert();
+  ctx = null;
 });
 </script>
 
 <style scoped>
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.project-title {
+  font-size: clamp(1.75rem, 8.5vw, 4rem);
+  letter-spacing: -0.04em;
+  transition:
+    color 0.4s ease,
+    -webkit-text-stroke-color 0.4s ease;
 }
 
-.project-grid {
-  perspective: 1200px;
+@media (min-width: 1024px) {
+  .project-title {
+    font-size: clamp(3rem, 8vw, 7.5rem);
+  }
 }
 
-.proj-card {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
+.project-title.is-open {
+  color: rgb(var(--paper));
+  -webkit-text-stroke: 0 transparent;
 }
 
-.portal-wrapper {
-  transform-origin: center center;
+.project-title.is-closed {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(var(--paper) / 0.35);
 }
 
-.horizontal-track {
-  width: fit-content;
+.project-title.is-closed:hover,
+.project-title.is-closed:focus-visible {
+  color: rgb(var(--brand-text) / 0.08);
+  -webkit-text-stroke-color: rgb(var(--brand-text));
 }
 
-.project-slide {
-  will-change: transform;
+.project-panel {
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease;
+}
+
+.project-panel.is-open {
+  grid-template-rows: 1fr;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-title,
+  .project-panel {
+    transition: none;
+  }
 }
 </style>

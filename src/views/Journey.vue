@@ -2,97 +2,113 @@
   <section
     ref="el"
     aria-labelledby="journey-title"
-    class="no-scrollbar min-h-screen bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-8 gap-5 sm:gap-6"
+    class="no-scrollbar min-h-screen flex flex-col justify-center py-8 gap-5 sm:gap-6"
   >
     <header
       ref="headerEl"
-      class="relative flex items-end justify-between gap-4 pb-5"
+      class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0"
     >
-      <span
-        class="journey-rule absolute left-0 right-0 bottom-0 h-px bg-gray-200 origin-left"
-        aria-hidden="true"
-      />
-      <div>
-        <p class="text-xs font-mono uppercase tracking-[0.3em] text-indigo-500 mb-2">
+      <div class="lane-left relative lg:pb-5">
+        <span
+          class="journey-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-left"
+          aria-hidden="true"
+        />
+        <p class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2">
           // expérience & formation
         </p>
-        <h1
+        <AsciiDecodeText
+          tag="h1"
           id="journey-title"
-          class="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none"
-        >
-          Parcours
-        </h1>
+          data-tower-anchor="journey"
+          text="Parcours"
+          idle-glitch
+          :start="titleReady"
+          class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
+        />
       </div>
-      <p class="hidden sm:block text-sm text-gray-400 italic max-w-xs text-right">
-        Mon expérience et mes formations, du lycée au mastère.
-      </p>
+      <div class="lane-right relative flex items-end justify-end lg:pb-5">
+        <span
+          class="journey-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-right"
+          aria-hidden="true"
+        />
+        <p class="hidden sm:block text-sm text-ink-muted italic max-w-xs sm:ml-auto lg:text-right">
+          Mon expérience et mes formations, du lycée au mastère.
+        </p>
+      </div>
     </header>
 
-    <div class="flex flex-col gap-4 sm:gap-5">
-      <div v-for="group in groups" :key="group.label" class="journey-group">
-        <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400 mb-1">
-          {{ group.label }}
-        </h2>
+    <div class="lane-grid">
+      <div
+        v-for="(column, ci) in columns"
+        :key="ci"
+        :class="[ci === 0 ? 'lane-left' : 'lane-right', 'flex flex-col gap-4 sm:gap-5']"
+      >
+        <div v-for="group in column" :key="group.label" class="journey-group">
+          <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted mb-1">
+            {{ group.label }}
+          </h2>
 
-        <ol class="flex flex-col">
-          <li
-            v-for="item in group.items"
-            :key="item.title"
-            class="journey-row group flex flex-col sm:flex-row gap-1 sm:gap-8 py-3 border-b border-gray-100 last:border-b-0"
-          >
-            <span
-              class="font-mono text-sm text-gray-400 sm:w-28 shrink-0 sm:pt-0.5 transition-colors duration-300 group-hover:text-indigo-500"
+          <ol class="flex flex-col">
+            <li
+              v-for="item in group.items"
+              :key="item.title"
+              class="journey-row group flex flex-col gap-1 py-3 border-b border-line/15 last:border-b-0"
             >
-              {{ item.years }}
-            </span>
+              <span
+                class="font-mono text-sm text-ink-muted transition-colors duration-300 group-hover:text-brand-text"
+              >
+                {{ item.years }}
+              </span>
 
-            <div
-              class="flex-1 min-w-0 transition-transform duration-300 ease-out motion-safe:group-hover:translate-x-1"
-            >
-              <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 class="text-base sm:text-lg font-bold text-gray-900 leading-snug">
-                  {{ item.title }}
-                </h3>
-                <span
-                  v-if="item.ongoing"
-                  class="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5"
-                >
-                  <span class="relative flex w-1.5 h-1.5" aria-hidden="true">
-                    <span
-                      class="absolute inset-0 rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"
-                    />
-                    <span class="relative w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <div
+                class="min-w-0 transition-transform duration-300 ease-out motion-safe:group-hover:translate-x-1"
+              >
+                <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <h3 class="text-base sm:text-lg font-bold text-ink leading-snug">
+                    {{ item.title }}
+                  </h3>
+                  <span
+                    v-if="item.ongoing"
+                    class="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5"
+                  >
+                    <span class="relative flex w-1.5 h-1.5" aria-hidden="true">
+                      <span
+                        class="absolute inset-0 rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping"
+                      />
+                      <span class="relative w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    </span>
+                    En cours
                   </span>
-                  En cours
-                </span>
+                </div>
+                <p class="text-sm font-medium text-ink-soft">
+                  {{ item.institution }}
+                </p>
+                <p class="mt-1 text-sm text-ink-soft leading-relaxed">
+                  {{ item.description }}
+                </p>
+                <ul class="mt-1.5 flex flex-wrap gap-1.5" aria-label="Compétences">
+                  <li
+                    v-for="tag in item.tags"
+                    :key="tag"
+                    class="journey-tag text-[11px] font-medium text-ink-soft border border-line/25 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-line/40 group-hover:text-ink"
+                  >
+                    {{ tag }}
+                  </li>
+                </ul>
               </div>
-              <p class="text-sm font-medium text-gray-500">
-                {{ item.institution }}
-              </p>
-              <p class="mt-1 text-sm text-gray-600 leading-relaxed max-w-3xl">
-                {{ item.description }}
-              </p>
-              <ul class="mt-1.5 flex flex-wrap gap-1.5" aria-label="Compétences">
-                <li
-                  v-for="tag in item.tags"
-                  :key="tag"
-                  class="journey-tag text-[11px] font-medium text-gray-500 border border-gray-200 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-gray-300 group-hover:text-gray-700"
-                >
-                  {{ tag }}
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ol>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, inject, watch, onMounted, onUnmounted } from "vue";
+import { ref, computed } from "vue";
 import gsap from "gsap";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
+import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
 const el = ref(null);
 const headerEl = ref(null);
@@ -143,21 +159,27 @@ const groups = [
   },
 ];
 
-// set by SharkPortal: true once the zoom-in is nearly done
-const portalOpen = inject("portalOpen", null);
+const [experience, formation] = groups;
+const columns = [
+  [experience, { label: formation.label, items: formation.items.slice(0, 1) }],
+  [{ label: `${formation.label} (suite)`, items: formation.items.slice(1) }],
+];
 
-const buildTimeline = (paused = false) => {
+const entered = ref(false);
+const titleReady = computed(() => entered.value);
+
+const buildTimeline = () => {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !el.value) return null;
 
-  const tl = gsap.timeline({ paused, defaults: { ease: "power2.out" } });
+  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
   return tl.fromTo(
-    headerEl.value.querySelectorAll(":scope > div, :scope > p"),
+    headerEl.value.querySelectorAll(":scope > div"),
     { opacity: 0, y: -12 },
     { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
   )
     .fromTo(
-      headerEl.value.querySelector(".journey-rule"),
+      headerEl.value.querySelectorAll(".journey-rule"),
       { scaleX: 0 },
       { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
       0
@@ -188,19 +210,10 @@ const buildTimeline = (paused = false) => {
     );
 };
 
-if (portalOpen) {
-  // inside the portal the section is in view (scaled down) long before it is
-  // readable, so wait for the zoom instead of the viewport
-  let tl = null;
-  onMounted(() => {
-    tl = buildTimeline(true);
-    if (portalOpen.value) tl?.play();
-  });
-  watch(portalOpen, (open) => open && tl?.play(), { once: true });
-  onUnmounted(() => tl?.kill());
-} else {
-  useEnterAnimation(el, () => buildTimeline());
-}
+useEnterAnimation(el, () => {
+  entered.value = true;
+  buildTimeline();
+});
 </script>
 
 <style scoped>

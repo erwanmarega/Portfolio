@@ -1,58 +1,74 @@
 <template>
-  <div ref="el" class="h-full bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-10 gap-8 overflow-hidden">
+  <div ref="el" class="h-full flex flex-col justify-center py-10 gap-8 overflow-hidden">
 
-    <header ref="headerEl" class="flex items-end justify-between gap-4 border-b border-gray-200 pb-5">
-      <div>
-        <p class="text-xs font-mono uppercase tracking-[0.3em] text-indigo-500 mb-2 animate-fade-in">
+    <header
+      ref="headerEl"
+      class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0 lg:pb-0"
+    >
+      <div class="lane-left lg:border-b lg:border-line/15 lg:pb-5">
+        <p class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2 animate-fade-in">
           // sources
         </p>
-        <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none animate-fade-in">
-          Veille Technologique
-        </h1>
+        <AsciiDecodeText
+          tag="h1"
+          data-tower-anchor="tech-watch"
+          text="Veille Technologique"
+          idle-glitch
+          :start="titleReady"
+          class="text-4xl lg:text-3xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
+        />
       </div>
-      <p class="hidden sm:block text-sm text-gray-400 italic max-w-xs text-right animate-fade-in-delay">
-        Les sources que je consulte pour rester à jour.
-      </p>
+      <div class="lane-right hidden sm:flex items-end justify-end lg:border-b lg:border-line/15 lg:pb-5">
+        <p class="text-sm text-ink-muted italic max-w-xs lg:text-right animate-fade-in-delay">
+          Les sources que je consulte pour rester à jour.
+        </p>
+      </div>
     </header>
 
-    <div class="flex flex-col">
-      <a
-        v-for="(item, index) in techList"
-        :key="index"
-        :href="item.link"
-        target="_blank"
-        class="watch-row group relative flex items-center gap-4 sm:gap-8 py-5 px-3 sm:px-6 no-underline border-b border-gray-200 overflow-hidden"
-        :style="{ '--accent': item.accent }"
+    <div class="lane-grid gap-y-0">
+      <div
+        v-for="(list, ci) in columns"
+        :key="ci"
+        :class="[ci === 0 ? 'lane-left' : 'lane-right', 'flex flex-col']"
       >
-        <span class="watch-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-        <span class="relative z-10 font-mono text-sm w-8 shrink-0 text-gray-300 group-hover:text-[color:var(--accent)] transition-colors duration-300">
-          {{ String(index + 1).padStart(2, "0") }}
-        </span>
-
-        <div class="relative z-10 flex-1 min-w-0">
-          <div class="flex items-center gap-3">
-            <h3 class="text-xl sm:text-2xl font-bold text-gray-500 group-hover:text-gray-900 transition-colors duration-300 group-hover:translate-x-1 transform-gpu">
-              {{ item.title }}
-            </h3>
-            <span
-              class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border border-gray-200 text-gray-400 group-hover:border-[color:var(--accent)] group-hover:text-[color:var(--accent)] transition-colors duration-300"
-            >
-              {{ item.category }}
-            </span>
-          </div>
-          <p class="text-sm text-gray-500 mt-0 max-h-0 opacity-0 group-hover:max-h-12 group-hover:mt-2 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
-            {{ item.description }}
-          </p>
-        </div>
-
-        <svg
-          class="relative z-10 w-5 h-5 shrink-0 text-gray-300 group-hover:text-[color:var(--accent)] -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
-          fill="none" stroke="currentColor" viewBox="0 0 24 24"
+        <a
+          v-for="(item, i) in list"
+          :key="item.title"
+          :href="item.link"
+          target="_blank"
+          class="watch-row group relative flex items-center gap-4 py-5 px-3 sm:px-4 no-underline border-b border-line/15 overflow-hidden"
+          :style="{ '--accent': item.accent }"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8M17 7V16" />
-        </svg>
-      </a>
+          <span class="watch-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          <span class="relative z-10 font-mono text-sm w-8 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] transition-colors duration-300">
+            {{ String(ci * half + i + 1).padStart(2, "0") }}
+          </span>
+
+          <div class="relative z-10 flex-1 min-w-0">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <h3 class="text-xl sm:text-2xl font-bold text-ink-soft group-hover:text-ink transition-colors duration-300 group-hover:translate-x-1 transform-gpu">
+                {{ item.title }}
+              </h3>
+              <span
+                class="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border border-line/15 text-ink-muted group-hover:border-[color:var(--accent)] group-hover:text-[color:var(--accent)] transition-colors duration-300"
+              >
+                {{ item.category }}
+              </span>
+            </div>
+            <p class="text-sm text-ink-soft mt-0 max-h-0 opacity-0 group-hover:max-h-20 group-hover:mt-2 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+              {{ item.description }}
+            </p>
+          </div>
+
+          <svg
+            class="relative z-10 w-5 h-5 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8M17 7V16" />
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -61,9 +77,11 @@
 import { ref } from "vue";
 import gsap from "gsap";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
+import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
 const el = ref(null);
 const headerEl = ref(null);
+const titleReady = ref(false);
 
 const techList = ref([
   {
@@ -110,15 +128,19 @@ const techList = ref([
   },
 ]);
 
+const half = Math.ceil(techList.value.length / 2);
+const columns = [techList.value.slice(0, half), techList.value.slice(half)];
+
 useEnterAnimation(el, () => {
+  titleReady.value = true;
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
   gsap.set(headerEl.value, { opacity: 0, y: -30 });
   tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 });
 
   const rows = el.value.querySelectorAll(".watch-row");
-  gsap.set(rows, { opacity: 0, x: -40 });
-  tl.to(rows, { opacity: 1, x: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
+  gsap.set(rows, { opacity: 0, y: 24 });
+  tl.to(rows, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
 });
 </script>
 
