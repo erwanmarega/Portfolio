@@ -37,13 +37,17 @@
         <li
           v-for="(project, index) in projects"
           :key="project.id"
-          class="project-row border-b border-line/15"
+          class="project-row relative border-b border-line/15"
         >
+          <span
+            class="row-line pointer-events-none absolute inset-x-0 -bottom-px h-px origin-left bg-line/15 opacity-0"
+            aria-hidden="true"
+          ></span>
           <div
             class="grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-x-2 py-5 lg:grid-cols-[56px_minmax(0,1fr)_220px_64px] lg:gap-x-0 lg:py-6"
           >
             <span
-              class="font-mono text-xs transition-colors duration-300"
+              class="row-num font-mono text-xs transition-colors duration-300"
               :class="openIndex === index ? 'text-brand-text' : 'text-paper/50'"
             >
               {{ String(index + 1).padStart(2, "0") }}
@@ -62,18 +66,18 @@
                 {{ project.title }}
               </button>
               <p
-                class="mt-2 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:hidden"
+                class="row-cat mt-2 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:hidden"
               >
                 {{ project.category }} · {{ project.altitude }} m
               </p>
             </div>
 
-            <div class="hidden font-mono text-xs uppercase lg:block">
+            <div class="row-cat hidden font-mono text-xs uppercase lg:block">
               <p class="tracking-widest text-paper/80">{{ project.category }}</p>
               <p class="mt-2 normal-case text-paper/50">{{ project.altitude }} m</p>
             </div>
 
-            <div class="flex justify-end">
+            <div class="row-cta flex justify-end">
               <a
                 :href="project.link"
                 target="_blank"
@@ -104,13 +108,17 @@
               <div
                 class="grid gap-10 pb-12 pt-2 lg:grid-cols-[minmax(0,620px)_minmax(0,1fr)] lg:gap-16 lg:pb-14"
               >
-                <div class="relative pb-3.5 pr-3.5">
+                <div
+                  class="shot-tilt relative pb-3.5 pr-3.5"
+                  @pointermove="onTiltMove"
+                  @pointerleave="onTiltLeave"
+                >
                   <div
-                    class="absolute inset-0 left-3.5 top-3.5 rounded-xl border border-brand/60"
+                    class="shot-offset absolute inset-0 left-3.5 top-3.5 rounded-xl border border-brand/60"
                     aria-hidden="true"
                   ></div>
                   <div
-                    class="relative overflow-hidden rounded-xl border border-line/15 bg-surface shadow-2xl shadow-black/50"
+                    class="shot-frame relative overflow-hidden rounded-xl border border-line/15 bg-surface shadow-2xl shadow-black/50"
                   >
                     <div class="flex h-9 items-center gap-3 border-b border-line/15 bg-page px-3">
                       <span class="flex gap-1.5">
@@ -126,18 +134,18 @@
                       :src="project.image"
                       :alt="`Capture d'écran du projet ${project.title}`"
                       loading="lazy"
-                      class="aspect-[16/10] w-full object-cover object-top"
+                      class="shot-img aspect-[16/10] w-full object-cover object-top"
                     />
                   </div>
                 </div>
 
                 <div class="min-w-0">
-                  <p class="max-w-[460px] text-xl leading-snug text-paper sm:text-2xl">
+                  <p class="panel-reveal max-w-[460px] text-xl leading-snug text-paper sm:text-2xl">
                     {{ project.description }}
                   </p>
 
                   <dl
-                    class="mt-8 grid max-w-[460px] grid-cols-[4.5rem_1fr] items-center gap-y-3 border-t border-line/15 pt-6"
+                    class="panel-reveal mt-8 grid max-w-[460px] grid-cols-[4.5rem_1fr] items-center gap-y-3 border-t border-line/15 pt-6"
                   >
                     <dt class="font-mono text-[11px] uppercase tracking-widest text-paper/50">
                       Stack
@@ -163,7 +171,7 @@
                     :href="project.link"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-page transition-colors duration-300 hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    class="panel-reveal mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-page transition-colors duration-300 hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
                     Voir le projet
                     <svg viewBox="0 0 16 16" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
@@ -182,7 +190,7 @@
         <span>Index — {{ String(projects.length).padStart(2, "0") }} projets</span>
         <span>
           Altitude actuelle :
-          <span class="ml-1 text-brand-text">{{ projects[openIndex].altitude }} M</span>
+          <span class="ml-1 text-brand-text">{{ displayAltitude }} M</span>
         </span>
       </footer>
     </section>
@@ -190,16 +198,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
+import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from "@/lib/motion.js";
 import spotifyImage from "../assets/images/projects/spotify.webp";
 import adiImage from "../assets/images/projects/adi.webp";
 import Hovly from "../assets/images/projects/hovly.webp";
 import GitAgent from "../assets/images/projects/git-agent.webp";
 import Postulo from "../assets/images/projects/postulo.webp";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const el = ref(null);
 const headerEl = ref(null);
@@ -271,42 +276,177 @@ const onPanelEnd = (event) => {
   }
 };
 
+const displayAltitude = ref(projects.value[0].altitude);
+
 let ctx = null;
+let tiltEnabled = false;
+const altitudeState = { v: projects.value[0].altitude };
+const tiltTo = new Map();
+
+watch(openIndex, async (index) => {
+  const target = projects.value[index].altitude;
+  if (!ctx) {
+    displayAltitude.value = target;
+    return;
+  }
+
+  ctx.add(() => {
+    gsap.to(altitudeState, {
+      v: target,
+      duration: 0.8,
+      ease: "power2.out",
+      overwrite: true,
+      onUpdate: () => {
+        displayAltitude.value = Math.round(altitudeState.v);
+      },
+      onComplete: () => {
+        displayAltitude.value = target;
+      },
+    });
+  });
+
+  await nextTick();
+  const panel = el.value?.querySelector(`#project-panel-${projects.value[index].id}`);
+  if (!panel) return;
+
+  ctx.add(() => {
+    const q = (sel) => panel.querySelectorAll(sel);
+    gsap
+      .timeline({ defaults: { ease: "power3.out", overwrite: "auto" } })
+      .fromTo(
+        q(".shot-frame"),
+        { clipPath: "inset(0% 0% 100% 0%)" },
+        { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, clearProps: "clipPath" },
+        0.1
+      )
+      .from(q(".shot-img"), { scale: 1.08, duration: 1.1, clearProps: "transform" }, 0.1)
+      .from(q(".shot-offset"), { x: -14, y: -14, duration: 0.7, clearProps: "transform" }, 0.5)
+      .from(
+        q(".panel-reveal"),
+        { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, clearProps: "transform,opacity" },
+        0.3
+      );
+  });
+});
+
+const TILT_MAX = 3.5;
+
+const getTilt = (node) => {
+  let t = tiltTo.get(node);
+  if (!t) {
+    gsap.set(node, { transformPerspective: 900 });
+    const opts = { duration: 0.5, ease: "power3.out" };
+    t = { x: gsap.quickTo(node, "rotationX", opts), y: gsap.quickTo(node, "rotationY", opts) };
+    tiltTo.set(node, t);
+  }
+  return t;
+};
+
+const onTiltMove = (event) => {
+  if (!tiltEnabled) return;
+  const node = event.currentTarget;
+  const rect = node.getBoundingClientRect();
+  const px = (event.clientX - rect.left) / rect.width - 0.5;
+  const py = (event.clientY - rect.top) / rect.height - 0.5;
+  const t = getTilt(node);
+  t.y(px * 2 * TILT_MAX);
+  t.x(-py * 2 * TILT_MAX);
+};
+
+const onTiltLeave = (event) => {
+  const t = tiltTo.get(event.currentTarget);
+  if (!t) return;
+  t.x(0);
+  t.y(0);
+};
 
 onMounted(() => {
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reducedMotion) return;
+  if (prefersReducedMotion()) return;
+  tiltEnabled = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   ctx = gsap.context(() => {
     const rows = listEl.value.querySelectorAll(".project-row");
-    gsap.set([headerEl.value, rows], { opacity: 0, y: 24 });
+    const titles = listEl.value.querySelectorAll(".project-title");
+    const q = (sel) => listEl.value.querySelectorAll(sel);
+
+    gsap.set(headerEl.value, { opacity: 0, y: 24 });
+    gsap.set(titles, { opacity: 0 });
+    gsap.set([q(".row-num"), q(".row-cat"), q(".row-cta")], { opacity: 0 });
 
     ScrollTrigger.create({
       trigger: headerEl.value,
       start: "top 85%",
       once: true,
       onEnter: () =>
-        gsap.to(headerEl.value, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }),
+        gsap.to(headerEl.value, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power2.out",
+          clearProps: "transform,opacity",
+        }),
     });
 
     ScrollTrigger.create({
       trigger: listEl.value,
       start: "top 85%",
       once: true,
-      onEnter: () =>
-        gsap.to(rows, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-          stagger: 0.1,
-          clearProps: "transform,opacity",
-        }),
+      onEnter: () => {
+        const lines = q(".row-line");
+        // Hairlines are drawn by spans; hide the real borders while they animate.
+        gsap.set(rows, { borderBottomColor: "transparent" });
+        gsap.set(lines, { opacity: 1 });
+
+        const tl = gsap.timeline({
+          defaults: { ease: "power3.out" },
+          onComplete: () => {
+            gsap.set(lines, { opacity: 0, clearProps: "transform" });
+            gsap.set(rows, { clearProps: "borderBottomColor" });
+          },
+        });
+        const splits = [];
+
+        rows.forEach((row, i) => {
+          const at = i * 0.12;
+          const title = row.querySelector(".project-title");
+          const split = SplitText.create(title, { type: "chars", mask: "chars" });
+          splits.push(split);
+          gsap.set(title, { opacity: 1 });
+
+          tl.from(row.querySelector(".row-line"), { scaleX: 0, duration: 0.9, ease: "power2.inOut" }, at)
+            .from(split.chars, { yPercent: 110, duration: 0.8, stagger: 0.03 }, at + 0.1)
+            .fromTo(
+              row.querySelector(".row-num"),
+              { opacity: 0, x: -16 },
+              { opacity: 1, x: 0, duration: 0.5, clearProps: "transform,opacity" },
+              at + 0.1
+            )
+            .fromTo(
+              row.querySelectorAll(".row-cat"),
+              { opacity: 0, x: 24 },
+              { opacity: 1, x: 0, duration: 0.6, clearProps: "transform,opacity" },
+              at + 0.25
+            )
+            .fromTo(
+              row.querySelector(".row-cta"),
+              { opacity: 0 },
+              { opacity: 1, duration: 0.5, clearProps: "opacity" },
+              at + 0.35
+            );
+        });
+
+        // Restore the plain text node so the outlined/filled transition and a11y are untouched.
+        tl.add(() => {
+          splits.forEach((split) => split.revert());
+          gsap.set(titles, { clearProps: "opacity" });
+        });
+      },
     });
   }, el.value);
 });
 
 onUnmounted(() => {
+  tiltTo.clear();
   ctx?.revert();
   ctx = null;
 });

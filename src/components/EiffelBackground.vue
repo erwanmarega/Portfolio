@@ -9,16 +9,19 @@
     class="pointer-events-none fixed inset-0 -z-10 hidden h-full w-full lg:block"
     aria-hidden="true"
   ></svg>
+  <TowerChatters ref="chatters" />
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 
 import { CALLOUTS, calloutLabel } from "@/lib/eiffel/callouts.js";
+import TowerChatters from "@/components/TowerChatters.vue";
 import { computeStops } from "@/lib/eiffel/stops.js";
 
 const canvas = ref(null);
 const overlay = ref(null);
+const chatters = ref(null);
 
 let scene = null;
 let idleHandle = null;
@@ -206,7 +209,10 @@ async function init() {
 
   reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   buildCallouts();
-  offRender = scene.onRender(updateCallouts);
+  offRender = scene.onRender(() => {
+    updateCallouts();
+    if (window.innerWidth >= 1024) chatters.value?.update(scene, laneWidth);
+  });
   window.addEventListener("scroll", updateProgress, { passive: true });
   window.addEventListener("resize", onResize);
   document.addEventListener("visibilitychange", onVisibility);

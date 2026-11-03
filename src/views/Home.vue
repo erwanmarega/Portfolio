@@ -8,32 +8,32 @@
     >
       <div ref="textBlock" class="lane-left min-w-0 lg:pr-6">
         <p
-          data-hero="item"
+          data-hero="prompt"
           class="mb-5 font-mono text-xs text-ink-soft"
         >
-          <span class="text-brand-text">$</span> whoami
+          <span class="text-brand-text">$</span> <span ref="whoamiEl">whoami</span>
         </p>
 
         <h1
           data-tower-anchor="home"
-          data-hero="item"
           class="mb-6 text-4xl font-extrabold leading-[1.02] tracking-[-0.04em] text-paper sm:text-5xl lg:text-[clamp(1.75rem,3.4vw,4.5rem)]"
         >
-          Développeur web
+          <span ref="titleA">Développeur web</span>{{ " " }}
           <span class="whitespace-nowrap"
-            >fullstack<span class="cursor" aria-hidden="true"
+            ><span ref="titleB">fullstack</span
+            ><span class="cursor" aria-hidden="true"
           /></span>
         </h1>
 
         <p
-          data-hero="item"
+          data-hero="para"
           class="mb-8 max-w-md text-base leading-relaxed text-paper/75 lg:text-[15px] xl:text-lg"
         >
           Je conçois des applications web modernes et performantes. Passionné
           par Vue.js, Node.js et l'expérience utilisateur.
         </p>
 
-        <div data-hero="item" class="flex flex-wrap items-stretch">
+        <div data-hero="buttons" class="flex flex-wrap items-stretch">
           <a
             href="#projects"
             class="inline-flex items-center gap-3 bg-paper px-5 py-3.5 text-sm font-semibold text-page outline-none transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-text sm:px-6"
@@ -54,7 +54,7 @@
         class="lane-right flex min-w-0 flex-col lg:items-end lg:pl-6"
       >
         <div class="w-full lg:max-w-[26rem]">
-          <div data-hero="item" class="border border-line/15 bg-surface/70">
+          <div data-hero="card" class="border border-line/15 bg-surface/70">
             <div
               class="flex items-center gap-1.5 border-b border-line/15 px-4 py-3"
             >
@@ -67,17 +67,17 @@
             </div>
             <pre
               class="overflow-x-auto px-5 py-5 font-mono text-[13px] leading-[1.75] text-ink-muted"
-            ><code><span class="text-paper">const</span> <span class="font-semibold text-paper">erwan</span> = {
-  <span class="text-paper">role</span>: <span class="text-ink">'fullstack'</span>,
-  <span class="text-paper">ville</span>: <span class="text-ink">'Paris'</span>,
-  <span class="text-paper">cursus</span>: <span class="text-ink">'Efrei — M2'</span>,
-  <span class="text-paper">stack</span>: [<span class="text-ink">'Vue.js'</span>, <span class="text-ink">'Node.js'</span>],
-}</code></pre>
+            ><code><span class="code-line"><span class="text-paper">const</span> <span class="font-semibold text-paper">erwan</span> = {<span class="caret" aria-hidden="true"></span></span
+><span class="code-line">  <span class="text-paper">role</span>: <span class="text-ink">'fullstack'</span>,<span class="caret" aria-hidden="true"></span></span
+><span class="code-line">  <span class="text-paper">ville</span>: <span class="text-ink">'Paris'</span>,<span class="caret" aria-hidden="true"></span></span
+><span class="code-line">  <span class="text-paper">cursus</span>: <span class="text-ink">'Efrei — M2'</span>,<span class="caret" aria-hidden="true"></span></span
+><span class="code-line">  <span class="text-paper">stack</span>: [<span class="text-ink">'Vue.js'</span>, <span class="text-ink">'Node.js'</span>],<span class="caret" aria-hidden="true"></span></span
+><span class="code-line">}<span class="caret" aria-hidden="true"></span></span></code></pre>
           </div>
 
           <div
             ref="statsEl"
-            data-hero="item"
+            data-hero="stats"
             class="mt-5 grid grid-cols-3 divide-x divide-line/15 border border-line/15"
           >
             <div v-for="stat in statItems" :key="stat.key" class="px-4 py-4">
@@ -97,7 +97,13 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from "vue";
-import { gsap } from "gsap";
+import {
+  gsap,
+  SplitText,
+  prefersReducedMotion,
+  onSiteReady,
+  typeText,
+} from "../lib/motion.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -108,49 +114,133 @@ const statItems = [
   { key: "tech", label: "technos" },
   { key: "years", label: "années" },
 ];
+const statTargets = { projects: 5, tech: 12, years: 3 };
 
 const el = ref(null);
 const textBlock = ref(null);
 const statsEl = ref(null);
+const whoamiEl = ref(null);
+const titleA = ref(null);
+const titleB = ref(null);
 
 const stats = reactive({ projects: 0, tech: 0, years: 0 });
 let ctx = null;
-
-const animateStats = () => {
-  const targets = { projects: 5, tech: 12, years: 3 };
-  Object.entries(targets).forEach(([key, value]) => {
-    const counter = { v: 0 };
-    gsap.to(counter, {
-      v: value,
-      duration: 1.5,
-      ease: "power2.out",
-      onUpdate: () => {
-        stats[key] = Math.round(counter.v);
-      },
-    });
-  });
-};
+let offReady = null;
 
 onMounted(() => {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    Object.assign(stats, { projects: 5, tech: 12, years: 3 });
+  if (prefersReducedMotion()) {
+    Object.assign(stats, statTargets);
     return;
   }
+
   ctx = gsap.context(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.from('[data-hero="item"]', {
-      opacity: 0,
-      y: 28,
-      duration: 0.8,
-      stagger: 0.1,
-    }).add(animateStats, "-=0.6");
+    const q = (sel) => el.value.querySelector(sel);
+    const splits = [];
+    const whoami = whoamiEl.value;
+
+    const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
+
+    // $ whoami: typed in brand color
+    if (whoami) {
+      whoami.classList.add("text-brand-text");
+      tl.fromTo(q('[data-hero="prompt"]'), { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0);
+      tl.add(typeText(whoami, "whoami", { duration: 0.45 }), 0.1);
+      tl.call(() => whoami.classList.remove("text-brand-text"), null, ">0.15");
+    }
+
+    // H1: masked word slide-up (cursor span is left untouched)
+    const words = [];
+    [titleA.value, titleB.value].forEach((node) => {
+      if (!node) return;
+      const split = SplitText.create(node, { type: "words", mask: "words" });
+      splits.push(split);
+      words.push(...split.words);
+    });
+    if (words.length) {
+      tl.from(words, { yPercent: 115, duration: 0.9, stagger: 0.12 }, 0.35);
+    }
+
+    tl.from(q('[data-hero="para"]'), { opacity: 0, y: 20, duration: 0.7 }, 0.9);
+    tl.from(q('[data-hero="buttons"]'), { opacity: 0, y: 20, duration: 0.7 }, 1.05);
+
+    // profil.ts card: frame reveals from the header bar, then code is printed line by line
+    const card = q('[data-hero="card"]');
+    tl.fromTo(
+      card,
+      { clipPath: "inset(0 0 100% 0)" },
+      { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: "power2.inOut", clearProps: "clipPath" },
+      0.6
+    );
+    const lines = gsap.utils.toArray(card.querySelectorAll(".code-line"));
+    const carets = gsap.utils.toArray(card.querySelectorAll(".caret"));
+    let t = 1.15;
+    lines.forEach((line, i) => {
+      tl.fromTo(
+        line,
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.32, ease: "steps(12)", clearProps: "clipPath" },
+        t
+      );
+      const caret = carets[i];
+      if (caret) {
+        tl.set(caret, { opacity: 1 }, t);
+        tl.set(caret, { opacity: 0, display: "none" }, t + 0.4);
+      }
+      t += 0.28;
+    });
+
+    // Stats: cells reveal from the bottom while the counters run
+    const cells = gsap.utils.toArray(statsEl.value.children);
+    tl.from(statsEl.value, { opacity: 0, duration: 0.4, clearProps: "opacity" }, 1.5);
+    tl.fromTo(
+      cells,
+      { clipPath: "inset(100% 0 0 0)", y: 10 },
+      {
+        clipPath: "inset(0% 0 0 0)",
+        y: 0,
+        duration: 0.6,
+        stagger: 0.12,
+        clearProps: "clipPath,transform",
+      },
+      1.5
+    );
+    Object.entries(statTargets).forEach(([key, value], i) => {
+      const counter = { v: 0 };
+      tl.to(
+        counter,
+        {
+          v: value,
+          duration: 1.5,
+          ease: "power2.out",
+          onUpdate: () => {
+            stats[key] = Math.round(counter.v);
+          },
+        },
+        1.5 + i * 0.12
+      );
+    });
+
+    tl.call(() => splits.forEach((s) => s.revert()));
+
+    offReady = onSiteReady(() => tl.play());
+
+    return () => {
+      splits.forEach((s) => s.revert());
+      if (whoami) {
+        whoami.textContent = "whoami";
+        whoami.classList.remove("text-brand-text");
+      }
+      Object.assign(stats, statTargets);
+    };
   }, el.value);
 });
 
 onUnmounted(() => {
+  offReady?.();
   ctx?.revert();
 });
 </script>
+
 
 <style scoped>
 .cursor {
@@ -161,6 +251,20 @@ onUnmounted(() => {
   background: rgb(var(--brand-text));
   vertical-align: baseline;
   animation: blink 1.1s steps(1) infinite;
+}
+
+.code-line {
+  display: block;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.1em;
+  margin-left: 0.15em;
+  vertical-align: text-bottom;
+  background: rgb(var(--brand-text));
+  opacity: 0;
 }
 
 @keyframes blink {

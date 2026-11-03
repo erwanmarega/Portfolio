@@ -35,7 +35,7 @@
               data-tower-anchor="contact"
               text="Parlons de votre prochain projet."
               :start="titleReady"
-              :delay="0.4"
+              :delay="0.1"
               :duration="1.5"
               class="mt-2 text-base sm:text-lg font-bold text-ink"
             />
@@ -211,7 +211,7 @@
 
 <script setup>
 import { ref, onUnmounted } from "vue";
-import gsap from "gsap";
+import { gsap, prefersReducedMotion, typeText } from "../lib/motion.js";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
@@ -271,23 +271,87 @@ const validateClient = () => {
 
 const titleReady = ref(false);
 
-useEnterAnimation(el, () => {
-  titleReady.value = true;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce || !termEl.value) return;
+let ctx = null;
 
-  gsap.fromTo(
-    termEl.value.querySelectorAll(".term-line"),
-    { opacity: 0, y: 8 },
-    {
-      opacity: 1,
-      y: 0,
-      duration: 0.4,
-      stagger: 0.1,
-      ease: "power2.out",
-      clearProps: "opacity,transform",
+// Boots one terminal window: types each prompt command, then reveals its output.
+const bootWindow = (tl, win, at) => {
+  const lines = Array.from(win.querySelectorAll(".term-line"));
+  let t = at;
+  lines.forEach((line) => {
+    const cmd = line.querySelector(".prompt .text-ink");
+    const outputs = Array.from(line.children).filter(
+      (c) => !c.classList.contains("prompt")
+    );
+    const isFirst = line === lines[0] && win === termEl.value.querySelector(".term-window");
+
+    if (cmd) {
+      const typed = typeText(cmd, cmd.textContent);
+      tl.add(typed, t);
+      t += typed.duration() + 0.12;
+    } else {
+      t += 0.1;
     }
-  );
+
+    if (line.tagName === "FORM") {
+      const [note, fields, ...rest] = outputs;
+      const rows = fields ? Array.from(fields.querySelectorAll(".term-row")) : [];
+      if (note) {
+        tl.fromTo(note, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.4, clearProps: "opacity,transform" }, t);
+      }
+      rows.forEach((row, i) => {
+        const label = row.querySelector(".term-label");
+        const input = row.querySelector(".term-input");
+        const rt = t + 0.15 + i * 0.16;
+        if (label) {
+          tl.fromTo(label, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.4, clearProps: "opacity,transform" }, rt);
+        }
+        if (input) {
+          tl.fromTo(input, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power2.inOut", clearProps: "clipPath" }, rt + 0.08);
+        }
+      });
+      if (rest.length) {
+        tl.fromTo(rest, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, clearProps: "opacity,transform" }, t + 0.3 + rows.length * 0.16);
+      }
+      t += 0.3 + rows.length * 0.16 + 0.4;
+    } else if (outputs.length) {
+      if (isFirst) tl.call(() => (titleReady.value = true), null, t);
+      tl.fromTo(
+        outputs,
+        { opacity: 0, y: 6 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, clearProps: "opacity,transform" },
+        t
+      );
+      t += 0.4 + outputs.length * 0.1 + 0.1;
+    }
+  });
+  return t;
+};
+
+useEnterAnimation(el, () => {
+  const wins = termEl.value ? Array.from(termEl.value.querySelectorAll(".term-window")) : [];
+  if (prefersReducedMotion() || !wins.length) {
+    titleReady.value = true;
+    return;
+  }
+
+  const restore = [];
+  ctx = gsap.context(() => {
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    // CRT-style opening: the windows unfold from a thin line
+    tl.fromTo(
+      wins,
+      { scaleY: 0.02, opacity: 0, transformOrigin: "50% 0%" },
+      { scaleY: 1, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.15, clearProps: "transform,opacity" },
+      0
+    );
+    wins.forEach((win, i) => {
+      win.querySelectorAll(".prompt .text-ink").forEach((c) => restore.push([c, c.textContent]));
+      bootWindow(tl, win, 0.5 + i * 0.3);
+    });
+    // Safety net: never leave the title hidden
+    tl.call(() => (titleReady.value = true));
+  }, termEl.value);
+  ctx.cleanup = () => restore.forEach(([c, txt]) => (c.textContent = txt));
 });
 
 const submitForm = async () => {
@@ -355,6 +419,8 @@ const submitForm = async () => {
 };
 
 onUnmounted(() => {
+  ctx?.revert();
+  ctx?.cleanup?.();
   if (autoCloseTimeout) clearTimeout(autoCloseTimeout);
 });
 </script>

@@ -6,7 +6,7 @@
       class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0 lg:pb-0"
     >
       <div class="lane-left lg:border-b lg:border-line/15 lg:pb-5">
-        <p class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2 animate-fade-in">
+        <p class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2 watch-label">
           // sources
         </p>
         <AsciiDecodeText
@@ -19,7 +19,7 @@
         />
       </div>
       <div class="lane-right hidden sm:flex items-end justify-end lg:border-b lg:border-line/15 lg:pb-5">
-        <p class="text-sm text-ink-muted italic max-w-xs lg:text-right animate-fade-in-delay">
+        <p class="text-sm text-ink-muted italic max-w-xs lg:text-right watch-intro">
           Les sources que je consulte pour rester à jour.
         </p>
       </div>
@@ -36,12 +36,16 @@
           :key="item.title"
           :href="item.link"
           target="_blank"
-          class="watch-row group relative flex items-center gap-4 py-5 px-3 sm:px-4 no-underline border-b border-line/15 overflow-hidden"
+          class="watch-row group relative flex items-center gap-4 py-5 px-3 sm:px-4 no-underline overflow-hidden"
           :style="{ '--accent': item.accent }"
         >
+          <span
+            :class="[ci === 0 ? 'origin-left' : 'origin-right', 'watch-line absolute left-0 right-0 bottom-0 h-px bg-line/15']"
+            aria-hidden="true"
+          />
           <span class="watch-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          <span class="relative z-10 font-mono text-sm w-8 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] transition-colors duration-300">
+          <span :data-num="String(ci * half + i + 1).padStart(2, '0')" class="watch-num relative z-10 font-mono text-sm w-8 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] transition-colors duration-300">
             {{ String(ci * half + i + 1).padStart(2, "0") }}
           </span>
 
@@ -74,8 +78,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import gsap from "gsap";
+import { ref, onUnmounted } from "vue";
+import { gsap, prefersReducedMotion, typeText } from "@/lib/motion.js";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
@@ -131,27 +135,88 @@ const techList = ref([
 const half = Math.ceil(techList.value.length / 2);
 const columns = [techList.value.slice(0, half), techList.value.slice(half)];
 
+const scrambleNumber = (node, final, duration) => {
+  const state = { p: 0 };
+  node.textContent = "00";
+  return gsap.to(state, {
+    p: 1,
+    duration,
+    ease: "none",
+    onUpdate: () => {
+      node.textContent = final
+        .split("")
+        .map((ch, k) =>
+          state.p >= (k + 1) / (final.length + 1) + 0.15
+            ? ch
+            : String(Math.floor(Math.random() * 10))
+        )
+        .join("");
+    },
+    onComplete: () => {
+      node.textContent = final;
+    },
+  });
+};
+
+let ctx = null;
+
 useEnterAnimation(el, () => {
   titleReady.value = true;
-  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  if (prefersReducedMotion() || !el.value) return;
 
-  gsap.set(headerEl.value, { opacity: 0, y: -30 });
-  tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 });
+  ctx = gsap.context(() => {
+    const q = (sel) => el.value.querySelectorAll(sel);
+    const label = headerEl.value.querySelector(".watch-label");
+    const labelText = label.textContent.trim();
 
-  const rows = el.value.querySelectorAll(".watch-row");
-  gsap.set(rows, { opacity: 0, y: 24 });
-  tl.to(rows, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.4");
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.add(typeText(label, labelText), 0).fromTo(
+      headerEl.value.querySelector(".watch-intro"),
+      { opacity: 0, y: 10 },
+      { opacity: 1, y: 0, duration: 0.7, clearProps: "opacity,transform" },
+      0.2
+    );
+
+    const rows = q(".watch-row");
+    rows.forEach((row, k) => {
+      const right = row.parentElement.classList.contains("lane-right");
+      const at = 0.35 + k * 0.1;
+      const fill = row.querySelector(".watch-fill");
+      const num = row.querySelector(".watch-num");
+
+      tl.fromTo(
+        row,
+        { opacity: 0, x: right ? 40 : -40 },
+        { opacity: 1, x: 0, duration: 0.7, clearProps: "opacity,transform" },
+        at
+      )
+        .fromTo(
+          row.querySelector(".watch-line"),
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
+          at
+        )
+        .add(scrambleNumber(num, num.dataset.num, 0.7), at)
+        .fromTo(
+          fill,
+          { opacity: 0, transition: "none" },
+          {
+            keyframes: [
+              { opacity: 0.9, duration: 0.3, ease: "power2.out" },
+              { opacity: 0, duration: 0.6, ease: "power2.in" },
+            ],
+            clearProps: "opacity,transition",
+          },
+          at + 0.35
+        );
+    });
+  }, el.value);
 });
+
+onUnmounted(() => ctx?.revert());
 </script>
 
 <style scoped>
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in { animation: fade-in 0.7s ease-out forwards; }
-.animate-fade-in-delay { opacity: 0; animation: fade-in 0.7s ease-out 0.15s forwards; }
-
 .watch-fill {
   background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 75%);
 }

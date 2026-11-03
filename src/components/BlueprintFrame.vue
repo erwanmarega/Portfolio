@@ -1,11 +1,11 @@
 <template>
-  <div class="blueprint-frame" aria-label="Cadre de navigation">
+  <div ref="root" class="blueprint-frame" aria-label="Cadre de navigation">
     <div class="frame-box">
       <span
         v-for="corner in corners"
         :key="corner"
         :class="corner"
-        class="absolute z-30 h-2.5 w-2.5 border border-brand-text"
+        class="corner-mark absolute z-30 h-2.5 w-2.5 border border-brand-text"
         aria-hidden="true"
       />
 
@@ -19,6 +19,16 @@
         class="pointer-events-auto absolute inset-x-0 top-0 z-20 flex items-stretch border-b border-line/15 bg-page"
         :style="{ height: 'var(--bar-h)' }"
       >
+        <span
+          class="hair hair-top pointer-events-none absolute inset-x-0 -bottom-px h-px origin-center bg-line/15 opacity-0"
+          aria-hidden="true"
+        />
+        <span
+          ref="progress"
+          class="pointer-events-none absolute inset-x-0 -bottom-px z-10 h-px origin-left bg-brand-text"
+          style="transform: scaleX(0)"
+          aria-hidden="true"
+        />
         <a
           href="#home"
           class="flex min-w-0 items-center gap-2 border-r border-line/15 px-4 font-mono text-sm outline-none transition-colors hover:bg-line/5 focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-2 focus-visible:outline-brand-text sm:px-7"
@@ -38,7 +48,7 @@
             :key="link.href"
             :href="link.href"
             :aria-current="activeId === link.id ? 'true' : undefined"
-            class="group px-5 py-2 font-mono text-[13px] outline-none transition-colors hover:text-paper focus-visible:outline focus-visible:outline-1 focus-visible:outline-brand-text motion-reduce:transition-none xl:px-6"
+            class="nav-link group px-5 py-2 font-mono text-[13px] outline-none transition-colors hover:text-paper focus-visible:outline focus-visible:outline-1 focus-visible:outline-brand-text motion-reduce:transition-none xl:px-6"
             :class="activeId === link.id ? 'text-paper' : 'text-ink-muted'"
           >
             <span
@@ -91,7 +101,7 @@
             :href="`#${item.id}`"
             :aria-label="item.label"
             :aria-current="activeId === item.id ? 'true' : undefined"
-            class="pointer-events-auto flex h-10 w-10 shrink-0 items-center justify-center border font-mono text-[11px] tracking-wider outline-none transition-colors duration-300 hover:text-paper focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-brand-text motion-reduce:transition-none"
+            class="rail-num pointer-events-auto flex h-10 w-10 shrink-0 items-center justify-center border font-mono text-[11px] tracking-wider outline-none transition-colors duration-300 hover:text-paper focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-brand-text motion-reduce:transition-none"
             :class="
               activeId === item.id
                 ? 'border-brand-text text-brand-text'
@@ -118,13 +128,13 @@
         <div class="ruler">
           <template v-for="m in ticks" :key="m">
             <span
-              class="absolute left-0 h-px bg-line/30"
+              class="tick absolute left-0 h-px origin-left bg-line/30"
               :class="m % 50 === 0 ? 'w-3' : 'w-1.5'"
               :style="{ top: `${100 - (m / 330) * 100}%` }"
             />
             <span
               v-if="m % 50 === 0"
-              class="absolute left-4 -translate-y-1/2 font-mono text-[9px] leading-none text-ink-muted/70"
+              class="tick-label absolute left-4 -translate-y-1/2 font-mono text-[9px] leading-none text-ink-muted/70"
               :style="{ top: `${100 - (m / 330) * 100}%` }"
               >{{ m }}</span
             >
@@ -140,6 +150,10 @@
         class="pointer-events-auto absolute inset-x-0 bottom-0 z-20 flex items-center justify-between border-t border-line/15 bg-page px-4 font-mono text-[11px] text-ink-muted lg:px-7"
         :style="{ height: 'var(--foot-h)' }"
       >
+        <span
+          class="hair hair-bottom pointer-events-none absolute inset-x-0 -top-px h-px origin-center bg-line/15 opacity-0"
+          aria-hidden="true"
+        />
         <span>48.8584° N / 2.2945° E</span>
         <span class="hidden md:inline"
           >Three.js · particules · scroll-driven</span
@@ -154,6 +168,7 @@
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
+import { gsap, prefersReducedMotion, onSiteReady } from "@/lib/motion.js";
 import { CALLOUTS, METERS_PER_UNIT } from "@/lib/eiffel/callouts.js";
 import { computeStops, normalizeStops, levelAt } from "@/lib/eiffel/stops.js";
 
@@ -189,6 +204,8 @@ const railLinks = [
 const ticks = Array.from({ length: MAX_ALTITUDE / 10 + 1 }, (_, i) => i * 10);
 
 const activeId = ref(CALLOUTS[0].id);
+const root = ref(null);
+const progress = ref(null);
 const marker = ref(null);
 const markerLabel = ref(null);
 
@@ -198,6 +215,79 @@ let maxScroll = 1;
 let frame = 0;
 let observer = null;
 let lastMeters = -1;
+let ctx = null;
+let offReady = () => {};
+
+function setupIntro() {
+  const q = (sel) => root.value.querySelectorAll(sel);
+  const header = root.value.querySelector("header");
+  const footer = root.value.querySelector("footer");
+  const hairs = q(".hair");
+  const ticks = q(".tick");
+
+  ctx = gsap.context(() => {
+    // Hairlines are drawn by spans during the intro; hide the real borders meanwhile.
+    gsap.set(header, { borderBottomColor: "transparent" });
+    gsap.set(footer, { borderTopColor: "transparent" });
+    gsap.set(hairs, { opacity: 1 });
+
+    const tl = gsap.timeline({
+      paused: true,
+      defaults: { ease: "power3.out" },
+      onComplete: () => {
+        gsap.set(hairs, { opacity: 0, clearProps: "transform" });
+        gsap.set([header, footer], { clearProps: "borderBottomColor,borderTopColor" });
+      },
+    });
+
+    tl.from(
+      q(".corner-mark"),
+      {
+        x: (i, t) => {
+          const r = t.getBoundingClientRect();
+          return i % 2 === 0 ? -r.left : window.innerWidth - r.right;
+        },
+        y: (i, t) => {
+          const r = t.getBoundingClientRect();
+          return i < 2 ? -r.top : window.innerHeight - r.bottom;
+        },
+        opacity: 0,
+        duration: 1,
+        ease: "expo.out",
+        clearProps: "transform,opacity",
+      },
+      0
+    )
+      .from(hairs, { scaleX: 0, duration: 0.9, ease: "power2.inOut" }, 0.1)
+      .from(
+        q(".rail-num"),
+        { opacity: 0, x: -10, duration: 0.45, stagger: 0.05, clearProps: "transform,opacity" },
+        0.3
+      )
+      .from(
+        ticks,
+        {
+          scaleX: 0,
+          duration: 0.4,
+          stagger: { each: 0.012, from: "end" },
+          clearProps: "transform",
+        },
+        0.3
+      )
+      .from(
+        [...q(".tick-label"), marker.value],
+        { opacity: 0, duration: 0.5, clearProps: "opacity" },
+        0.7
+      )
+      .from(
+        q(".nav-link"),
+        { opacity: 0, y: -6, duration: 0.45, stagger: 0.07, clearProps: "transform,opacity" },
+        0.45
+      );
+
+    offReady = onSiteReady(() => tl.play());
+  }, root.value);
+}
 
 function measure() {
   rawStops = computeStops();
@@ -222,8 +312,10 @@ function update() {
   }
   if (best && best !== activeId.value) activeId.value = best;
 
-  if (!marker.value) return;
   const p = Math.min(1, Math.max(0, y / maxScroll));
+  if (progress.value) progress.value.style.transform = `scaleX(${p})`;
+
+  if (!marker.value) return;
   const meters = Math.min(
     MAX_ALTITUDE,
     Math.max(0, levelAt(levelStops, p) * METERS_PER_UNIT)
@@ -248,6 +340,7 @@ function onLayout() {
 onMounted(() => {
   measure();
   update();
+  if (!prefersReducedMotion()) setupIntro();
   window.addEventListener("scroll", schedule, { passive: true });
   window.addEventListener("resize", onLayout);
   observer = new ResizeObserver(onLayout);
@@ -255,6 +348,9 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  offReady();
+  ctx?.revert();
+  ctx = null;
   window.removeEventListener("scroll", schedule);
   window.removeEventListener("resize", onLayout);
   observer?.disconnect();
@@ -268,7 +364,6 @@ onUnmounted(() => {
   inset: 0;
   z-index: 40;
   pointer-events: none;
-  animation: frame-in 0.6s ease-out both;
 }
 
 .frame-box {
@@ -327,20 +422,5 @@ onUnmounted(() => {
   line-height: 1;
   color: rgb(var(--brand-text));
   white-space: nowrap;
-}
-
-@keyframes frame-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .blueprint-frame {
-    animation: none;
-  }
 }
 </style>
