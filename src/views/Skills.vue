@@ -48,10 +48,15 @@
         :class="[ci === 0 ? 'lane-left' : 'lane-right', 'flex flex-col']"
       >
         <li
-          v-for="item in column"
+          v-for="(item, ri) in column"
           :key="item.title"
-          class="skill-row group flex flex-col gap-4 py-5 border-b border-line/15 last:border-b-0"
+          class="skill-row group relative flex flex-col gap-4 py-5"
         >
+          <span
+            v-if="ri < column.length - 1"
+            :class="[ci === 0 ? 'origin-left' : 'origin-right', 'skill-line absolute left-0 right-0 bottom-0 h-px bg-line/15']"
+            aria-hidden="true"
+          />
           <div>
             <AsciiDecodeText
               tag="h2"
@@ -100,8 +105,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import gsap from "gsap";
+import { ref, onUnmounted } from "vue";
+import { gsap, prefersReducedMotion } from "@/lib/motion.js";
 import AsciiEffect from "@/components/AsciiEffect.vue";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 import AsciiDecodeText from "../components/AsciiDecodeText.vue";
@@ -189,59 +194,137 @@ const half = Math.ceil(competences.length / 2);
 const indexed = competences.map((item, index) => ({ ...item, index }));
 const columns = [indexed.slice(0, half), indexed.slice(half)];
 
-const animate = () => {
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce || !el.value) return;
+let ctx = null;
 
-  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-  tl.fromTo(
-    headerEl.value.querySelectorAll(":scope > div"),
-    { opacity: 0, y: -12 },
-    { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
-  )
-    .fromTo(
-      headerEl.value.querySelectorAll(".skills-rule"),
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
-      0
-    )
-    .fromTo(
-      el.value.querySelectorAll(".skill-row"),
-      { opacity: 0, x: -12 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.45,
-        stagger: 0.1,
-        clearProps: "opacity,transform",
-      },
-      "-=0.4"
-    )
-    .fromTo(
-      el.value.querySelectorAll(".skill-tech"),
-      { opacity: 0, y: 6 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.3,
-        stagger: 0.03,
-        clearProps: "opacity,transform",
-      },
-      "-=0.4"
-    )
-    .fromTo(
-      el.value.querySelectorAll(".skill-tag"),
-      { opacity: 0, scale: 0.9 },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 0.3,
-        stagger: 0.02,
-        clearProps: "opacity,transform",
-      },
-      "-=0.3"
-    );
+const brandColor = () => {
+  const v = getComputedStyle(document.documentElement)
+    .getPropertyValue("--brand-text")
+    .trim();
+  if (!v) return "#ff4d94";
+  return v.includes(",") || v.startsWith("#") || v.includes("(") ? v : `rgb(${v})`;
 };
+
+const animate = () => {
+  if (prefersReducedMotion() || !el.value) return;
+
+  ctx = gsap.context(() => {
+    const q = (sel) => el.value.querySelectorAll(sel);
+    const tags = q(".skill-tag");
+    const restBorder = tags.length ? getComputedStyle(tags[0]).borderTopColor : "";
+
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+    tl.fromTo(
+      headerEl.value.querySelectorAll(":scope > div"),
+      { opacity: 0, y: -12 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
+    )
+      .fromTo(
+        headerEl.value.querySelectorAll(".skills-rule"),
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
+        0
+      )
+      .fromTo(
+        q(".skill-row"),
+        { opacity: 0, x: -12 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.45,
+          stagger: 0.1,
+          clearProps: "opacity,transform",
+        },
+        "-=0.4"
+      )
+      .fromTo(
+        q(".skill-line"),
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.inOut",
+          clearProps: "transform",
+        },
+        "<"
+      )
+      .fromTo(
+        q(".skill-tech img"),
+        {
+          opacity: 0,
+          y: -14,
+          scale: 0.4,
+          rotation: () => gsap.utils.random(-25, 25),
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          rotation: 0,
+          duration: 0.55,
+          stagger: 0.04,
+          ease: "back.out(2.2)",
+          clearProps: "opacity,transform",
+        },
+        "-=0.4"
+      )
+      .fromTo(
+        q(".skill-tech span"),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, stagger: 0.04, clearProps: "opacity" },
+        "<0.15"
+      )
+      .fromTo(
+        tags,
+        { opacity: 0, scale: 0.9 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.3,
+          stagger: 0.02,
+          clearProps: "opacity,transform",
+        },
+        "-=0.3"
+      );
+
+    if (tags.length) {
+      tl.fromTo(
+        tags,
+        { borderColor: brandColor() },
+        {
+          borderColor: restBorder,
+          duration: 0.6,
+          stagger: 0.02,
+          ease: "power1.out",
+          clearProps: "borderColor",
+        },
+        "<"
+      );
+    }
+
+    // Light scroll-linked parallax, columns drift at slightly different speeds.
+    const cols = q(".lane-grid > ol");
+    cols.forEach((col, i) => {
+      const amp = i === 0 ? 10 : 20;
+      gsap.fromTo(
+        col,
+        { y: amp },
+        {
+          y: -amp,
+          ease: "none",
+          scrollTrigger: {
+            trigger: el.value,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        }
+      );
+    });
+  }, el.value);
+};
+
+onUnmounted(() => ctx?.revert());
 
 const titlesReady = ref(false);
 

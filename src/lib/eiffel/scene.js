@@ -199,6 +199,17 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
     return { x: best, y: cy, visible };
   }
 
+  function projectPoint(x, y, z) {
+    const W = canvas.clientWidth || window.innerWidth;
+    const H = canvas.clientHeight || window.innerHeight;
+    tmpProj.set(x, y, z).project(camera);
+    const px = ((tmpProj.x + 1) / 2) * W;
+    const py = ((1 - tmpProj.y) / 2) * H;
+    const edge = Math.min(px, W - px, py, H - py);
+    const visible = tmpProj.z > 1 ? 0 : Math.min(1, Math.max(0, edge / 60));
+    return { x: px, y: py, visible };
+  }
+
   function tick(now) {
     raf = 0;
     if (disposed || !running) return;
@@ -277,5 +288,5 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
     if (!disposed && running) render();
   }
 
-  return { setProgress, setStops, resize, start, stop, dispose, onRender, projectLevel };
+  return { setProgress, setStops, resize, start, stop, dispose, onRender, projectLevel, projectPoint };
 }

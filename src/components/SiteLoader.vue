@@ -15,6 +15,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import AsciiEffect from "./AsciiEffect.vue";
+import { markSiteReady } from "@/lib/motion.js";
 
 const MIN_MS = 600;
 const MAX_MS = 2000;
@@ -29,6 +30,7 @@ let maxTimer = 0;
 
 function hide() {
   visible.value = false;
+  markSiteReady();
   cleanup();
 }
 
@@ -54,7 +56,10 @@ function cleanup() {
 }
 
 onMounted(() => {
-  if (!visible.value) return;
+  if (!visible.value) {
+    markSiteReady();
+    return;
+  }
   if (loaded) tryHide();
   else window.addEventListener("load", onLoad);
   maxTimer = setTimeout(hide, MAX_MS);
