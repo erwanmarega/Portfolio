@@ -11,5 +11,5 @@ export const CALLOUTS = [
 ];
 
 export function calloutLabel(index, y) {
-  return `${String(index + 1).padStart(2, "0")} — ${Math.round(y * METERS_PER_UNIT)} M`;
+  return `[ ${String(index + 1).padStart(2, "0")} — ${Math.round(y * METERS_PER_UNIT)} M ]`;
 }

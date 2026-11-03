@@ -15,6 +15,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 import { CALLOUTS, calloutLabel } from "@/lib/eiffel/callouts.js";
+import { computeStops } from "@/lib/eiffel/stops.js";
 
 const canvas = ref(null);
 const overlay = ref(null);
@@ -62,16 +63,7 @@ function getLaneWidth() {
 
 function updateStops() {
   if (!scene) return;
-  const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-  const stops = [];
-  for (const c of CALLOUTS) {
-    const el = document.querySelector(`[data-tower-anchor="${c.id}"]`);
-    if (!el) continue;
-    const r = el.getBoundingClientRect();
-    const centerY = window.scrollY + r.top + r.height / 2 - window.innerHeight / 2;
-    stops.push({ p: centerY / max, y: c.y });
-  }
-  scene.setStops(stops);
+  scene.setStops(computeStops());
 }
 
 function onLayoutChange() {
@@ -109,7 +101,7 @@ function buildCallouts() {
     );
     const label = svgEl(
       "text",
-      { class: "font-mono text-[10px] uppercase tracking-[0.25em] text-ink-muted", fill: "currentColor" },
+      { class: "font-mono text-[11px] tracking-[0.15em] text-brand-text", fill: "currentColor" },
       g,
     );
     label.textContent = calloutLabel(i, c.y);

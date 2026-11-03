@@ -1,5 +1,7 @@
 <template>
     <EiffelBackground />
+    <BlueprintFrame />
+    <div class="page-shell">
     <div class="section" id="home"><Home /></div>
     <div class="section" id="about"><About /></div>
     <div class="section" id="journey"><Journey /></div>
@@ -7,6 +9,7 @@
     <div class="section" id="tech-watch"><TechWatch /></div>
     <div class="section" id="projects"><Projects /></div>
     <div class="section" id="contact"><Contact /></div>
+    </div>
     <SharkEasterEgg />
     <SiteLoader />
 </template>
@@ -22,6 +25,7 @@ import TechWatch from './views/TechWatch.vue';
 import SharkEasterEgg from './components/SharkEasterEgg.vue';
 import SiteLoader from './components/SiteLoader.vue';
 import EiffelBackground from './components/EiffelBackground.vue';
+import BlueprintFrame from './components/BlueprintFrame.vue';
 
 </script>
 
@@ -44,9 +48,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
 </style>
 
 <style scoped>
+.page-shell {
+  padding: calc(var(--frame-inset) + var(--bar-h)) var(--frame-gutter) calc(var(--frame-inset) + var(--foot-h));
+}
 .section {
   position: relative;
-  max-width: 100vw;
+  max-width: 100%;
   overflow-x: hidden;
+  scroll-margin-top: calc(var(--frame-inset) + var(--bar-h));
 }
 </style>

@@ -1,3 +1,5 @@
+import defaultTheme from 'tailwindcss/defaultTheme';
+
 export default {
     darkMode: ["class"],
     content: [
@@ -7,6 +9,10 @@ export default {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['Geist', ...defaultTheme.fontFamily.sans],
+  			mono: ['"Geist Mono"', ...defaultTheme.fontFamily.mono]
+  		},
   		zIndex: {
   			'60': '60'
   		},
@@ -31,6 +37,7 @@ export default {
   				text: 'rgb(var(--brand-text) / <alpha-value>)'
   			},
   			line: 'rgb(var(--line) / <alpha-value>)',
+  			paper: 'rgb(var(--paper) / <alpha-value>)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

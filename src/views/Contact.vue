@@ -2,7 +2,7 @@
   <section
     ref="el"
     aria-labelledby="contact-title"
-    class="contact-section relative px-4 sm:px-8 lg:px-16 py-16 sm:py-24 lg:py-32"
+    class="contact-section relative py-16 sm:py-24 lg:py-32"
   >
     <div ref="termEl" class="lane-grid lg:items-stretch">
       <div

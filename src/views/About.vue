@@ -1,7 +1,7 @@
 <template>
   <div
     ref="el"
-    class="w-full min-h-screen pt-28 sm:pt-40 pb-12 px-4 sm:px-8 lg:px-12"
+    class="w-full min-h-screen pt-28 sm:pt-40 pb-12"
   >
     <div class="lane-grid lg:gap-y-8">
       <header
@@ -24,7 +24,7 @@
               idle-glitch
               :start="showName"
               :duration="2.5"
-              class="block text-4xl sm:text-6xl lg:text-5xl font-extrabold tracking-tight text-ink"
+              class="block text-4xl sm:text-6xl lg:text-4xl xl:text-5xl font-extrabold tracking-tight text-ink"
             />
             <p class="text-base sm:text-xl lg:text-lg text-ink-soft mt-1">
               Je code des apps web. J'aime apprendre et m'intéresser à tous les

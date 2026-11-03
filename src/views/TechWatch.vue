@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" class="h-full flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-10 gap-8 overflow-hidden">
+  <div ref="el" class="h-full flex flex-col justify-center py-10 gap-8 overflow-hidden">
 
     <header
       ref="headerEl"
@@ -15,7 +15,7 @@
           text="Veille Technologique"
           idle-glitch
           :start="titleReady"
-          class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
+          class="text-4xl lg:text-3xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
         />
       </div>
       <div class="lane-right hidden sm:flex items-end justify-end lg:border-b lg:border-line/15 lg:pb-5">

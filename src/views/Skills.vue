@@ -2,7 +2,7 @@
   <section
     ref="el"
     aria-labelledby="skills-title"
-    class="w-full min-h-screen flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-12 gap-5 sm:gap-6"
+    class="w-full min-h-screen flex flex-col justify-center py-12 gap-5 sm:gap-6"
   >
     <header
       ref="headerEl"
