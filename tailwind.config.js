@@ -1,8 +1,8 @@
-/** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
     content: [
     "./index.html",
+    "./404.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
@@ -16,6 +16,21 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			page: 'rgb(var(--page) / <alpha-value>)',
+  			surface: {
+  				DEFAULT: 'rgb(var(--surface) / <alpha-value>)',
+  				strong: 'rgb(var(--surface-strong) / <alpha-value>)'
+  			},
+  			ink: {
+  				DEFAULT: 'rgb(var(--ink) / <alpha-value>)',
+  				soft: 'rgb(var(--ink-soft) / <alpha-value>)',
+  				muted: 'rgb(var(--ink-muted) / <alpha-value>)'
+  			},
+  			brand: {
+  				DEFAULT: 'rgb(var(--brand) / <alpha-value>)',
+  				text: 'rgb(var(--brand-text) / <alpha-value>)'
+  			},
+  			line: 'rgb(var(--line) / <alpha-value>)',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

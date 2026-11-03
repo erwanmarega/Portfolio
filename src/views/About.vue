@@ -1,23 +1,32 @@
 <template>
   <div
     ref="el"
-    class="w-full min-h-screen bg-white pt-28 sm:pt-40 pb-12 px-4 sm:px-8 lg:px-14"
+    class="w-full min-h-screen pt-28 sm:pt-40 pb-12 px-4 sm:px-8 lg:px-12"
   >
-    <div class="max-w-6xl mx-auto">
-      <header ref="header" class="flex items-start justify-between gap-4 mb-10">
-        <div class="flex items-center gap-4 sm:gap-5">
+    <div class="lane-grid lg:gap-y-8">
+      <header
+        ref="header"
+        class="lane-full flex items-start justify-between gap-4"
+      >
+        <div
+          class="flex items-center gap-4 sm:gap-5 lg:flex-col lg:items-start lg:max-w-[calc((100%-var(--tower-lane))/2-1.5rem)]"
+        >
           <img
             :src="erwanImage"
             alt="Erwan Marega"
-            class="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full object-cover object-center shadow-sm"
+            class="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full object-cover object-center shadow-[0_2px_8px_rgba(10,10,10,0.1)] shrink-0"
           />
           <div>
-            <h1
-              class="text-2xl sm:text-4xl font-bold tracking-tight text-gray-900"
-            >
-              Erwan Marega
-            </h1>
-            <p class="text-base sm:text-xl text-gray-500 mt-1">
+            <AsciiDecodeText
+              tag="h1"
+              data-tower-anchor="about"
+              text="Erwan Marega"
+              idle-glitch
+              :start="showName"
+              :duration="2.5"
+              class="block text-4xl sm:text-6xl lg:text-5xl font-extrabold tracking-tight text-ink"
+            />
+            <p class="text-base sm:text-xl lg:text-lg text-ink-soft mt-1">
               Je code des apps web. J'aime apprendre et m'intéresser à tous les
               sujets.
             </p>
@@ -26,7 +35,7 @@
         <a
           :href="CV_Marega"
           target="_blank"
-          class="hidden sm:inline-flex items-center gap-2 bg-gray-900 text-white text-base font-semibold rounded-full px-6 py-3 transition-all hover:bg-black hover:shadow-md shrink-0"
+          class="hidden sm:inline-flex items-center gap-2 bg-ink text-page text-base font-semibold rounded-full px-6 py-3 transition-all hover:bg-ink/90 hover:shadow-md shrink-0"
         >
           <font-awesome-icon :icon="['fas', 'file-arrow-down']" />
           Mon CV
@@ -35,94 +44,90 @@
 
       <div
         ref="grid"
-        class="grid grid-cols-1 lg:grid-cols-[1fr_1.9fr_1fr] gap-4 sm:gap-5 lg:auto-rows-auto"
+        class="lane-left lg:row-start-2 flex flex-col gap-4 sm:gap-5 lg:pr-6"
       >
-        <div class="flex flex-col gap-4 sm:gap-5">
-          <a
-            href="#projects"
-            class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] h-64 lg:h-[360px]"
-          >
-          </a>
-          <a
-            href="#projects"
-            class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] flex-1"
-          >
-            <img
-              :src="ImgBoat"
-              alt="Voyage"
-              class="bento-img"
-              loading="lazy"
-              decoding="async"
-            />
-          </a>
-        </div>
-
-        <div class="flex flex-col gap-4 sm:gap-5">
-          <a
-            href="#projects"
-            class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] h-64 lg:h-[360px]"
-          >
-            <img
-              :src="ImgCity"
-              alt="Voyage urbain"
-              class="bento-img"
-              loading="lazy"
-              decoding="async"
-            />
-          </a>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 flex-1">
-            <a
-              href="#projects"
-              class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] min-h-[200px]"
-            >
-              <img
-                :src="ImgBeach"
-                alt="Plage"
-                class="bento-img"
-                loading="lazy"
-                decoding="async"
-              />
-            </a>
-            <a
-              :href="CV_Marega"
-              target="_blank"
-              class="bento-card group flex flex-col rounded-3xl bg-white shadow-[0_2px_16px_rgba(0,0,0,0.06)] p-5 min-h-[200px]"
-            >
-              <div
-                class="flex items-center gap-2 text-gray-500 text-sm font-medium mb-3"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'bookmark']"
-                  class="text-orange-500"
-                />
-                Mastère
-              </div>
-              <h3 class="font-bold text-gray-900 text-lg leading-snug mb-2">
-                Dev Manager Full Stack @ Efrei
-              </h3>
-              <p class="text-gray-500 leading-relaxed text-sm">
-                Développeur web en formation, passionné par la création de sites
-                internet et la gestion de projets digitaux. En Mastère Dev
-                Manager Full Stack à l'Efrei, je suis actuellement en alternance
-                pendant 2 ans en tant qu'Ingénieur Développement de septembre
-                2025 à juillet 2027.
-              </p>
-              <div
-                class="flex items-center gap-1.5 text-gray-700 text-sm font-medium mt-auto pt-4"
-              >
-                <span>Lire plus</span>
-                <font-awesome-icon
-                  :icon="['fas', 'arrow-up-right-from-square']"
-                  class="text-xs transition-transform group-hover:translate-x-0.5"
-                />
-              </div>
-            </a>
-          </div>
-        </div>
-
         <a
           href="#projects"
-          class="bento-card group block rounded-3xl overflow-hidden bg-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] h-64 lg:h-auto"
+          class="bento-card group block rounded-3xl overflow-hidden bg-surface shadow-[0_2px_16px_rgba(10,10,10,0.08)] relative h-64 lg:h-[300px]"
+          aria-label="Voir mes projets"
+        >
+          <AsciiEffect effect="torus" class="absolute inset-0" />
+        </a>
+        <a
+          :href="CV_Marega"
+          target="_blank"
+          class="bento-card group flex flex-col rounded-3xl bg-surface-strong shadow-[0_2px_16px_rgba(10,10,10,0.08)] p-5 min-h-[200px]"
+        >
+          <div
+            class="flex items-center gap-2 text-ink-soft text-sm font-medium mb-3"
+          >
+            <font-awesome-icon :icon="['fas', 'bookmark']" class="text-brand" />
+            Mastère
+          </div>
+          <h3 class="font-bold text-ink text-lg leading-snug mb-2">
+            Dev Manager Full Stack @ Efrei
+          </h3>
+          <p class="text-ink-soft leading-relaxed text-sm">
+            Développeur web en formation, passionné par la création de sites
+            internet et la gestion de projets digitaux. En Mastère Dev Manager
+            Full Stack à l'Efrei, je suis actuellement en alternance pendant 2
+            ans en tant qu'Ingénieur Développement de septembre 2025 à juillet
+            2027.
+          </p>
+          <div
+            class="flex items-center gap-1.5 text-ink-soft text-sm font-medium mt-auto pt-4"
+          >
+            <span>Lire plus</span>
+            <font-awesome-icon
+              :icon="['fas', 'arrow-up-right-from-square']"
+              class="text-xs transition-transform group-hover:translate-x-0.5"
+            />
+          </div>
+        </a>
+        <a
+          href="#projects"
+          class="bento-card group block rounded-3xl overflow-hidden bg-surface shadow-[0_2px_16px_rgba(10,10,10,0.08)] h-64 lg:flex-1 lg:h-auto lg:min-h-[200px]"
+        >
+          <img
+            :src="ImgBoat"
+            alt="Voyage"
+            class="bento-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </div>
+
+      <div
+        class="lane-right lg:row-start-2 flex flex-col gap-4 sm:gap-5 lg:pl-6"
+      >
+        <a
+          href="#projects"
+          class="bento-card group block rounded-3xl overflow-hidden bg-surface shadow-[0_2px_16px_rgba(10,10,10,0.08)] h-64 lg:h-[300px]"
+        >
+          <img
+            :src="ImgCity"
+            alt="Voyage urbain"
+            class="bento-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <a
+          href="#projects"
+          class="bento-card group block rounded-3xl overflow-hidden bg-surface shadow-[0_2px_16px_rgba(10,10,10,0.08)] h-64 lg:flex-1 lg:h-auto lg:min-h-[200px]"
+        >
+          <img
+            :src="ImgBeach"
+            alt="Plage"
+            class="bento-img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <a
+          href="#projects"
+          class="bento-card group block rounded-3xl overflow-hidden bg-surface shadow-[0_2px_16px_rgba(10,10,10,0.08)] h-64 lg:flex-1 lg:h-auto lg:min-h-[200px]"
         >
           <img
             :src="ImgRome"
@@ -152,6 +157,8 @@ import ImgCity from "../assets/images/about/city.webp";
 import ImgBeach from "../assets/images/about/beach.webp";
 import ImgRome from "../assets/images/about/rome.webp";
 import CV_Marega from "../assets/docs/cv-erwan-marega.pdf";
+import AsciiEffect from "../components/AsciiEffect.vue";
+import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
 
 library.add(faFileArrowDown, faArrowUpRightFromSquare, faBookmark);
@@ -161,7 +168,10 @@ const header = ref(null);
 const grid = ref(null);
 const erwanImage = ImgErwan;
 
+const showName = ref(false);
+
 useEnterAnimation(el, () => {
+  showName.value = true;
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
   gsap.set(header.value, { opacity: 0, y: 30 });
   tl.to(header.value, { opacity: 1, y: 0, duration: 0.7 });

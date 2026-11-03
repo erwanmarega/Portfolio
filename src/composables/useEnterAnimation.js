@@ -14,10 +14,6 @@ export function useEnterAnimation(elRef, animateFn) {
       return
     }
 
-    // ScrollTrigger rather than IntersectionObserver: positions are recomputed
-    // once images and pinned sections (SharkPortal, Creations) are laid out, so
-    // the entrance doesn't fire on load while a section is briefly in view.
-    // Still fires on fast scroll, anchor jumps and reloads landing mid-page.
     trigger = ScrollTrigger.create({
       trigger: target,
       start: 'top 85%',

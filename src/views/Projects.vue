@@ -1,326 +1,182 @@
 <template>
-  <div ref="el" class="bg-white">
-    <!-- Section Portal (intro pleine page) -->
+  <div ref="el">
     <section
-      ref="portalSection"
-      class="relative h-screen w-full overflow-hidden bg-white flex items-center justify-center"
+      aria-labelledby="projects-title"
+      class="relative px-4 sm:px-8 lg:px-16 py-20 sm:py-28 lg:py-32"
     >
-      <div
-        ref="portalWrapper"
-        class="portal-wrapper relative w-screen h-screen overflow-hidden"
-      >
-        <AsciiPortal>
-          <div class="flex flex-col items-center">
-            <span
-              class="text-white/70 text-xs sm:text-sm font-mono uppercase tracking-widest mb-3"
+      <div>
+        <header ref="headerEl" class="lane-grid items-end">
+          <div class="lane-left pb-6 border-b border-line/15 lg:row-start-1">
+            <p
+              class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2"
             >
-              Portfolio
-            </span>
-            <h2
-              class="text-white text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"
-            >
-              Projets
-            </h2>
+              // projets
+            </p>
+            <AsciiDecodeText
+              tag="h2"
+              id="projects-title"
+              data-tower-anchor="projects"
+              text="Projets sélectionnés"
+              idle-glitch
+              class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
+            />
+            <p class="mt-4 text-sm sm:text-base text-ink-soft max-w-xl">
+              Une sélection de projets web, du SaaS aux outils pour développeurs.
+            </p>
           </div>
-        </AsciiPortal>
-      </div>
-
-      <div
-        class="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 text-sm font-medium flex flex-col items-center gap-2 z-20"
-      >
-        <span>Découvrir</span>
-        <svg
-          class="w-5 h-5 animate-bounce"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
-      </div>
-    </section>
-
-    <!-- Section horizontale (desktop) -->
-    <section
-      ref="horizontalSection"
-      class="hidden lg:block relative bg-white overflow-hidden"
-    >
-      <div ref="horizontalTrack" class="horizontal-track flex h-screen">
-        <!-- Slide projet : image pleine page + overlay sombre + infos -->
-        <article
-          v-for="(project, index) in projects"
-          :key="project.id"
-          class="project-slide relative flex-shrink-0 w-screen h-screen"
-          :style="{ '--accent': project.accent }"
-        >
-          <!-- Image de fond -->
-          <img
-            :src="project.image"
-            :alt="project.title"
-            class="absolute inset-0 w-full h-full object-cover"
-          />
-
-          <!-- Overlay sombre avec dégradé -->
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30"
-          />
-          <div
-            class="absolute inset-0"
-            :style="{
-              background: `linear-gradient(to top, ${project.accent}30 0%, transparent 60%)`,
-            }"
-          />
-
-          <!-- Contenu du projet -->
-          <div
-            class="absolute bottom-0 left-0 w-full p-12 lg:p-16 xl:p-24 flex flex-col justify-end"
+          <span
+            class="lane-right max-lg:mt-4 max-lg:pb-0 max-lg:border-0 max-lg:text-left pb-6 border-b border-line/15 text-right font-mono text-2xl sm:text-4xl text-ink-muted leading-none lg:row-start-1"
           >
-            <div class="max-w-4xl">
-              <div class="flex items-center gap-4 mb-5">
-                <span
-                  class="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
-                  :style="{ backgroundColor: project.accent }"
-                >
-                  {{ project.category }}
-                </span>
-                <span class="font-mono text-sm text-white/60">
-                  {{ String(index + 1).padStart(2, "0") }} /
-                  {{ String(projects.length).padStart(2, "0") }}
-                </span>
-              </div>
-
-              <h2
-                class="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-5 leading-tight"
-              >
-                {{ project.title }}
-              </h2>
-
-              <p
-                class="text-lg lg:text-xl text-white/80 leading-relaxed mb-8 max-w-2xl"
-              >
-                {{ project.description }}
-              </p>
-
-              <div class="flex flex-wrap gap-2 mb-10">
-                <span
-                  v-for="tag in project.tags"
-                  :key="tag"
-                  class="px-3 py-1.5 rounded-full text-xs font-medium border backdrop-blur-sm"
-                  :style="{
-                    color: 'white',
-                    borderColor: 'rgba(255,255,255,0.3)',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                  }"
-                >
-                  {{ tag }}
-                </span>
-              </div>
-
-              <a
-                :href="project.link"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-medium transition-all hover:scale-105 hover:shadow-lg"
-                :style="{ backgroundColor: project.accent }"
-              >
-                Voir le projet
-                <font-awesome-icon
-                  :icon="['fas', 'arrow-up-right-from-square']"
-                  class="w-4 h-4"
-                />
-              </a>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <!-- Indicateur de progression -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        <button
-          v-for="(_, index) in projects"
-          :key="index"
-          type="button"
-          class="progress-dot w-2 h-2 rounded-full bg-gray-300 transition-all duration-300"
-          :class="{ 'w-8 bg-gray-900': activeSlide === index }"
-          @click="goToSlide(index)"
-          :aria-label="`Projet ${index + 1}`"
-        />
-      </div>
-    </section>
-
-    <!-- Fallback mobile : grille verticale -->
-    <section
-      ref="contentSection"
-      class="lg:hidden relative bg-white pt-20 sm:pt-28 pb-20 px-4 sm:px-8"
-    >
-      <div class="max-w-6xl mx-auto">
-        <header ref="headerEl" class="text-center mb-12">
-          <h1
-            class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none"
-          >
-            Mes projets
-          </h1>
-          <p
-            class="mt-4 text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto font-light leading-relaxed"
-          >
-            Une collection de réalisations web alliant design moderne,
-            performance et expérience utilisateur.
-          </p>
-
-          <div
-            ref="statsEl"
-            class="flex flex-wrap justify-center gap-8 sm:gap-12 mt-10"
-          >
-            <div class="text-center">
-              <div
-                ref="statProjects"
-                class="text-3xl sm:text-4xl font-bold text-gray-900"
-              >
-                0
-              </div>
-              <div class="text-sm text-gray-500 mt-1">Projets</div>
-            </div>
-            <div class="text-center">
-              <div
-                ref="statTech"
-                class="text-3xl sm:text-4xl font-bold text-gray-900"
-              >
-                0
-              </div>
-              <div class="text-sm text-gray-500 mt-1">Technologies</div>
-            </div>
-            <div class="text-center">
-              <div
-                ref="statYears"
-                class="text-3xl sm:text-4xl font-bold text-gray-900"
-              >
-                0
-              </div>
-              <div class="text-sm text-gray-500 mt-1">Années</div>
-            </div>
-          </div>
+            {{ String(projects.length).padStart(2, "0") }}
+            <span class="sr-only">projets</span>
+          </span>
         </header>
 
-        <div
-          ref="gridEl"
-          class="project-grid grid grid-cols-1 sm:grid-cols-2 gap-6"
-        >
+        <ol class="mt-16 lg:mt-24 space-y-24 lg:space-y-36">
+          <li v-for="(project, index) in projects" :key="project.id">
+            <article
+              :ref="(c) => (blockEls[index] = c)"
+              class="group lane-grid items-center"
+            >
+              <div
+                class="lg:row-start-1"
+                :class="index % 2 === 1 ? 'lane-right' : 'lane-left'"
+              >
+                <a
+                  :href="project.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabindex="-1"
+                  aria-hidden="true"
+                  class="block overflow-hidden rounded-xl border border-line/15 bg-surface shadow-2xl shadow-black/50 transition-colors duration-500 group-hover:border-brand/40 group-focus-within:border-brand/40"
+                >
+                  <div
+                    class="flex h-9 items-center gap-3 border-b border-line/15 px-3"
+                  >
+                    <span class="flex gap-1.5">
+                      <span class="h-2.5 w-2.5 rounded-full bg-ink-muted/40"></span>
+                      <span class="h-2.5 w-2.5 rounded-full bg-ink-muted/40"></span>
+                      <span class="h-2.5 w-2.5 rounded-full bg-ink-muted/40"></span>
+                    </span>
+                    <span
+                      class="mx-auto max-w-[60%] truncate rounded-md bg-page/60 px-3 py-0.5 font-mono text-[11px] text-ink-muted"
+                    >
+                      {{ hostname(project.link) }}
+                    </span>
+                    <span class="w-10 shrink-0 max-sm:hidden"></span>
+                  </div>
+                  <div class="relative overflow-hidden">
+                    <img
+                      :src="project.image"
+                      :alt="`Capture d'écran du projet ${project.title}`"
+                      loading="lazy"
+                      class="aspect-[16/10] w-full object-cover object-top"
+                    />
+                  </div>
+                </a>
+              </div>
+
+              <div
+                class="case-text lg:row-start-1"
+                :class="index % 2 === 1 ? 'lane-left' : 'lane-right'"
+              >
+                <p class="font-mono text-xs uppercase tracking-[0.3em]">
+                  <span class="text-brand-text">{{
+                    String(index + 1).padStart(2, "0")
+                  }}</span>
+                  <span class="text-ink-muted"> — {{ project.category }}</span>
+                </p>
+                <AsciiDecodeText
+                  tag="h3"
+                  :text="project.title"
+                  class="mt-3 text-3xl lg:text-5xl font-extrabold tracking-tight text-ink leading-tight"
+                />
+                <p class="mt-4 max-w-md text-base text-ink-soft leading-relaxed">
+                  {{ project.description }}
+                </p>
+
+                <dl
+                  class="mt-8 grid grid-cols-[5rem_1fr] items-center gap-y-3 border-t border-line/15 pt-6"
+                >
+                  <dt class="text-xs font-mono uppercase tracking-widest text-ink-muted">
+                    Stack
+                  </dt>
+                  <dd class="flex flex-wrap gap-2">
+                    <span
+                      v-for="tag in project.tags"
+                      :key="tag"
+                      class="rounded-full border border-line/20 px-3 py-1 text-xs font-mono text-ink-soft"
+                    >
+                      {{ tag }}
+                    </span>
+                  </dd>
+                  <dt class="text-xs font-mono uppercase tracking-widest text-ink-muted">
+                    Site
+                  </dt>
+                  <dd class="font-mono text-sm text-ink-soft break-all">
+                    {{ hostname(project.link) }}
+                  </dd>
+                </dl>
+
+                <a
+                  :href="project.link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="cta group/cta mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-brand/50 px-5 py-2.5 text-sm font-medium text-ink transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-page focus-visible:border-brand focus-visible:bg-brand focus-visible:text-page focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                >
+                  Voir le projet
+                  <font-awesome-icon
+                    :icon="['fas', 'arrow-up-right-from-square']"
+                    class="h-3.5 w-3.5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover/cta:translate-x-0.5 motion-safe:group-hover/cta:-translate-y-0.5 motion-safe:group-focus-visible/cta:translate-x-0.5 motion-safe:group-focus-visible/cta:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                  <span class="sr-only">(nouvel onglet)</span>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ol>
+
+        <p class="lane-grid mt-20 lg:mt-28 text-sm text-ink-soft">
+          <span class="lane-left">
+          Plus de projets sur
           <a
-            v-for="(project, index) in projects"
-            :key="project.id"
-            :href="project.link"
+            href="https://github.com/erwanmarega"
             target="_blank"
             rel="noopener noreferrer"
-            class="proj-card group relative flex flex-col bg-white rounded-3xl border border-gray-100 shadow-[0_2px_16px_rgba(0,0,0,0.06)] overflow-hidden"
-            :style="{ '--accent': project.accent }"
+            class="group/gh ml-1 inline-flex min-h-[44px] items-center gap-2 font-medium text-ink underline decoration-brand/50 underline-offset-4 transition-colors duration-300 hover:text-brand hover:decoration-brand focus-visible:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
-            <div class="relative h-52 overflow-hidden">
-              <img
-                :src="project.image"
-                :alt="project.title"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
-              />
-
-              <span
-                class="absolute top-4 left-4 font-mono text-xs text-white/80 bg-black/20 backdrop-blur-sm px-2 py-1 rounded-lg"
-              >
-                {{ String(index + 1).padStart(2, "0") }}
-              </span>
-
-              <span
-                class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/15 backdrop-blur-sm flex items-center justify-center text-white opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300"
-              >
-                <font-awesome-icon
-                  :icon="['fas', 'arrow-up-right-from-square']"
-                  class="w-3.5 h-3.5"
-                />
-              </span>
-
-              <div class="absolute bottom-4 left-4 right-4">
-                <span
-                  class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-white bg-white/20 backdrop-blur-sm border border-white/20 mb-2"
-                >
-                  {{ project.category }}
-                </span>
-                <h2
-                  class="text-xl sm:text-2xl font-bold text-white leading-tight drop-shadow-sm"
-                >
-                  {{ project.title }}
-                </h2>
-              </div>
-            </div>
-
-            <div class="flex flex-col flex-1 p-5 gap-3">
-              <p class="text-sm text-gray-600 leading-relaxed line-clamp-3">
-                {{ project.description }}
-              </p>
-
-              <div class="flex flex-wrap gap-1.5 mt-auto pt-2">
-                <span
-                  v-for="tag in project.tags"
-                  :key="tag"
-                  class="px-2.5 py-1 rounded-full text-[11px] font-medium border"
-                  :style="{
-                    color: project.accent,
-                    borderColor: `${project.accent}40`,
-                    backgroundColor: `${project.accent}10`,
-                  }"
-                >
-                  {{ tag }}
-                </span>
-              </div>
-            </div>
-
-            <div
-              class="h-1 w-0 group-hover:w-full transition-all duration-500 ease-out"
-              :style="{ background: project.accent }"
-            />
+            <font-awesome-icon :icon="['fab', 'github']" class="h-4 w-4" aria-hidden="true" />
+            GitHub
+            <span class="sr-only">(nouvel onglet)</span>
           </a>
-        </div>
+          </span>
+        </p>
       </div>
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import spotifyImage from "../assets/images/projects/spotify.webp";
 import adiImage from "../assets/images/projects/adi.webp";
 import Hovly from "../assets/images/projects/hovly.webp";
 import GitAgent from "../assets/images/projects/git-agent.webp";
 import Postulo from "../assets/images/projects/postulo.webp";
-import AsciiPortal from "../components/AsciiPortal.vue";
+import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
-library.add(faArrowUpRightFromSquare);
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+library.add(faArrowUpRightFromSquare, faGithub);
+gsap.registerPlugin(ScrollTrigger);
 
 const el = ref(null);
-const portalSection = ref(null);
-const portalWrapper = ref(null);
-const horizontalSection = ref(null);
-const horizontalTrack = ref(null);
-const contentSection = ref(null);
 const headerEl = ref(null);
-const statsEl = ref(null);
-const gridEl = ref(null);
-
-const statProjects = ref(null);
-const statTech = ref(null);
-const statYears = ref(null);
-const activeSlide = ref(0);
+const blockEls = [];
 
 const projects = ref([
   {
@@ -330,7 +186,6 @@ const projects = ref([
       "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify.",
     image: spotifyImage,
     link: "https://spotcalendar.fr",
-    accent: "#1db954",
     tags: ["Spotify API", "Vue.js", "Music"],
     category: "Web App",
   },
@@ -341,7 +196,6 @@ const projects = ref([
       "Assistant CLI qui génère messages de commit, noms de branches, et s'intègre à Jira et GitHub.",
     image: GitAgent,
     link: "https://git-agent-steel.vercel.app/",
-    accent: "#6366f1",
     tags: ["IA", "CLI", "Node.js"],
     category: "Outil",
   },
@@ -351,7 +205,6 @@ const projects = ref([
     description: "Crée ton tableau de bord immobilier en moins d'une minute.",
     image: Hovly,
     link: "https://hovly-production.up.railway.app/",
-    accent: "#ffd02f",
     tags: ["IA", "Vue.js", "UX", "PDF"],
     category: "SaaS",
   },
@@ -362,7 +215,6 @@ const projects = ref([
       "Refonte complète du site de la société ADI, spécialisée dans l'agencement immobilier.",
     image: adiImage,
     link: "https://agencementimmo.vercel.app/",
-    accent: "#06b6d4",
     tags: ["Vue.js", "Tailwind", "Responsive"],
     category: "Refonte",
   },
@@ -373,322 +225,54 @@ const projects = ref([
       "Connecte vos étudiants à votre tableau de bord. Pour les CFA et écoles en recherche d'alternance.",
     image: Postulo,
     link: "https://postulo.fr",
-    accent: "#841EFA",
     tags: ["SaaS", "Vue.js", "Dashboard"],
     category: "SaaS",
   },
 ]);
 
-const uniqueTechnologies = computed(() => {
-  const techs = new Set();
-  projects.value.forEach((c) => c.tags.forEach((t) => techs.add(t)));
-  return techs.size;
-});
+const hostname = (link) => new URL(link).hostname.replace(/^www\./, "");
 
-const animateStats = () => {
-  const targets = [
-    { el: statProjects.value, value: projects.value.length },
-    { el: statTech.value, value: uniqueTechnologies.value },
-    { el: statYears.value, value: 3 },
-  ];
-
-  targets.forEach(({ el, value }) => {
-    if (!el) return;
-    gsap.fromTo(
-      el,
-      { innerText: 0 },
-      {
-        innerText: value,
-        duration: 1.5,
-        ease: "power2.out",
-        snap: { innerText: 1 },
-      }
-    );
-  });
-};
-
-const getTiles = () =>
-  Array.from(gridEl.value?.querySelectorAll(".proj-card") ?? []);
-
-const animateCardsEnter = () => {
-  const tiles = getTiles();
-  if (!tiles.length) return;
-
-  gsap.fromTo(
-    tiles,
-    { rotationY: -90, opacity: 0, scale: 0.9 },
-    {
-      rotationY: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 0.7,
-      stagger: 0.08,
-      ease: "power3.out",
-    }
-  );
-};
-
-const attachTilt = () => {
-  const tiles = getTiles();
-  tiles.forEach((card) => {
-    if (card.dataset.tiltAttached) return;
-    card.dataset.tiltAttached = "true";
-
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-      const rotateX = ((y - cy) / cy) * -6;
-      const rotateY = ((x - cx) / cx) * 6;
-
-      gsap.to(card, {
-        rotateX,
-        rotateY,
-        y: -8,
-        scale: 1.02,
-        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.18)",
-        duration: 0.3,
-        ease: "power2.out",
-      });
-    });
-
-    card.addEventListener("mouseleave", () => {
-      gsap.to(card, {
-        rotateX: 0,
-        rotateY: 0,
-        y: 0,
-        scale: 1,
-        boxShadow: "0 2px 16px rgba(0, 0, 0, 0.06)",
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    });
-  });
-};
-
-const animateContent = () => {
-  const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-
-  gsap.set(headerEl.value, { opacity: 0, y: -30 });
-  gsap.set(statsEl.value, { opacity: 0, y: 20 });
-
-  tl.to(headerEl.value, { opacity: 1, y: 0, duration: 0.8 })
-    .to(statsEl.value, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-    .add(() => animateStats(), "-=0.4")
-    .add(() => {
-      animateCardsEnter();
-      attachTilt();
-    }, "-=0.8");
-};
-
-let portalTrigger = null;
-let contentTrigger = null;
-let horizontalTriggers = [];
-let matchMediaInstance = null;
-let scrollBlockers = [];
-
-const addScrollBlocker = (type, handler, options = {}) => {
-  window.addEventListener(type, handler, options);
-  scrollBlockers.push({ type, handler, options });
-};
-
-const removeScrollBlockers = () => {
-  scrollBlockers.forEach(({ type, handler, options }) => {
-    window.removeEventListener(type, handler, options);
-  });
-  scrollBlockers = [];
-};
-
-const blockWheelAtEnd = (e) => {
-  const tween = horizontalTriggers[0];
-  if (!tween?.scrollTrigger) return;
-  if (tween.scrollTrigger.progress >= 0.995 && e.deltaY > 0) {
-    e.preventDefault();
-  }
-};
-
-let touchStartY = 0;
-const blockTouchStart = (e) => {
-  touchStartY = e.touches[0]?.clientY ?? 0;
-};
-const blockTouchMoveAtEnd = (e) => {
-  const tween = horizontalTriggers[0];
-  if (!tween?.scrollTrigger) return;
-  const currentY = e.touches[0]?.clientY ?? touchStartY;
-  const deltaY = touchStartY - currentY;
-  if (tween.scrollTrigger.progress >= 0.995 && deltaY > 0) {
-    e.preventDefault();
-  }
-  touchStartY = currentY;
-};
-
-const goToSlide = (index) => {
-  if (!horizontalTrack.value) return;
-  const slides = gsap.utils.toArray(".project-slide", horizontalTrack.value);
-  if (!slides[index]) return;
-
-  const st = horizontalTriggers[0];
-  if (st && st.scrollTrigger) {
-    const progress = index / (slides.length - 1);
-    const scrollTo =
-      st.scrollTrigger.start +
-      progress * (st.scrollTrigger.end - st.scrollTrigger.start);
-    gsap.to(window, {
-      scrollTo: { y: scrollTo, autoKill: false },
-      duration: 0.8,
-      ease: "power2.inOut",
-    });
-  }
-};
+let ctx = null;
 
 onMounted(() => {
-  const portal = portalWrapper.value;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  gsap.set(portal, { willChange: "transform, opacity" });
+  if (reducedMotion) return;
 
-  // Portal scroll effect — plein écran sans border-radius
-  const portalTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: portalSection.value,
-      start: "top top",
-      end: "+=120%",
-      pin: true,
-      scrub: 1,
-      anticipatePin: 1,
-      onLeaveBack: () => {
-        gsap.set(portal, { scale: 1, opacity: 1 });
-      },
-      onLeave: () => {
-        gsap.set(portal, { willChange: "auto" });
-      },
-    },
-  });
-
-  portalTl.fromTo(
-    portal,
-    { scale: 1, opacity: 1 },
-    { scale: 1.15, opacity: 0, ease: "power2.inOut" },
-    0
-  );
-
-  portalTrigger = portalTl.scrollTrigger;
-
-  // Animation du contenu mobile quand il entre dans la vue
-  contentTrigger = ScrollTrigger.create({
-    trigger: contentSection.value,
-    start: "top 75%",
-    once: true,
-    onEnter: animateContent,
-  });
-
-  // Scroll horizontal — uniquement sur desktop
-  matchMediaInstance = gsap.matchMedia();
-  matchMediaInstance.add("(min-width: 1024px)", () => {
-    const slides = gsap.utils.toArray(".project-slide", horizontalTrack.value);
-    if (!slides.length) return;
-
-    gsap.set(horizontalTrack.value, { willChange: "transform" });
-
-    const maxScroll = () => horizontalTrack.value.scrollWidth - window.innerWidth;
-
-    const horizontalTween = gsap.to(horizontalTrack.value, {
-      x: () => -maxScroll(),
-      ease: "none",
-      scrollTrigger: {
-        trigger: horizontalSection.value,
-        start: "top top",
-        end: () => "+=" + maxScroll(),
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          const newIndex = Math.round(self.progress * (slides.length - 1));
-          if (newIndex !== activeSlide.value) {
-            activeSlide.value = newIndex;
-          }
-        },
-        onLeave: () => {
-          gsap.set(horizontalTrack.value, { willChange: "auto" });
-        },
-        onLeaveBack: () => {
-          activeSlide.value = 0;
-        },
-      },
+  ctx = gsap.context(() => {
+    gsap.from(headerEl.value, {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: "power2.out",
+      scrollTrigger: { trigger: headerEl.value, start: "top 85%", once: true },
     });
 
-    horizontalTriggers.push(horizontalTween);
+    blockEls.forEach((block) => {
+      const textItems = block.querySelectorAll(".case-text > *");
 
-    // Bloque le scroll vers le bas après le dernier slide
-    addScrollBlocker("wheel", blockWheelAtEnd, { passive: false });
-    addScrollBlocker("touchstart", blockTouchStart, { passive: true });
-    addScrollBlocker("touchmove", blockTouchMoveAtEnd, { passive: false });
+      gsap.set(textItems, { opacity: 0, y: 24 });
 
-    return () => {
-      removeScrollBlockers();
-    };
-  });
+      ScrollTrigger.create({
+        trigger: block,
+        start: "top 80%",
+        once: true,
+        onEnter: () => {
+          gsap.to(textItems, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power2.out",
+            stagger: 0.1,
+          });
+        },
+      });
+    });
+  }, el.value);
 });
 
 onUnmounted(() => {
-  if (portalTrigger) {
-    portalTrigger.kill();
-    portalTrigger = null;
-  }
-  if (contentTrigger) {
-    contentTrigger.kill();
-    contentTrigger = null;
-  }
-  horizontalTriggers.forEach((t) => {
-    if (t.scrollTrigger) t.scrollTrigger.kill();
-    t.kill();
-  });
-  horizontalTriggers = [];
-  if (matchMediaInstance) {
-    matchMediaInstance.revert();
-    matchMediaInstance = null;
-  }
-  removeScrollBlockers();
-  ScrollTrigger.getAll().forEach((t) => {
-    if (
-      t.trigger === portalSection.value ||
-      t.trigger === contentSection.value ||
-      t.trigger === horizontalSection.value
-    ) {
-      t.kill();
-    }
-  });
+  ctx?.revert();
+  ctx = null;
 });
 </script>
-
-<style scoped>
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.project-grid {
-  perspective: 1200px;
-}
-
-.proj-card {
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-
-.portal-wrapper {
-  transform-origin: center center;
-}
-
-.horizontal-track {
-  width: fit-content;
-}
-
-.project-slide {
-  will-change: transform;
-}
-</style>

@@ -2,83 +2,109 @@
   <section
     ref="el"
     aria-labelledby="skills-title"
-    class="w-full min-h-screen bg-white flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-12 gap-5 sm:gap-6"
+    class="w-full min-h-screen flex flex-col justify-center px-4 sm:px-8 lg:px-16 py-12 gap-5 sm:gap-6"
   >
-    <header ref="headerEl" class="relative flex items-end justify-between gap-4 pb-5">
-      <span
-        class="skills-rule absolute left-0 right-0 bottom-0 h-px bg-gray-200 origin-left"
-        aria-hidden="true"
-      />
-      <div>
-        <p class="text-xs font-mono uppercase tracking-[0.3em] text-indigo-500 mb-2">
+    <header
+      ref="headerEl"
+      class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0"
+    >
+      <div class="lane-left relative lg:pb-5">
+        <span
+          class="skills-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-left"
+          aria-hidden="true"
+        />
+        <p class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2">
           // stack technique
         </p>
-        <h1
+        <AsciiDecodeText
+          tag="h1"
           id="skills-title"
-          class="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-none"
-        >
-          Compétences
-        </h1>
+          data-tower-anchor="skills"
+          text="Compétences"
+          idle-glitch
+          :start="titlesReady"
+          class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
+        />
       </div>
-      <p class="hidden sm:block text-sm text-gray-400 italic max-w-xs text-right">
-        Les technologies et outils que j'utilise pour concevoir et développer des
-        applications web.
-      </p>
+      <div class="lane-right relative hidden sm:flex items-end justify-end gap-4 lg:pb-5">
+        <span
+          class="skills-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-right"
+          aria-hidden="true"
+        />
+        <p class="text-sm text-ink-soft italic max-w-xs lg:text-right pb-1">
+          Les technologies et outils que j'utilise pour concevoir et développer des
+          applications web.
+        </p>
+        <div class="w-28 h-28 lg:w-32 lg:h-32 shrink-0 -mb-3" aria-hidden="true">
+          <AsciiEffect effect="cube" :options="{ scale: 1 }" />
+        </div>
+      </div>
     </header>
 
-    <ol class="flex flex-col">
-      <li
-        v-for="item in competences"
-        :key="item.title"
-        class="skill-row group flex flex-col sm:flex-row gap-4 sm:gap-8 py-5 border-b border-gray-100 last:border-b-0"
+    <div class="lane-grid gap-y-0">
+      <ol
+        v-for="(column, ci) in columns"
+        :key="ci"
+        :class="[ci === 0 ? 'lane-left' : 'lane-right', 'flex flex-col']"
       >
-        <div class="sm:w-56 shrink-0">
-          <h2
-            class="text-lg sm:text-xl font-bold text-gray-900 leading-snug transition-colors duration-300"
-          >
-            {{ item.title }}
-          </h2>
-          <p
-            class="text-sm text-gray-400 transition-colors duration-300 group-hover:text-indigo-500"
-          >
-            {{ item.subtitle }}
-          </p>
-        </div>
-
-        <div
-          class="flex-1 min-w-0 transition-transform duration-300 ease-out motion-safe:group-hover:translate-x-1"
+        <li
+          v-for="item in column"
+          :key="item.title"
+          class="skill-row group flex flex-col gap-4 py-5 border-b border-line/15 last:border-b-0"
         >
-          <ul class="flex flex-wrap gap-x-8 gap-y-3" aria-label="Technologies">
-            <li
-              v-for="tech in item.technologies"
-              :key="tech.name"
-              class="skill-tech flex items-center gap-2.5"
+          <div>
+            <AsciiDecodeText
+              tag="h2"
+              :text="item.title"
+              :start="titlesReady"
+              :delay="0.3 + item.index * 0.12"
+              :duration="1.2"
+              class="text-lg sm:text-xl font-bold text-ink leading-snug transition-colors duration-300"
+            />
+            <p
+              class="text-sm text-ink-muted transition-colors duration-300 group-hover:text-brand-text"
             >
-              <img :src="tech.icon" alt="" class="w-6 h-6 object-contain" />
-              <span class="text-sm sm:text-base font-medium text-gray-800">
-                {{ tech.name }}
-              </span>
-            </li>
-          </ul>
-          <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Pratiques">
-            <li
-              v-for="detail in item.details"
-              :key="detail"
-              class="skill-tag text-[11px] font-medium text-gray-500 border border-gray-200 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-gray-300 group-hover:text-gray-700"
-            >
-              {{ detail }}
-            </li>
-          </ul>
-        </div>
-      </li>
-    </ol>
+              {{ item.subtitle }}
+            </p>
+          </div>
+
+          <div
+            class="min-w-0 transition-transform duration-300 ease-out motion-safe:group-hover:translate-x-1"
+          >
+            <ul class="flex flex-wrap gap-x-6 gap-y-3" aria-label="Technologies">
+              <li
+                v-for="tech in item.technologies"
+                :key="tech.name"
+                class="skill-tech flex items-center gap-2.5"
+              >
+                <img :src="tech.icon" alt="" class="w-6 h-6 object-contain" />
+                <span class="text-sm sm:text-base font-medium text-ink">
+                  {{ tech.name }}
+                </span>
+              </li>
+            </ul>
+            <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Pratiques">
+              <li
+                v-for="detail in item.details"
+                :key="detail"
+                class="skill-tag text-[11px] font-medium text-ink-soft border border-line/25 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-line/40 group-hover:text-ink"
+              >
+                {{ detail }}
+              </li>
+            </ul>
+          </div>
+        </li>
+      </ol>
+    </div>
   </section>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import gsap from "gsap";
+import AsciiEffect from "@/components/AsciiEffect.vue";
 import { useEnterAnimation } from "../composables/useEnterAnimation.js";
+import AsciiDecodeText from "../components/AsciiDecodeText.vue";
 
 import vueIcon from "@/assets/icons/frontend/vue.svg";
 import reactIcon from "@/assets/icons/frontend/react.svg";
@@ -159,18 +185,22 @@ const competences = [
   },
 ];
 
+const half = Math.ceil(competences.length / 2);
+const indexed = competences.map((item, index) => ({ ...item, index }));
+const columns = [indexed.slice(0, half), indexed.slice(half)];
+
 const animate = () => {
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce || !el.value) return;
 
   const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
   tl.fromTo(
-    headerEl.value.querySelectorAll(":scope > div, :scope > p"),
+    headerEl.value.querySelectorAll(":scope > div"),
     { opacity: 0, y: -12 },
     { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
   )
     .fromTo(
-      headerEl.value.querySelector(".skills-rule"),
+      headerEl.value.querySelectorAll(".skills-rule"),
       { scaleX: 0 },
       { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
       0
@@ -213,5 +243,10 @@ const animate = () => {
     );
 };
 
-useEnterAnimation(el, animate);
+const titlesReady = ref(false);
+
+useEnterAnimation(el, () => {
+  titlesReady.value = true;
+  animate();
+});
 </script>

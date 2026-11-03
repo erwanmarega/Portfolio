@@ -1,10 +1,8 @@
 <template>
   <main
     ref="el"
-    class="relative min-h-screen bg-white flex flex-col font-sans overflow-hidden"
+    class="relative min-h-screen flex flex-col font-sans overflow-hidden"
   >
-    <SharkCanvas />
-
     <nav
       ref="navEl"
       class="w-full flex items-center justify-between px-6 sm:px-8 lg:px-12 py-5 relative z-20"
@@ -13,9 +11,9 @@
         <img
           :src="erwanImage"
           alt="Erwan Marega"
-          class="w-11 h-11 rounded-full object-cover ring-2 ring-gray-100 group-hover:ring-gray-300 transition-all"
+          class="w-11 h-11 rounded-full object-cover ring-2 ring-line/15 group-hover:ring-line/40 transition-all"
         />
-        <span class="hidden sm:block font-bold text-gray-900 text-lg">
+        <span class="hidden sm:block font-bold text-ink text-lg">
           Erwan Marega
         </span>
       </a>
@@ -25,7 +23,7 @@
           href="https://github.com/erwanmarega"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-gray-900 hover:text-white transition-all duration-300"
+          class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-ink-soft hover:bg-ink hover:text-page transition-all duration-300"
           aria-label="GitHub"
         >
           <font-awesome-icon :icon="['fab', 'github']" class="w-5 h-5" />
@@ -34,14 +32,14 @@
           href="https://linkedin.com/in/erwanmarega"
           target="_blank"
           rel="noopener noreferrer"
-          class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-[#0a66c2] hover:text-white transition-all duration-300"
+          class="w-10 h-10 rounded-full bg-surface flex items-center justify-center text-ink-soft hover:bg-[#0a66c2] hover:text-white transition-all duration-300"
           aria-label="LinkedIn"
         >
           <font-awesome-icon :icon="['fab', 'linkedin-in']" class="w-5 h-5" />
         </a>
         <a
           href="#contact"
-          class="hidden sm:inline-flex items-center gap-2 bg-gray-900 text-white text-sm font-semibold rounded-full px-5 py-2.5 transition-all hover:bg-black hover:shadow-lg hover:shadow-gray-900/20"
+          class="hidden sm:inline-flex items-center gap-2 bg-ink text-page text-sm font-semibold rounded-full px-5 py-2.5 transition-all hover:bg-ink/90 hover:shadow-lg hover:shadow-ink/20"
         >
           <font-awesome-icon :icon="['fas', 'paper-plane']" class="w-4 h-4" />
           Me contacter
@@ -50,27 +48,24 @@
     </nav>
 
     <section
-      class="flex flex-col lg:flex-row items-center justify-between px-6 sm:px-8 lg:px-12 py-12 sm:py-16 lg:py-24 flex-1 relative z-10 max-w-7xl mx-auto w-full"
+      class="lane-grid items-center px-6 sm:px-8 lg:px-12 py-12 sm:py-16 lg:py-24 lg:pb-32 flex-1 relative z-10 w-full"
     >
       <div
         ref="textBlock"
-        class="lg:w-1/2 text-center lg:text-left mb-12 lg:mb-0 lg:pr-12"
+        class="lane-left text-center lg:text-left lg:pr-6"
       >
         <h1
-          class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-[1.1] mb-6"
+          data-tower-anchor="home"
+          class="text-4xl sm:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold leading-[1.1] mb-6"
         >
-          <SharkText
-            ><span class="text-gray-900">Développeur Web Fullstack</span></SharkText
-          >
+          <span class="text-ink">Développeur Web Fullstack</span>
         </h1>
 
         <p
-          class="text-gray-600 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
+          class="text-ink-soft text-lg sm:text-xl lg:text-lg leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
         >
-          <SharkText
-            >Je conçois des applications web modernes et performantes. Passionné
-            par Vue.js, Node.js et l'expérience utilisateur.</SharkText
-          >
+          Je conçois des applications web modernes et performantes. Passionné
+          par Vue.js, Node.js et l'expérience utilisateur.
         </p>
 
         <div
@@ -79,14 +74,14 @@
         >
           <a
             href="#projects"
-            class="inline-flex items-center gap-2 bg-gray-900 text-white text-base font-semibold rounded-full px-7 py-3.5 transition-all hover:bg-black hover:shadow-xl hover:shadow-gray-900/20 hover:-translate-y-0.5"
+            class="inline-flex items-center gap-2 bg-ink text-page text-base font-semibold rounded-full px-7 py-3.5 transition-all hover:bg-ink/90 hover:shadow-xl hover:shadow-ink/20 hover:-translate-y-0.5"
           >
             <font-awesome-icon :icon="['fas', 'rocket']" class="w-4 h-4" />
             Voir mes projets
           </a>
           <a
             href="#contact"
-            class="inline-flex items-center gap-2 bg-white text-gray-900 text-base font-semibold rounded-full px-7 py-3.5 border border-gray-200 transition-all hover:border-gray-300 hover:bg-gray-50 hover:-translate-y-0.5"
+            class="inline-flex items-center gap-2 bg-surface-strong text-ink text-base font-semibold rounded-full px-7 py-3.5 border border-line/15 transition-all hover:border-line/40 hover:bg-surface hover:-translate-y-0.5"
           >
             <font-awesome-icon :icon="['fas', 'envelope']" class="w-4 h-4" />
             Me contacter
@@ -95,32 +90,32 @@
 
         <div
           ref="statsEl"
-          class="flex items-center justify-center lg:justify-start gap-8 sm:gap-10"
+          class="flex items-center justify-center lg:justify-start gap-6 sm:gap-10 lg:gap-6 xl:gap-10"
         >
           <div class="text-center lg:text-left">
-            <div class="text-2xl sm:text-3xl font-bold text-gray-900">
-              <SharkText>{{ stats.projects }}</SharkText>
+            <div class="text-2xl sm:text-3xl font-bold text-ink">
+              {{ stats.projects }}
             </div>
-            <div class="text-xs sm:text-sm text-gray-500">
-              <SharkText>Projets</SharkText>
-            </div>
-          </div>
-          <div class="w-px h-10 bg-gray-200" />
-          <div class="text-center lg:text-left">
-            <div class="text-2xl sm:text-3xl font-bold text-gray-900">
-              <SharkText>{{ stats.tech }}</SharkText>
-            </div>
-            <div class="text-xs sm:text-sm text-gray-500">
-              <SharkText>Technologies</SharkText>
+            <div class="text-xs sm:text-sm text-ink-soft">
+              Projets
             </div>
           </div>
-          <div class="w-px h-10 bg-gray-200" />
+          <div class="w-px h-10 bg-line/20" />
           <div class="text-center lg:text-left">
-            <div class="text-2xl sm:text-3xl font-bold text-gray-900">
-              <SharkText>{{ stats.years }}</SharkText>
+            <div class="text-2xl sm:text-3xl font-bold text-ink">
+              {{ stats.tech }}
             </div>
-            <div class="text-xs sm:text-sm text-gray-500">
-              <SharkText>Années</SharkText>
+            <div class="text-xs sm:text-sm text-ink-soft">
+              Technologies
+            </div>
+          </div>
+          <div class="w-px h-10 bg-line/20" />
+          <div class="text-center lg:text-left">
+            <div class="text-2xl sm:text-3xl font-bold text-ink">
+              {{ stats.years }}
+            </div>
+            <div class="text-xs sm:text-sm text-ink-soft">
+              Années
             </div>
           </div>
         </div>
@@ -128,30 +123,34 @@
 
       <div
         ref="mockupBlock"
-        class="lg:w-1/2 flex justify-center lg:justify-end"
+        class="lane-right flex justify-center lg:justify-end lg:pl-6"
       >
-        <div class="mockup-container relative">
+        <div class="mockup-container relative lg:w-full lg:max-w-[30rem]">
           <div
-            class="absolute -inset-4 bg-gradient-to-tr from-indigo-200/40 via-purple-200/30 to-pink-200/40 rounded-full blur-3xl"
+            class="absolute inset-4 bg-gradient-to-tr from-brand/20 via-surface-strong/40 to-brand/10 rounded-full blur-3xl"
           />
           <img
             :src="ipadMockup"
             alt="Portfolio mockup"
-            class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] object-contain animate-float transition-transform duration-500 hover:scale-105"
+            class="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-full lg:h-auto lg:aspect-square object-contain animate-float transition-transform duration-500 hover:scale-105"
           />
         </div>
       </div>
     </section>
 
     <div
-      ref="scrollIndicator"
-      class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-gray-400"
+      class="absolute bottom-8 left-1/2 -translate-x-1/2 lg:left-12 lg:translate-x-0 z-10"
     >
-      <span class="text-xs font-medium uppercase tracking-widest">Scroll</span>
       <div
-        class="w-6 h-10 rounded-full border-2 border-gray-300 flex justify-center p-1"
+        ref="scrollIndicator"
+        class="flex flex-col items-center lg:items-start gap-2 text-ink-muted"
       >
-        <div class="w-1.5 h-2.5 bg-gray-400 rounded-full animate-scroll-dot" />
+        <span class="text-xs font-medium uppercase tracking-widest">Scroll</span>
+        <div
+          class="w-6 h-10 rounded-full border-2 border-ink-muted/50 flex justify-center p-1"
+        >
+          <div class="w-1.5 h-2.5 bg-ink-muted rounded-full animate-scroll-dot" />
+        </div>
       </div>
     </div>
   </main>
@@ -167,8 +166,6 @@ import {
   faRocket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
-import SharkCanvas from "../components/SharkCanvas.vue";
-import SharkText from "../components/SharkText.vue";
 import erwanImage from "../assets/images/logo.webp";
 import ipadMockup from "../assets/images/ipad-mockup.webp";
 
@@ -176,7 +173,6 @@ library.add(faPaperPlane, faEnvelope, faRocket, faGithub, faLinkedinIn);
 
 const el = ref(null);
 const navEl = ref(null);
-const badgeEl = ref(null);
 const textBlock = ref(null);
 const ctaEl = ref(null);
 const statsEl = ref(null);
@@ -204,7 +200,6 @@ onMounted(() => {
   const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
   gsap.set(navEl.value, { y: -20, opacity: 0 });
-  gsap.set(badgeEl.value, { y: 20, opacity: 0, scale: 0.9 });
   gsap.set(textBlock.value.querySelector("h1"), { y: 40, opacity: 0 });
   gsap.set(textBlock.value.querySelector("p"), { y: 30, opacity: 0 });
   gsap.set(ctaEl.value, { y: 30, opacity: 0 });
@@ -213,7 +208,6 @@ onMounted(() => {
   gsap.set(scrollIndicator.value, { opacity: 0, y: 20 });
 
   tl.to(navEl.value, { y: 0, opacity: 1, duration: 0.6 })
-    .to(badgeEl.value, { y: 0, opacity: 1, scale: 1, duration: 0.6 }, "-=0.3")
     .to(
       textBlock.value.querySelector("h1"),
       { y: 0, opacity: 1, duration: 0.9 },
@@ -280,7 +274,7 @@ onMounted(() => {
   width: 80%;
   height: 30px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.12);
+  background: rgba(10, 10, 10, 0.1);
   filter: blur(20px);
   z-index: -1;
 }

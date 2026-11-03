@@ -1,5 +1,43 @@
-/* src/assets/main.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --page: 10 10 10;
+    --surface: 23 17 20;
+    --surface-strong: 33 24 29;
+    --ink: 249 168 212;
+    --ink-soft: 217 163 191;
+    --ink-muted: 176 122 150;
+    --brand: 236 72 153;
+    --brand-text: 244 114 182;
+    --line: 249 168 212;
+
+    --ascii-ink: #F9A8D4;
+    --ascii-accent: #EC4899;
+    --ascii-bg: #0A0A0A;
+    --tower-lane: clamp(240px, 28vw, 440px);
+  }
+  html {
+    background-color: rgb(var(--page));
+  }
+}
+
+@layer components {
+  .lane-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 3rem;
+  }
+  @media (min-width: 1024px) {
+    .lane-grid {
+      grid-template-columns: minmax(0, 1fr) var(--tower-lane) minmax(0, 1fr);
+      grid-auto-flow: row dense;
+      column-gap: 0;
+    }
+    .lane-left { grid-column: 1; }
+    .lane-right { grid-column: 3; }
+    .lane-full { grid-column: 1 / -1; }
+  }
+}
