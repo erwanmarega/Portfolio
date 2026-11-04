@@ -9,6 +9,7 @@
     class="pointer-events-none fixed inset-0 -z-10 hidden h-full w-full lg:block"
     aria-hidden="true"
   ></svg>
+  <TowerFireworks ref="fireworks" />
   <TowerChatters ref="chatters" />
 </template>
 
@@ -17,11 +18,14 @@ import { ref, onMounted, onUnmounted } from "vue";
 
 import { CALLOUTS, calloutLabel } from "@/lib/eiffel/callouts.js";
 import TowerChatters from "@/components/TowerChatters.vue";
+import TowerFireworks from "@/components/TowerFireworks.vue";
 import { computeStops } from "@/lib/eiffel/stops.js";
+import { registerHighlightHandler } from "@/lib/eiffel/bus.js";
 
 const canvas = ref(null);
 const overlay = ref(null);
 const chatters = ref(null);
+const fireworks = ref(null);
 
 let scene = null;
 let idleHandle = null;
@@ -29,6 +33,7 @@ let usedIdle = false;
 let observer = null;
 let unmounted = false;
 let offRender = null;
+let offHighlight = null;
 let reducedMotion = false;
 let groups = [];
 let laneWidth = 0;
@@ -209,8 +214,10 @@ async function init() {
 
   reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   buildCallouts();
+  offHighlight = registerHighlightHandler((y) => scene?.setHighlight(y));
   offRender = scene.onRender(() => {
     updateCallouts();
+    fireworks.value?.update(scene);
     if (window.innerWidth >= 1024) chatters.value?.update(scene, laneWidth);
   });
   window.addEventListener("scroll", updateProgress, { passive: true });
@@ -244,6 +251,7 @@ onUnmounted(() => {
   observer?.disconnect();
   observer = null;
   offRender?.();
+  offHighlight?.();
   scene?.dispose();
   scene = null;
 });
