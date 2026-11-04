@@ -6,21 +6,18 @@
   >
     <header class="lane-grid gap-y-8 pb-12 sm:pb-16">
       <div class="lane-left">
-        <p
-          v-reveal
-          class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60"
-        >
-          <span class="h-px w-8 bg-brand-text" aria-hidden="true" />
-          03 — Stack technique
+        <p v-reveal class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2">
+          // stack technique
         </p>
-        <h1
+        <AsciiDecodeText
+          tag="h1"
           id="skills-title"
-          v-reveal="80"
           data-tower-anchor="skills"
-          class="mt-6 text-5xl sm:text-6xl xl:text-7xl font-bold tracking-[-0.04em] leading-[0.95] text-paper"
-        >
-          Du socle <span class="text-ink">au sommet.</span>
-        </h1>
+          text="Du socle au sommet"
+          idle-glitch
+          :start="titleReady"
+          class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
+        />
         <p
           v-reveal="160"
           class="mt-6 max-w-md text-base sm:text-lg leading-relaxed text-paper/70"
@@ -101,14 +98,22 @@
           <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" :aria-label="`Technologies ${layer.title}`">
             <li
               v-for="(tech, j) in layer.technologies"
-              :key="tech"
+              :key="tech.name"
               v-reveal="120 + j * 40"
             >
               <div class="tile">
-                <span class="font-mono text-[10px] tracking-[0.18em] text-paper/45">
-                  {{ layer.code }}.{{ pad(j + 1) }}
-                </span>
-                <span class="mt-3 block text-[15px] font-semibold text-paper">{{ tech }}</span>
+                <div class="flex items-start justify-between gap-2">
+                  <span class="font-mono text-[10px] tracking-[0.18em] text-paper/45">
+                    {{ layer.code }}.{{ pad(j + 1) }}
+                  </span>
+                  <img
+                    :src="tech.icon"
+                    alt=""
+                    class="tile-icon h-5 w-5 object-contain"
+                    :class="{ 'is-mono': tech.mono }"
+                  />
+                </div>
+                <span class="mt-3 block text-[15px] font-semibold text-paper">{{ tech.name }}</span>
               </div>
             </li>
           </ul>
@@ -133,6 +138,27 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { vReveal } from "@/directives/reveal.js";
 import { setTowerHighlight } from "@/lib/eiffel/bus.js";
+import AsciiDecodeText from "@/components/AsciiDecodeText.vue";
+import { useEnterAnimation } from "@/composables/useEnterAnimation.js";
+
+import vueIcon from "@/assets/icons/frontend/vue.svg";
+import reactIcon from "@/assets/icons/frontend/react.svg";
+import tailwindIcon from "@/assets/icons/frontend/tailwind.svg";
+import tsIcon from "@/assets/icons/frontend/typescript.svg";
+import dockerIcon from "@/assets/icons/backend/docker.svg";
+import mysqlIcon from "@/assets/icons/backend/mysql.svg";
+import nodeIcon from "@/assets/icons/backend/nodejs.svg";
+import symfonyIcon from "@/assets/icons/backend/symfony.png";
+import supabaseIcon from "@/assets/icons/backend/supabase.svg";
+import gitIcon from "@/assets/icons/tools/git.svg";
+import githubIcon from "@/assets/icons/tools/github.svg";
+import gitlabIcon from "@/assets/icons/tools/gitlab.svg";
+import railwayIcon from "@/assets/icons/tools/railway.svg";
+import powerbiIcon from "@/assets/icons/data/powerbi.svg";
+import excelIcon from "@/assets/icons/data/excel.svg";
+import claudeIcon from "@/assets/icons/ai/claude.svg";
+import codexIcon from "@/assets/icons/ai/codex.svg";
+import cursorIcon from "@/assets/icons/ai/cursor.svg";
 
 // `y` is the floor height in tower units (see lib/eiffel/geometry.js).
 const layers = [
@@ -144,7 +170,11 @@ const layers = [
     y: 10,
     subtitle: "Développement assisté : je délègue, je vérifie, je livre plus vite.",
     details: ["Agents", "Prompt engineering", "Code review IA"],
-    technologies: ["Claude", "Codex", "Cursor"],
+    technologies: [
+      { name: "Claude", icon: claudeIcon },
+      { name: "Codex", icon: codexIcon, mono: true },
+      { name: "Cursor", icon: cursorIcon, mono: true },
+    ],
   },
   {
     code: "FE",
@@ -154,7 +184,12 @@ const layers = [
     y: 8.9,
     subtitle: "Interfaces modernes, rapides et soignées.",
     details: ["Responsive", "SPA", "SSR", "Animations"],
-    technologies: ["Vue.js", "React", "TypeScript", "Tailwind"],
+    technologies: [
+      { name: "Vue.js", icon: vueIcon },
+      { name: "React", icon: reactIcon },
+      { name: "TypeScript", icon: tsIcon },
+      { name: "Tailwind", icon: tailwindIcon },
+    ],
   },
   {
     code: "BE",
@@ -164,7 +199,12 @@ const layers = [
     y: 3.8,
     subtitle: "Serveurs, APIs et bases de données.",
     details: ["REST API", "GraphQL", "SQL"],
-    technologies: ["Node.js", "Symfony", "MySQL", "Supabase"],
+    technologies: [
+      { name: "Node.js", icon: nodeIcon },
+      { name: "Symfony", icon: symfonyIcon, mono: true },
+      { name: "MySQL", icon: mysqlIcon, mono: true },
+      { name: "Supabase", icon: supabaseIcon },
+    ],
   },
   {
     code: "DA",
@@ -174,7 +214,10 @@ const layers = [
     y: 1.8,
     subtitle: "Analyse, tableaux de bord et BI.",
     details: ["Dashboards", "Data viz", "ETL"],
-    technologies: ["Power BI", "Excel"],
+    technologies: [
+      { name: "Power BI", icon: powerbiIcon },
+      { name: "Excel", icon: excelIcon },
+    ],
   },
   {
     code: "OP",
@@ -184,7 +227,13 @@ const layers = [
     y: 0.4,
     subtitle: "Versionner, conteneuriser, déployer.",
     details: ["CI/CD", "Déploiement", "Code review", "Testing"],
-    technologies: ["Git", "GitHub", "GitLab", "Docker", "Railway"],
+    technologies: [
+      { name: "Git", icon: gitIcon },
+      { name: "GitHub", icon: githubIcon, mono: true },
+      { name: "GitLab", icon: gitlabIcon },
+      { name: "Docker", icon: dockerIcon },
+      { name: "Railway", icon: railwayIcon, mono: true },
+    ],
   },
 ];
 
@@ -202,6 +251,11 @@ const rowEls = [];
 const active = ref(layers.map(() => reduced));
 const hovered = ref(null);
 const altVisible = ref(false);
+const titleReady = ref(false);
+
+useEnterAnimation(el, () => {
+  titleReady.value = true;
+});
 
 let lastMeters = -1;
 let frame = 0;
@@ -322,6 +376,26 @@ onUnmounted(() => {
     border-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1),
     background-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+/* Icons: muted at rest, brand colours when the layer is hovered.
+   Dark logos (GitHub, Railway…) are always shown as light silhouettes. */
+.tile-icon {
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition:
+    filter 300ms ease,
+    opacity 300ms ease;
+}
+.tile-icon.is-mono {
+  filter: brightness(0) invert(1);
+}
+.layer.is-hovered .tile-icon {
+  filter: none;
+  opacity: 1;
+}
+.layer.is-hovered .tile-icon.is-mono {
+  filter: brightness(0) invert(1);
+}
+
 .layer.is-hovered .tile {
   border-color: rgb(var(--brand-text) / 0.6);
   background: rgb(var(--brand) / 0.06);
