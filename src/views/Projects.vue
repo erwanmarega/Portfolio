@@ -360,6 +360,22 @@ const onTiltLeave = (event) => {
   t.y(0);
 };
 
+// Dim the tower while the section fills the middle of the screen, so the text stays readable.
+let dimObserver = null;
+const setTowerDim = (on) => document.documentElement.classList.toggle("tower-dim", on);
+
+onMounted(() => {
+  dimObserver = new IntersectionObserver(([entry]) => setTowerDim(entry.isIntersecting), {
+    rootMargin: "-35% 0px -35% 0px",
+  });
+  if (el.value) dimObserver.observe(el.value);
+});
+
+onUnmounted(() => {
+  dimObserver?.disconnect();
+  setTowerDim(false);
+});
+
 onMounted(() => {
   if (prefersReducedMotion()) return;
   tiltEnabled = window.matchMedia("(hover: hover) and (pointer: fine)").matches;

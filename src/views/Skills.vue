@@ -2,334 +2,407 @@
   <section
     ref="el"
     aria-labelledby="skills-title"
-    class="w-full min-h-screen flex flex-col justify-center py-12 gap-5 sm:gap-6"
+    class="skills w-full py-16 sm:py-24"
   >
-    <header
-      ref="headerEl"
-      class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0"
-    >
-      <div class="lane-left relative lg:pb-5">
-        <span
-          class="skills-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-left"
-          aria-hidden="true"
-        />
-        <p class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2">
-          // stack technique
+    <header class="lane-grid gap-y-8 pb-12 sm:pb-16">
+      <div class="lane-left">
+        <p
+          v-reveal
+          class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60"
+        >
+          <span class="h-px w-8 bg-brand-text" aria-hidden="true" />
+          03 — Stack technique
         </p>
-        <AsciiDecodeText
-          tag="h1"
+        <h1
           id="skills-title"
+          v-reveal="80"
           data-tower-anchor="skills"
-          text="Compétences"
-          idle-glitch
-          :start="titlesReady"
-          class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
-        />
-      </div>
-      <div class="lane-right relative hidden sm:flex items-end justify-end gap-4 lg:pb-5">
-        <span
-          class="skills-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-right"
-          aria-hidden="true"
-        />
-        <p class="text-sm text-ink-soft italic max-w-xs lg:text-right pb-1">
-          Les technologies et outils que j'utilise pour concevoir et développer des
-          applications web.
+          class="mt-6 text-5xl sm:text-6xl xl:text-7xl font-bold tracking-[-0.04em] leading-[0.95] text-paper"
+        >
+          Du socle <span class="text-ink">au sommet.</span>
+        </h1>
+        <p
+          v-reveal="160"
+          class="mt-6 max-w-md text-base sm:text-lg leading-relaxed text-paper/70"
+        >
+          Les technologies et outils que j'utilise pour concevoir, développer et
+          déployer des applications web, couche par couche.
         </p>
-        <div class="w-28 h-28 lg:w-32 lg:h-32 shrink-0 -mb-3" aria-hidden="true">
-          <AsciiEffect effect="cube" :options="{ scale: 1 }" />
-        </div>
       </div>
+
+      <dl v-reveal="240" class="lane-right flex items-end justify-start gap-10 lg:justify-end">
+        <div class="flex flex-col-reverse items-start gap-2 lg:items-end">
+          <dt class="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60">
+            Technologies
+          </dt>
+          <dd class="stat-num">{{ pad(techCount) }}</dd>
+        </div>
+        <div class="flex flex-col-reverse items-start gap-2 lg:items-end">
+          <dt class="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60">
+            Couches
+          </dt>
+          <dd class="stat-num">{{ pad(layers.length) }}</dd>
+        </div>
+      </dl>
     </header>
 
-    <div class="lane-grid gap-y-0">
-      <ol
-        v-for="(column, ci) in columns"
-        :key="ci"
-        :class="[ci === 0 ? 'lane-left' : 'lane-right', 'flex flex-col']"
+    <ol
+      ref="listEl"
+      class="layers border-t border-paper/10"
+      :class="{ 'is-dimmed': hovered !== null }"
+      @mouseleave="setHovered(null)"
+    >
+      <li
+        v-for="(layer, i) in layers"
+        :key="layer.code"
+        :ref="(r) => (rowEls[i] = r)"
+        :data-index="i"
+        class="layer lane-grid gap-y-6 border-b border-paper/10 py-10 lg:items-center lg:py-12"
+        :class="{ 'is-active': active[i], 'is-hovered': hovered === i }"
+        @mouseenter="setHovered(i)"
+        @focusin="setHovered(i)"
+        @focusout="onFocusOut($event)"
       >
-        <li
-          v-for="(item, ri) in column"
-          :key="item.title"
-          class="skill-row group relative flex flex-col gap-4 py-5"
-        >
-          <span
-            v-if="ri < column.length - 1"
-            :class="[ci === 0 ? 'origin-left' : 'origin-right', 'skill-line absolute left-0 right-0 bottom-0 h-px bg-line/15']"
-            aria-hidden="true"
-          />
-          <div>
-            <AsciiDecodeText
-              tag="h2"
-              :text="item.title"
-              :start="titlesReady"
-              :delay="0.3 + item.index * 0.12"
-              :duration="1.2"
-              class="text-lg sm:text-xl font-bold text-ink leading-snug transition-colors duration-300"
-            />
-            <p
-              class="text-sm text-ink-muted transition-colors duration-300 group-hover:text-brand-text"
-            >
-              {{ item.subtitle }}
-            </p>
-          </div>
-
-          <div
-            class="min-w-0 transition-transform duration-300 ease-out motion-safe:group-hover:translate-x-1"
+        <div class="lane-left">
+          <p
+            v-reveal
+            class="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em]"
           >
-            <ul class="flex flex-wrap gap-x-6 gap-y-3" aria-label="Technologies">
-              <li
-                v-for="tech in item.technologies"
-                :key="tech.name"
-                class="skill-tech flex items-center gap-2.5"
-              >
-                <img :src="tech.icon" alt="" class="w-6 h-6 object-contain" />
-                <span class="text-sm sm:text-base font-medium text-ink">
-                  {{ tech.name }}
+            <span class="text-brand-text">{{ layer.meters }} M</span>
+            <span class="h-px w-4 bg-paper/25" aria-hidden="true" />
+            <span class="text-paper/60">{{ layer.floor }}</span>
+          </p>
+          <h2
+            v-reveal="40"
+            class="mt-3 text-3xl xl:text-4xl font-bold tracking-[-0.03em] text-paper"
+          >
+            {{ layer.title }}
+          </h2>
+          <p v-reveal="80" class="mt-3 text-sm sm:text-base text-paper/70">
+            {{ layer.subtitle }}
+          </p>
+          <ul v-reveal="120" class="mt-5 flex flex-wrap gap-1.5" aria-label="Pratiques">
+            <li
+              v-for="detail in layer.details"
+              :key="detail"
+              class="rounded-full border border-paper/15 px-2.5 py-0.5 font-mono text-[11px] text-paper/60"
+            >
+              {{ detail }}
+            </li>
+          </ul>
+        </div>
+
+        <div class="connector hidden lg:block lg:col-start-2 lg:row-start-1 self-stretch" aria-hidden="true">
+          <span class="connector-line" />
+          <span class="connector-dot" />
+        </div>
+
+        <div class="lane-right lg:pl-5">
+          <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" :aria-label="`Technologies ${layer.title}`">
+            <li
+              v-for="(tech, j) in layer.technologies"
+              :key="tech"
+              v-reveal="120 + j * 40"
+            >
+              <div class="tile">
+                <span class="font-mono text-[10px] tracking-[0.18em] text-paper/45">
+                  {{ layer.code }}.{{ pad(j + 1) }}
                 </span>
-              </li>
-            </ul>
-            <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Pratiques">
-              <li
-                v-for="detail in item.details"
-                :key="detail"
-                class="skill-tag text-[11px] font-medium text-ink-soft border border-line/25 rounded-full px-2 py-0.5 transition-colors duration-300 group-hover:border-line/40 group-hover:text-ink"
-              >
-                {{ detail }}
-              </li>
-            </ul>
-          </div>
-        </li>
-      </ol>
-    </div>
+                <span class="mt-3 block text-[15px] font-semibold text-paper">{{ tech }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+
+    <Teleport to="body">
+      <div
+        class="altimeter hidden lg:flex"
+        :class="{ 'is-visible': altVisible }"
+        aria-hidden="true"
+      >
+        <span class="text-paper/45">ALT</span>
+        <span ref="altEl" class="text-brand-text">330 M</span>
+      </div>
+    </Teleport>
   </section>
 </template>
 
 <script setup>
-import { ref, onUnmounted } from "vue";
-import { gsap, prefersReducedMotion } from "@/lib/motion.js";
-import AsciiEffect from "@/components/AsciiEffect.vue";
-import { useEnterAnimation } from "../composables/useEnterAnimation.js";
-import AsciiDecodeText from "../components/AsciiDecodeText.vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import { vReveal } from "@/directives/reveal.js";
+import { setTowerHighlight } from "@/lib/eiffel/bus.js";
 
-import vueIcon from "@/assets/icons/frontend/vue.svg";
-import reactIcon from "@/assets/icons/frontend/react.svg";
-import tailwindIcon from "@/assets/icons/frontend/tailwind.svg";
-import tsIcon from "@/assets/icons/frontend/typescript.svg";
-import dockerIcon from "@/assets/icons/backend/docker.svg";
-import mysqlIcon from "@/assets/icons/backend/mysql.svg";
-import nodeIcon from "@/assets/icons/backend/nodejs.svg";
-import symfonyIcon from "@/assets/icons/backend/symfony.png";
-import gitIcon from "@/assets/icons/tools/git.svg";
-import githubIcon from "@/assets/icons/tools/github.svg";
-import gitlabIcon from "@/assets/icons/tools/gitlab.svg";
-import supabaseIcon from "@/assets/icons/backend/supabase.svg";
-import railwayIcon from "@/assets/icons/tools/railway.svg";
-import powerbiIcon from "@/assets/icons/data/powerbi.svg";
-import excelIcon from "@/assets/icons/data/excel.svg";
-import claudeIcon from "@/assets/icons/ai/claude.svg";
-import codexIcon from "@/assets/icons/ai/codex.svg";
-import cursorIcon from "@/assets/icons/ai/cursor.svg";
-
-const el = ref(null);
-const headerEl = ref(null);
-
-const competences = [
+// `y` is the floor height in tower units (see lib/eiffel/geometry.js).
+const layers = [
   {
-    title: "Front-End",
-    subtitle: "Interfaces modernes",
-    technologies: [
-      { name: "Vue.js", icon: vueIcon },
-      { name: "React", icon: reactIcon },
-      { name: "TypeScript", icon: tsIcon },
-      { name: "Tailwind", icon: tailwindIcon },
-    ],
-    details: ["Responsive", "SPA", "SSR", "Animations"],
-  },
-  {
-    title: "Back-End",
-    subtitle: "Serveurs & APIs",
-    technologies: [
-      { name: "Node.js", icon: nodeIcon },
-      { name: "Symfony", icon: symfonyIcon },
-      { name: "MySQL", icon: mysqlIcon },
-      { name: "Supabase", icon: supabaseIcon },
-      { name: "Docker", icon: dockerIcon },
-    ],
-    details: ["REST API", "GraphQL", "SQL", "CI/CD"],
-  },
-  {
-    title: "Data",
-    subtitle: "Analyse & BI",
-    technologies: [
-      { name: "Power BI", icon: powerbiIcon },
-      { name: "Excel", icon: excelIcon },
-      { name: "MySQL", icon: mysqlIcon },
-    ],
-    details: ["Dashboards", "Data viz", "ETL"],
-  },
-  {
+    code: "IA",
     title: "IA",
-    subtitle: "Développement assisté",
-    technologies: [
-      { name: "Claude", icon: claudeIcon },
-      { name: "Codex", icon: codexIcon },
-      { name: "Cursor", icon: cursorIcon },
-    ],
+    meters: 330,
+    floor: "Antenne",
+    y: 10,
+    subtitle: "Développement assisté : je délègue, je vérifie, je livre plus vite.",
     details: ["Agents", "Prompt engineering", "Code review IA"],
+    technologies: ["Claude", "Codex", "Cursor"],
   },
   {
-    title: "Outils",
-    subtitle: "Workflow & Gestion",
-    technologies: [
-      { name: "Git", icon: gitIcon },
-      { name: "GitHub", icon: githubIcon },
-      { name: "GitLab", icon: gitlabIcon },
-      { name: "Railway", icon: railwayIcon },
-    ],
-    details: ["Déploiement", "Code Review", "Testing"],
+    code: "FE",
+    title: "Front-end",
+    meters: 276,
+    floor: "Sommet",
+    y: 8.9,
+    subtitle: "Interfaces modernes, rapides et soignées.",
+    details: ["Responsive", "SPA", "SSR", "Animations"],
+    technologies: ["Vue.js", "React", "TypeScript", "Tailwind"],
+  },
+  {
+    code: "BE",
+    title: "Back-end",
+    meters: 115,
+    floor: "2e étage",
+    y: 3.8,
+    subtitle: "Serveurs, APIs et bases de données.",
+    details: ["REST API", "GraphQL", "SQL"],
+    technologies: ["Node.js", "Symfony", "MySQL", "Supabase"],
+  },
+  {
+    code: "DA",
+    title: "Data",
+    meters: 57,
+    floor: "1er étage",
+    y: 1.8,
+    subtitle: "Analyse, tableaux de bord et BI.",
+    details: ["Dashboards", "Data viz", "ETL"],
+    technologies: ["Power BI", "Excel"],
+  },
+  {
+    code: "OP",
+    title: "DevOps & outils",
+    meters: 0,
+    floor: "Socle",
+    y: 0.4,
+    subtitle: "Versionner, conteneuriser, déployer.",
+    details: ["CI/CD", "Déploiement", "Code review", "Testing"],
+    technologies: ["Git", "GitHub", "GitLab", "Docker", "Railway"],
   },
 ];
 
-const half = Math.ceil(competences.length / 2);
-const indexed = competences.map((item, index) => ({ ...item, index }));
-const columns = [indexed.slice(0, half), indexed.slice(half)];
+const techCount = layers.reduce((n, l) => n + l.technologies.length, 0);
+const pad = (n) => String(n).padStart(2, "0");
 
-let ctx = null;
+const reduced =
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const brandColor = () => {
-  const v = getComputedStyle(document.documentElement)
-    .getPropertyValue("--brand-text")
-    .trim();
-  if (!v) return "#ff4d94";
-  return v.includes(",") || v.startsWith("#") || v.includes("(") ? v : `rgb(${v})`;
-};
+const el = ref(null);
+const listEl = ref(null);
+const altEl = ref(null);
+const rowEls = [];
+const active = ref(layers.map(() => reduced));
+const hovered = ref(null);
+const altVisible = ref(false);
 
-const animate = () => {
-  if (prefersReducedMotion() || !el.value) return;
+let lastMeters = -1;
+let frame = 0;
+let rowObserver = null;
+let altObserver = null;
 
-  ctx = gsap.context(() => {
-    const q = (sel) => el.value.querySelectorAll(sel);
-    const tags = q(".skill-tag");
-    const restBorder = tags.length ? getComputedStyle(tags[0]).borderTopColor : "";
+function activate(i) {
+  if (!active.value[i]) active.value[i] = true;
+}
 
-    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-    tl.fromTo(
-      headerEl.value.querySelectorAll(":scope > div"),
-      { opacity: 0, y: -12 },
-      { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
-    )
-      .fromTo(
-        headerEl.value.querySelectorAll(".skills-rule"),
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
-        0
-      )
-      .fromTo(
-        q(".skill-row"),
-        { opacity: 0, x: -12 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.45,
-          stagger: 0.1,
-          clearProps: "opacity,transform",
-        },
-        "-=0.4"
-      )
-      .fromTo(
-        q(".skill-line"),
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.inOut",
-          clearProps: "transform",
-        },
-        "<"
-      )
-      .fromTo(
-        q(".skill-tech img"),
-        {
-          opacity: 0,
-          y: -14,
-          scale: 0.4,
-          rotation: () => gsap.utils.random(-25, 25),
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotation: 0,
-          duration: 0.55,
-          stagger: 0.04,
-          ease: "back.out(2.2)",
-          clearProps: "opacity,transform",
-        },
-        "-=0.4"
-      )
-      .fromTo(
-        q(".skill-tech span"),
-        { opacity: 0 },
-        { opacity: 1, duration: 0.3, stagger: 0.04, clearProps: "opacity" },
-        "<0.15"
-      )
-      .fromTo(
-        tags,
-        { opacity: 0, scale: 0.9 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.3,
-          stagger: 0.02,
-          clearProps: "opacity,transform",
-        },
-        "-=0.3"
-      );
-
-    if (tags.length) {
-      tl.fromTo(
-        tags,
-        { borderColor: brandColor() },
-        {
-          borderColor: restBorder,
-          duration: 0.6,
-          stagger: 0.02,
-          ease: "power1.out",
-          clearProps: "borderColor",
-        },
-        "<"
-      );
-    }
-
-    // Light scroll-linked parallax, columns drift at slightly different speeds.
-    const cols = q(".lane-grid > ol");
-    cols.forEach((col, i) => {
-      const amp = i === 0 ? 10 : 20;
-      gsap.fromTo(
-        col,
-        { y: amp },
-        {
-          y: -amp,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el.value,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 0.6,
-          },
-        }
-      );
+// Altimeter: interpolates between the rows' altitudes based on which row sits at mid-screen.
+function updateAltimeter() {
+  frame = 0;
+  if (!altEl.value) return;
+  const mid = window.innerHeight / 2;
+  const pts = rowEls
+    .filter(Boolean)
+    .map((r, i) => {
+      const b = r.getBoundingClientRect();
+      return [b.top + b.height / 2, layers[i].meters];
     });
-  }, el.value);
-};
+  if (!pts.length) return;
+  let m = pts[0][1];
+  if (mid >= pts[pts.length - 1][0]) m = pts[pts.length - 1][1];
+  else if (mid > pts[0][0]) {
+    for (let i = 1; i < pts.length; i++) {
+      const [y0, m0] = pts[i - 1];
+      const [y1, m1] = pts[i];
+      if (mid <= y1) {
+        m = m0 + ((m1 - m0) * (mid - y0)) / (y1 - y0);
+        break;
+      }
+    }
+  }
+  const rounded = Math.round(m);
+  if (rounded === lastMeters) return;
+  lastMeters = rounded;
+  altEl.value.textContent = `${String(rounded).padStart(3, "0")} M`;
+}
 
-onUnmounted(() => ctx?.revert());
+function onScroll() {
+  if (altVisible.value && !frame) frame = requestAnimationFrame(updateAltimeter);
+}
 
-const titlesReady = ref(false);
+function setHovered(i) {
+  if (hovered.value === i) return;
+  hovered.value = i;
+  setTowerHighlight(i === null ? null : layers[i].y);
+}
 
-useEnterAnimation(el, () => {
-  titlesReady.value = true;
-  animate();
+function onFocusOut(e) {
+  if (!e.currentTarget.contains(e.relatedTarget)) setHovered(null);
+}
+
+onMounted(() => {
+  if (!reduced) {
+    // A floor lights up when its row reaches the middle band of the viewport.
+    rowObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const i = Number(entry.target.dataset.index);
+          // Also covers a fast scroll / anchor jump past the row.
+          if (entry.isIntersecting || entry.boundingClientRect.top < 0) activate(i);
+        }
+      },
+      { rootMargin: "-25% 0px -25% 0px" }
+    );
+    rowEls.forEach((r) => r && rowObserver.observe(r));
+  }
+
+  altObserver = new IntersectionObserver(
+    ([entry]) => {
+      altVisible.value = entry.isIntersecting;
+      if (entry.isIntersecting) updateAltimeter();
+    },
+    { rootMargin: "-50% 0px -50% 0px" }
+  );
+  if (listEl.value) altObserver.observe(listEl.value);
+  window.addEventListener("scroll", onScroll, { passive: true });
+});
+
+onUnmounted(() => {
+  rowObserver?.disconnect();
+  altObserver?.disconnect();
+  window.removeEventListener("scroll", onScroll);
+  if (frame) cancelAnimationFrame(frame);
+  setTowerHighlight(null);
 });
 </script>
+
+<style scoped>
+.stat-num {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: clamp(3rem, 5vw, 4rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(var(--paper) / 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hover: the other layers step back. */
+.layer {
+  transition: opacity 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.layers.is-dimmed .layer:not(.is-hovered) {
+  opacity: 0.4;
+}
+
+.tile {
+  height: 100%;
+  border-radius: 6px;
+  border: 1px solid rgb(var(--paper) / 0.1);
+  background: rgb(var(--paper) / 0.03);
+  padding: 0.75rem 0.875rem;
+  transition:
+    border-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    background-color 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.layer.is-hovered .tile {
+  border-color: rgb(var(--brand-text) / 0.6);
+  background: rgb(var(--brand) / 0.06);
+}
+
+/* Connector: dot on the tower axis, dashed line drawn outward from it. */
+.connector {
+  position: relative;
+  min-height: 1px;
+}
+.connector-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 0;
+  border-top: 1px dashed rgb(var(--brand-text) / 0.45);
+  transform: scaleX(0);
+  transform-origin: 50% 50%;
+  transition: transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.connector-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--paper) / 0.25);
+  background: rgb(var(--page));
+  transition:
+    background-color 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+}
+.layer.is-active .connector-line {
+  transform: scaleX(1);
+}
+.layer.is-active .connector-dot {
+  border-color: rgb(var(--ink));
+  background: rgb(var(--ink));
+  box-shadow:
+    0 0 0 4px rgb(var(--ink) / 0.15),
+    0 0 12px rgb(var(--brand) / 0.7);
+}
+.layer.is-active.is-hovered .connector-dot {
+  box-shadow:
+    0 0 0 6px rgb(var(--ink) / 0.2),
+    0 0 20px rgb(var(--brand) / 0.95);
+}
+.layer.is-hovered .connector-line {
+  border-top-color: rgb(var(--brand-text) / 0.8);
+}
+
+.altimeter {
+  position: fixed;
+  top: 50%;
+  left: calc(50% + 18px);
+  z-index: 1;
+  gap: 0.5rem;
+  transform: translateY(calc(-100% - 10px));
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.altimeter.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  .tile,
+  .connector-line,
+  .connector-dot,
+  .altimeter {
+    transition: none;
+  }
+}
+</style>

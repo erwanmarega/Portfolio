@@ -26,6 +26,7 @@ const FAR_DIM = 0.3;
 const MAX_PIXEL_RATIO = 2;
 const DAMPING = 4;
 const EPSILON = 1e-4;
+const HL_DAMPING = 9;
 const TOP_LEVEL = 9.7;
 const BOTTOM_LEVEL = 0.4;
 const DIST_TOP = 3.2;
@@ -48,14 +49,18 @@ uniform float uMinPx;
 uniform float uMaxPx;
 uniform float uCamDist;
 uniform float uFarDim;
+uniform float uHlY;
+uniform float uHl;
 varying vec3 vColor;
 varying float vFade;
+varying float vGlow;
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   float z = -mv.z;
   gl_PointSize = clamp(uSize * uPixelRatio * (uRefDist / z), uMinPx * uPixelRatio, uMaxPx * uPixelRatio);
   vFade = mix(1.0, uFarDim, smoothstep(uCamDist - 2.0, uCamDist + 3.5, z));
   vColor = color;
+  vGlow = uHl * (1.0 - smoothstep(0.08, 0.5, abs(position.y - uHlY)));
   gl_Position = projectionMatrix * mv;
 }
 `;
@@ -64,11 +69,13 @@ const POINT_FRAG = `
 uniform float uOpacity;
 varying vec3 vColor;
 varying float vFade;
+varying float vGlow;
 void main() {
   float d = length(gl_PointCoord - 0.5) * 2.0;
   if (d > 1.0) discard;
   float a = 1.0 - smoothstep(0.7, 1.0, d);
-  gl_FragColor = vec4(vColor * vFade, a * uOpacity);
+  float fade = mix(vFade, 1.0, vGlow);
+  gl_FragColor = vec4(vColor * fade * (1.0 + vGlow * 1.6), min(1.0, a * uOpacity * (1.0 + vGlow * 0.6)));
 }
 `;
 
@@ -100,6 +107,8 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
       uCamDist: { value: 10 },
       uFarDim: { value: FAR_DIM },
       uOpacity: { value: OPACITY },
+      uHlY: { value: -100 },
+      uHl: { value: 0 },
     },
     vertexShader: POINT_VERT,
     fragmentShader: POINT_FRAG,
@@ -159,9 +168,12 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
   let last = 0;
   let running = true;
   let disposed = false;
+  let hlTarget = 0;
+  let hlCurrent = 0;
 
   function render() {
     placeCamera(current);
+    material.uniforms.uHl.value = hlCurrent;
     material.uniforms.uCamDist.value = camera.position.distanceTo(tmpLook);
     renderer.render(scene, camera);
     for (const cb of renderCallbacks) cb();
@@ -218,8 +230,10 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
     current += (target - current) * (1 - Math.exp(-DAMPING * dt));
     current = Math.min(1, Math.max(0, current));
     if (Math.abs(target - current) < EPSILON) current = target;
+    hlCurrent += (hlTarget - hlCurrent) * (1 - Math.exp(-HL_DAMPING * dt));
+    if (Math.abs(hlTarget - hlCurrent) < 1e-3) hlCurrent = hlTarget;
     render();
-    if (current !== target) raf = requestAnimationFrame(tick);
+    if (current !== target || hlCurrent !== hlTarget) raf = requestAnimationFrame(tick);
   }
 
   function schedule() {
@@ -288,5 +302,21 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
     if (!disposed && running) render();
   }
 
-  return { setProgress, setStops, resize, start, stop, dispose, onRender, projectLevel, projectPoint };
+  // Brightens the particles around one floor (tower units); null fades it out.
+  function setHighlight(y) {
+    if (y === null || y === undefined) {
+      hlTarget = 0;
+    } else {
+      material.uniforms.uHlY.value = y;
+      hlTarget = 1;
+    }
+    if (reducedMotion) {
+      hlCurrent = hlTarget;
+      if (running && !disposed) render();
+      return;
+    }
+    schedule();
+  }
+
+  return { setProgress, setStops, setHighlight, resize, start, stop, dispose, onRender, projectLevel, projectPoint };
 }
