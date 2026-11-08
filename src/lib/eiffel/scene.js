@@ -92,7 +92,9 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
   const scene = new Scene();
   const camera = new PerspectiveCamera(50, 1, 0.1, 100);
 
-  const { positions, colors } = createEiffelPositions(isMobile ? PARTICLES_MOBILE : PARTICLES_DESKTOP);
+  const { positions, colors } = createEiffelPositions(
+    isMobile ? PARTICLES_MOBILE : PARTICLES_DESKTOP,
+  );
   const geometry = new BufferGeometry();
   geometry.setAttribute("position", new BufferAttribute(positions, 3));
   geometry.setAttribute("color", new BufferAttribute(colors, 3));
@@ -318,5 +320,16 @@ export function createEiffelScene(canvas, { reducedMotion = false, isMobile = fa
     schedule();
   }
 
-  return { setProgress, setStops, setHighlight, resize, start, stop, dispose, onRender, projectLevel, projectPoint };
+  return {
+    setProgress,
+    setStops,
+    setHighlight,
+    resize,
+    start,
+    stop,
+    dispose,
+    onRender,
+    projectLevel,
+    projectPoint,
+  };
 }

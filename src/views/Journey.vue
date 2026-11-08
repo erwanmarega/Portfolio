@@ -4,10 +4,7 @@
     aria-labelledby="journey-title"
     class="no-scrollbar min-h-screen flex flex-col justify-center py-8 gap-5 sm:gap-6"
   >
-    <header
-      ref="headerEl"
-      class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0"
-    >
+    <header ref="headerEl" class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0">
       <div class="lane-left relative lg:pb-5">
         <span
           class="journey-rule absolute left-0 right-0 bottom-0 hidden lg:block h-px bg-line/15 origin-left"
@@ -17,8 +14,8 @@
           // expérience & formation
         </p>
         <AsciiDecodeText
-          tag="h1"
           id="journey-title"
+          tag="h1"
           data-tower-anchor="journey"
           text="Parcours"
           idle-glitch
@@ -122,8 +119,7 @@ const groups = [
         institution: "Cegedim Business Services",
         years: "2025 – 2027",
         ongoing: true,
-        description:
-          "Développement d'interfaces web front-end, principalement en Vue.js.",
+        description: "Développement d'interfaces web front-end, principalement en Vue.js.",
         tags: ["Vue.js", "Front-end"],
       },
     ],
@@ -183,7 +179,7 @@ const scrambleYears = (span) => {
       const settled = Math.floor(state.p * finalText.length);
       span.textContent = [...finalText]
         .map((ch, i) =>
-          /\d/.test(ch) && i >= settled ? String(Math.floor(Math.random() * 10)) : ch
+          /\d/.test(ch) && i >= settled ? String(Math.floor(Math.random() * 10)) : ch,
         )
         .join("");
     },
@@ -202,12 +198,12 @@ const buildTimeline = () => {
   tl.fromTo(
     headerEl.value.querySelectorAll(":scope > div"),
     { opacity: 0, y: -12 },
-    { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" }
+    { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "opacity,transform" },
   ).fromTo(
     headerEl.value.querySelectorAll(".journey-rule"),
     { scaleX: 0 },
     { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
-    0
+    0,
   );
 
   root.querySelectorAll(".journey-col").forEach((col, ci) => {
@@ -220,7 +216,7 @@ const buildTimeline = () => {
         label,
         { opacity: 0, x: -12 },
         { opacity: 1, x: 0, duration: 0.45, clearProps: "opacity,transform" },
-        at
+        at,
       );
       at += 0.12;
 
@@ -229,8 +225,13 @@ const buildTimeline = () => {
         tl.fromTo(
           row,
           { clipPath: fromLeft ? "inset(0% 100% 0% 0%)" : "inset(0% 0% 0% 100%)" },
-          { clipPath: "inset(0% 0% 0% 0%)", duration: 0.7, ease: "power3.inOut", clearProps: "clipPath" },
-          at
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 0.7,
+            ease: "power3.inOut",
+            clearProps: "clipPath",
+          },
+          at,
         );
 
         // Pink hairline drawn under the row, then fades to the regular border.
@@ -244,7 +245,7 @@ const buildTimeline = () => {
           line,
           { scaleX: 0, opacity: 1 },
           { scaleX: 1, duration: 0.7, ease: "power3.inOut" },
-          at + 0.15
+          at + 0.15,
         ).to(line, { opacity: 0, duration: 0.5, onComplete: () => line.remove() }, ">");
 
         const years = row.querySelector(".journey-years");
@@ -262,7 +263,7 @@ const buildTimeline = () => {
               ease: "back.out(2.5)",
               clearProps: "opacity,transform",
             },
-            at + 0.55
+            at + 0.55,
           );
         }
 
@@ -280,7 +281,7 @@ const buildTimeline = () => {
               stagger: 0.05,
               clearProps: "opacity,transform",
             },
-            at + 0.4
+            at + 0.4,
           );
         }
 

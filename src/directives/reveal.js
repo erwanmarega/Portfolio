@@ -15,14 +15,13 @@ function getObserver() {
         observer.unobserve(entry.target);
       }
     },
-    { rootMargin: "0px 0px -12% 0px", threshold: 0 }
+    { rootMargin: "0px 0px -12% 0px", threshold: 0 },
   );
   return observer;
 }
 
 const reduced = () =>
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export const vReveal = {
   mounted(el, binding) {

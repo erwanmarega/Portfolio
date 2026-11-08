@@ -65,7 +65,7 @@ const glitch = (duration = 450) => {
   if (el) el.style.minWidth = `${el.getBoundingClientRect().width}px`;
   const chars = [...props.text];
   const settleAt = chars.map(
-    (_, i) => (i / chars.length) * duration * 0.7 + Math.random() * duration * 0.3
+    (_, i) => (i / chars.length) * duration * 0.7 + Math.random() * duration * 0.3,
   );
   const t0 = performance.now();
   const tick = (now) => {
@@ -78,9 +78,7 @@ const glitch = (duration = 450) => {
     }
     glitchText.value = chars
       .map((c, i) =>
-        c === " " || t >= settleAt[i]
-          ? c
-          : GLYPHS[Math.floor(Math.random() * GLYPHS.length)]
+        c === " " || t >= settleAt[i] ? c : GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
       )
       .join("");
     glitchRaf = requestAnimationFrame(tick);
@@ -103,10 +101,13 @@ const reveal = () => {
 
 const scheduleIdleGlitch = () => {
   clearTimeout(idleTimer);
-  idleTimer = setTimeout(() => {
-    if (onScreen && !document.hidden) glitch(550);
-    scheduleIdleGlitch();
-  }, 4000 + Math.random() * 5000);
+  idleTimer = setTimeout(
+    () => {
+      if (onScreen && !document.hidden) glitch(550);
+      scheduleIdleGlitch();
+    },
+    4000 + Math.random() * 5000,
+  );
 };
 
 const startIdleGlitch = () => {
@@ -148,7 +149,7 @@ watch(
   () => props.start,
   (v) => {
     if (v) begin();
-  }
+  },
 );
 
 onMounted(() => {
@@ -184,8 +185,14 @@ onUnmounted(() => {
 }
 
 @keyframes glitch-jitter {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-2px, 1px); }
-  100% { transform: translate(2px, -1px); }
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-2px, 1px);
+  }
+  100% {
+    transform: translate(2px, -1px);
+  }
 }
 </style>

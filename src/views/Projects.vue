@@ -1,9 +1,6 @@
 <template>
   <div ref="el">
-    <section
-      aria-labelledby="projects-title"
-      class="relative py-24 lg:py-32"
-    >
+    <section aria-labelledby="projects-title" class="relative py-24 lg:py-32">
       <header
         ref="headerEl"
         class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
@@ -79,8 +76,8 @@
 
             <div class="min-w-0">
               <button
-                type="button"
                 :id="`project-title-${project.id}`"
+                type="button"
                 :aria-expanded="openId === project.id"
                 :aria-controls="`project-panel-${project.id}`"
                 class="project-title block max-w-full text-left font-sans font-extrabold leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
@@ -122,7 +119,18 @@
                     : 'border-line/25 text-paper'
                 "
               >
-                <svg viewBox="0 0 16 16" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+                <svg
+                  viewBox="0 0 16 16"
+                  class="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+                </svg>
               </a>
             </div>
           </div>
@@ -241,7 +249,18 @@
                     class="panel-reveal mt-8 inline-flex min-h-[44px] items-center gap-2 rounded-full bg-ink px-6 py-3 font-semibold text-page transition-colors duration-300 hover:bg-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
                     Voir le projet
-                    <svg viewBox="0 0 16 16" class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+                    <svg
+                      viewBox="0 0 16 16"
+                      class="h-3 w-3"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.75"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+                    </svg>
                     <span class="sr-only">(nouvel onglet)</span>
                   </a>
                 </div>
@@ -416,14 +435,14 @@ watch(openId, async (id) => {
         q(".shot-frame"),
         { clipPath: "inset(0% 0% 100% 0%)" },
         { clipPath: "inset(0% 0% 0% 0%)", duration: 0.8, clearProps: "clipPath" },
-        0.1
+        0.1,
       )
       .from(q(".shot-img"), { scale: 1.08, duration: 1.1, clearProps: "transform" }, 0.1)
       .from(q(".shot-offset"), { x: -14, y: -14, duration: 0.7, clearProps: "transform" }, 0.5)
       .from(
         q(".panel-reveal"),
         { opacity: 0, y: 20, duration: 0.6, stagger: 0.1, clearProps: "transform,opacity" },
-        0.3
+        0.3,
       );
   });
 });
@@ -528,25 +547,29 @@ onMounted(() => {
           splits.push(split);
           gsap.set(title, { opacity: 1 });
 
-          tl.from(row.querySelector(".row-line"), { scaleX: 0, duration: 0.9, ease: "power2.inOut" }, at)
+          tl.from(
+            row.querySelector(".row-line"),
+            { scaleX: 0, duration: 0.9, ease: "power2.inOut" },
+            at,
+          )
             .from(split.chars, { yPercent: 110, duration: 0.8, stagger: 0.03 }, at + 0.1)
             .fromTo(
               row.querySelector(".row-num"),
               { opacity: 0, x: -16 },
               { opacity: 1, x: 0, duration: 0.5, clearProps: "transform,opacity" },
-              at + 0.1
+              at + 0.1,
             )
             .fromTo(
               row.querySelectorAll(".row-cat"),
               { opacity: 0, x: 24 },
               { opacity: 1, x: 0, duration: 0.6, clearProps: "transform,opacity" },
-              at + 0.25
+              at + 0.25,
             )
             .fromTo(
               row.querySelector(".row-cta"),
               { opacity: 0 },
               { opacity: 1, duration: 0.5, clearProps: "opacity" },
-              at + 0.35
+              at + 0.35,
             );
         });
 
