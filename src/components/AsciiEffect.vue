@@ -25,7 +25,11 @@ onMounted(() => {
   });
 });
 
-watch(() => props.params, (p) => renderer?.setParams(p), { deep: true });
+watch(
+  () => props.params,
+  (p) => renderer?.setParams(p),
+  { deep: true },
+);
 
 onUnmounted(() => {
   renderer?.destroy();

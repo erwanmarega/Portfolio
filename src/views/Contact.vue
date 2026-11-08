@@ -7,85 +7,88 @@
     <div ref="termEl" class="lane-grid lg:items-stretch">
       <div
         class="lane-left term-window rounded-2xl bg-surface-strong border border-line/15 overflow-hidden flex flex-col"
-        style="box-shadow: 0 0 0 1px rgb(var(--ink) / 0.04), 0 24px 80px rgb(0 0 0 / 0.5)"
+        style="
+          box-shadow:
+            0 0 0 1px rgb(var(--ink) / 0.04),
+            0 24px 80px rgb(0 0 0 / 0.5);
+        "
       >
-      <div
-        class="h-10 shrink-0 bg-surface border-b border-line/15 flex items-center gap-2 px-4"
-      >
-        <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
-        <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
-        <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
-        <span class="ml-auto font-mono text-xs text-ink-muted" aria-hidden="true">
-          erwan@portfolio — bienvenue
-        </span>
-      </div>
+        <div class="h-10 shrink-0 bg-surface border-b border-line/15 flex items-center gap-2 px-4">
+          <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
+          <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
+          <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
+          <span class="ml-auto font-mono text-xs text-ink-muted" aria-hidden="true">
+            erwan@portfolio — bienvenue
+          </span>
+        </div>
 
         <div
           class="flex-1 flex flex-col px-5 py-8 sm:px-8 sm:py-10 font-mono text-[13px] sm:text-sm leading-relaxed text-ink-soft"
         >
           <div class="space-y-6">
-          <div class="term-line">
-            <p class="prompt">
-              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
-              <span class="text-ink">cat bienvenue.txt</span>
-            </p>
-            <AsciiDecodeText
-              tag="h2"
-              id="contact-title"
-              data-tower-anchor="contact"
-              text="Parlons de votre prochain projet."
-              :start="titleReady"
-              :delay="0.1"
-              :duration="1.5"
-              class="mt-2 text-base sm:text-lg font-bold text-ink"
-            />
-            <p class="mt-1">
-              Vous avez une idée, une question ou un projet en tête ? Je vous
-              réponds sous 24h.
-            </p>
-          </div>
+            <div class="term-line">
+              <p class="prompt">
+                <span class="text-brand-text">erwan@portfolio</span
+                ><span class="text-ink-muted">:~$ </span>
+                <span class="text-ink">cat bienvenue.txt</span>
+              </p>
+              <AsciiDecodeText
+                id="contact-title"
+                tag="h2"
+                data-tower-anchor="contact"
+                text="Parlons de votre prochain projet."
+                :start="titleReady"
+                :delay="0.1"
+                :duration="1.5"
+                class="mt-2 text-base sm:text-lg font-bold text-ink"
+              />
+              <p class="mt-1">
+                Vous avez une idée, une question ou un projet en tête ? Je vous réponds sous 24h.
+              </p>
+            </div>
 
-          <div class="term-line">
-            <p class="prompt">
-              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
-              <span class="text-ink">ls liens/</span>
-            </p>
-            <ul class="mt-2 space-y-1">
-              <li class="link-row">
-                <span class="link-key">email</span>
-                <a href="mailto:maregaerwan@gmail.com" class="term-link">
-                  maregaerwan@gmail.com
-                </a>
-              </li>
-              <li class="link-row">
-                <span class="link-key">linkedin</span>
-                <a
-                  href="https://www.linkedin.com/in/erwan-marega/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="term-link"
-                >
-                  Erwan Marega
-                </a>
-              </li>
-              <li class="link-row">
-                <span class="link-key">github</span>
-                <a
-                  href="https://github.com/erwanmarega"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="term-link"
-                >
-                  @erwanmarega
-                </a>
-              </li>
-            </ul>
-          </div>
-
+            <div class="term-line">
+              <p class="prompt">
+                <span class="text-brand-text">erwan@portfolio</span
+                ><span class="text-ink-muted">:~$ </span>
+                <span class="text-ink">ls liens/</span>
+              </p>
+              <ul class="mt-2 space-y-1">
+                <li class="link-row">
+                  <span class="link-key">email</span>
+                  <a href="mailto:maregaerwan@gmail.com" class="term-link">
+                    maregaerwan@gmail.com
+                  </a>
+                </li>
+                <li class="link-row">
+                  <span class="link-key">linkedin</span>
+                  <a
+                    href="https://www.linkedin.com/in/erwan-marega/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="term-link"
+                  >
+                    Erwan Marega
+                  </a>
+                </li>
+                <li class="link-row">
+                  <span class="link-key">github</span>
+                  <a
+                    href="https://github.com/erwanmarega"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="term-link"
+                  >
+                    @erwanmarega
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="term-line mt-auto pt-10">
             <p class="prompt" aria-hidden="true">
-              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
+              <span class="text-brand-text">erwan@portfolio</span
+              ><span class="text-ink-muted">:~$ </span>
               <span class="term-cursor" />
             </p>
             <p class="mt-3 text-xs text-ink-muted">
@@ -97,25 +100,28 @@
 
       <div
         class="lane-right term-window rounded-2xl bg-surface-strong border border-line/15 overflow-hidden flex flex-col"
-        style="box-shadow: 0 0 0 1px rgb(var(--ink) / 0.04), 0 24px 80px rgb(0 0 0 / 0.5)"
+        style="
+          box-shadow:
+            0 0 0 1px rgb(var(--ink) / 0.04),
+            0 24px 80px rgb(0 0 0 / 0.5);
+        "
       >
-      <div
-        class="h-10 shrink-0 bg-surface border-b border-line/15 flex items-center gap-2 px-4"
-      >
-        <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
-        <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
-        <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
-        <span class="ml-auto font-mono text-xs text-ink-muted" aria-hidden="true">
-          erwan@portfolio — contact
-        </span>
-      </div>
+        <div class="h-10 shrink-0 bg-surface border-b border-line/15 flex items-center gap-2 px-4">
+          <span class="w-3 h-3 rounded-full bg-[#ff5f57]" aria-hidden="true" />
+          <span class="w-3 h-3 rounded-full bg-[#febc2e]" aria-hidden="true" />
+          <span class="w-3 h-3 rounded-full bg-[#28c840]" aria-hidden="true" />
+          <span class="ml-auto font-mono text-xs text-ink-muted" aria-hidden="true">
+            erwan@portfolio — contact
+          </span>
+        </div>
 
         <div
           class="flex-1 px-5 py-8 sm:px-8 sm:py-10 font-mono text-[13px] sm:text-sm leading-relaxed text-ink-soft"
         >
-          <form novalidate @submit.prevent="submitForm" class="term-line">
+          <form novalidate class="term-line" @submit.prevent="submitForm">
             <p class="prompt">
-              <span class="text-brand-text">erwan@portfolio</span><span class="text-ink-muted">:~$ </span>
+              <span class="text-brand-text">erwan@portfolio</span
+              ><span class="text-ink-muted">:~$ </span>
               <span class="text-ink">./contact</span>
             </p>
             <p class="mt-2 mb-3 text-ink-muted">
@@ -127,9 +133,9 @@
                 <label for="prenom" class="term-label">--prenom</label>
                 <input
                   id="prenom"
+                  v-model="prenom"
                   name="prenom"
                   type="text"
-                  v-model="prenom"
                   autocomplete="given-name"
                   placeholder="Votre prénom"
                   required
@@ -141,9 +147,9 @@
                 <label for="nom" class="term-label">--nom</label>
                 <input
                   id="nom"
+                  v-model="nom"
                   name="nom"
                   type="text"
-                  v-model="nom"
                   autocomplete="family-name"
                   placeholder="Votre nom"
                   required
@@ -155,9 +161,9 @@
                 <label for="email" class="term-label">--email</label>
                 <input
                   id="email"
+                  v-model="email"
                   name="email"
                   type="email"
-                  v-model="email"
                   autocomplete="email"
                   placeholder="vous@exemple.fr"
                   required
@@ -169,8 +175,8 @@
                 <label for="message" class="term-label">--message</label>
                 <textarea
                   id="message"
-                  name="message"
                   v-model="message"
+                  name="message"
                   rows="4"
                   placeholder="Décrivez votre projet…"
                   required
@@ -185,24 +191,17 @@
               <span aria-hidden="true">⏎</span>
             </button>
 
-            <div
-              role="status"
-              aria-live="polite"
-              class="min-h-[1.5rem] pt-2 break-words"
-            >
+            <div role="status" aria-live="polite" class="min-h-[1.5rem] pt-2 break-words">
               <p v-if="isLoading" class="text-ink-soft">
                 <span class="term-spinner" aria-hidden="true">⠋</span>
                 envoi en cours…
               </p>
-              <p v-else-if="messageError" class="text-red-400">
-                ✗ {{ errorMessage }}
-              </p>
+              <p v-else-if="messageError" class="text-red-400">✗ {{ errorMessage }}</p>
               <p v-else-if="messageSent" class="text-emerald-400">
                 ✓ message envoyé — je vous réponds vite
               </p>
             </div>
           </form>
-
         </div>
       </div>
     </div>
@@ -248,12 +247,7 @@ const showToast = (type, text, duration = 5000) => {
 };
 
 const validateClient = () => {
-  if (
-    !prenom.value.trim() ||
-    !nom.value.trim() ||
-    !email.value.trim() ||
-    !message.value.trim()
-  ) {
+  if (!prenom.value.trim() || !nom.value.trim() || !email.value.trim() || !message.value.trim()) {
     showToast("error", "Veuillez remplir tous les champs.");
     return false;
   }
@@ -279,9 +273,7 @@ const bootWindow = (tl, win, at) => {
   let t = at;
   lines.forEach((line) => {
     const cmd = line.querySelector(".prompt .text-ink");
-    const outputs = Array.from(line.children).filter(
-      (c) => !c.classList.contains("prompt")
-    );
+    const outputs = Array.from(line.children).filter((c) => !c.classList.contains("prompt"));
     const isFirst = line === lines[0] && win === termEl.value.querySelector(".term-window");
 
     if (cmd) {
@@ -296,21 +288,46 @@ const bootWindow = (tl, win, at) => {
       const [note, fields, ...rest] = outputs;
       const rows = fields ? Array.from(fields.querySelectorAll(".term-row")) : [];
       if (note) {
-        tl.fromTo(note, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.4, clearProps: "opacity,transform" }, t);
+        tl.fromTo(
+          note,
+          { opacity: 0, x: -8 },
+          { opacity: 1, x: 0, duration: 0.4, clearProps: "opacity,transform" },
+          t,
+        );
       }
       rows.forEach((row, i) => {
         const label = row.querySelector(".term-label");
         const input = row.querySelector(".term-input");
         const rt = t + 0.15 + i * 0.16;
         if (label) {
-          tl.fromTo(label, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.4, clearProps: "opacity,transform" }, rt);
+          tl.fromTo(
+            label,
+            { opacity: 0, x: -14 },
+            { opacity: 1, x: 0, duration: 0.4, clearProps: "opacity,transform" },
+            rt,
+          );
         }
         if (input) {
-          tl.fromTo(input, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.5, ease: "power2.inOut", clearProps: "clipPath" }, rt + 0.08);
+          tl.fromTo(
+            input,
+            { clipPath: "inset(0 100% 0 0)" },
+            {
+              clipPath: "inset(0 0% 0 0)",
+              duration: 0.5,
+              ease: "power2.inOut",
+              clearProps: "clipPath",
+            },
+            rt + 0.08,
+          );
         }
       });
       if (rest.length) {
-        tl.fromTo(rest, { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4, clearProps: "opacity,transform" }, t + 0.3 + rows.length * 0.16);
+        tl.fromTo(
+          rest,
+          { opacity: 0, y: 6 },
+          { opacity: 1, y: 0, duration: 0.4, clearProps: "opacity,transform" },
+          t + 0.3 + rows.length * 0.16,
+        );
       }
       t += 0.3 + rows.length * 0.16 + 0.4;
     } else if (outputs.length) {
@@ -319,7 +336,7 @@ const bootWindow = (tl, win, at) => {
         outputs,
         { opacity: 0, y: 6 },
         { opacity: 1, y: 0, duration: 0.4, stagger: 0.1, clearProps: "opacity,transform" },
-        t
+        t,
       );
       t += 0.4 + outputs.length * 0.1 + 0.1;
     }
@@ -341,8 +358,15 @@ useEnterAnimation(el, () => {
     tl.fromTo(
       wins,
       { scaleY: 0.02, opacity: 0, transformOrigin: "50% 0%" },
-      { scaleY: 1, opacity: 1, duration: 0.6, ease: "expo.out", stagger: 0.15, clearProps: "transform,opacity" },
-      0
+      {
+        scaleY: 1,
+        opacity: 1,
+        duration: 0.6,
+        ease: "expo.out",
+        stagger: 0.15,
+        clearProps: "transform,opacity",
+      },
+      0,
     );
     wins.forEach((win, i) => {
       win.querySelectorAll(".prompt .text-ink").forEach((c) => restore.push([c, c.textContent]));
@@ -396,10 +420,7 @@ const submitForm = async () => {
       throw new Error(result.error || `Erreur HTTP : ${response.status}`);
     }
 
-    showToast(
-      "success",
-      "Merci pour votre message. Je vous réponds dès que possible."
-    );
+    showToast("success", "Merci pour votre message. Je vous réponds dès que possible.");
 
     prenom.value = "";
     nom.value = "";
@@ -411,7 +432,7 @@ const submitForm = async () => {
       "error",
       error instanceof TypeError || !error.message
         ? "Envoi impossible, vérifiez votre connexion et réessayez."
-        : error.message
+        : error.message,
     );
   } finally {
     isLoading.value = false;

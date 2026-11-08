@@ -15,9 +15,9 @@
     --line: 249 168 212;
     --paper: 242 239 243;
 
-    --ascii-ink: #F9A8D4;
-    --ascii-accent: #EC4899;
-    --ascii-bg: #0A0A0A;
+    --ascii-ink: #f9a8d4;
+    --ascii-accent: #ec4899;
+    --ascii-bg: #0a0a0a;
     --tower-lane: clamp(240px, 28vw, 440px);
 
     --frame-inset: 12px;
@@ -57,9 +57,15 @@
       grid-auto-flow: row dense;
       column-gap: 0;
     }
-    .lane-left { grid-column: 1; }
-    .lane-right { grid-column: 3; }
-    .lane-full { grid-column: 1 / -1; }
+    .lane-left {
+      grid-column: 1;
+    }
+    .lane-right {
+      grid-column: 3;
+    }
+    .lane-full {
+      grid-column: 1 / -1;
+    }
   }
 }
 
