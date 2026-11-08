@@ -228,6 +228,24 @@
                         </ol>
                       </dd>
                     </template>
+                    <template v-if="project.next">
+                      <dt
+                        class="self-start pt-1 font-mono text-[11px] uppercase tracking-widest text-paper/50"
+                      >
+                        En cours
+                      </dt>
+                      <dd>
+                        <ul class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                          <li
+                            v-for="item in project.next"
+                            :key="item"
+                            class="rounded-full border border-dashed border-paper/30 px-3 py-1 text-paper/60"
+                          >
+                            {{ item }}
+                          </li>
+                        </ul>
+                      </dd>
+                    </template>
                     <template v-if="project.repo">
                       <dt class="font-mono text-[11px] uppercase tracking-widest text-paper/50">
                         Code
@@ -320,6 +338,8 @@ const projects = ref([
     kinds: ["dev", "devops"],
     // Chaîne GitLab CI/CD : chaque commit sur main passe par ces étapes.
     pipeline: ["Lint · Types · Tests", "Images Docker", "Scan sécurité", "Deploy Railway"],
+    // Prochaine brique, pas encore dans la chaîne : l'infra décrite en code.
+    next: ["Terraform : infra GitLab / Railway / Supabase en code"],
     repo: "https://gitlab.com/erwanmarega/hovly",
     altitude: 57,
   },
