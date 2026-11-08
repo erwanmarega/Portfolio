@@ -147,6 +147,7 @@ import gitIcon from "@/assets/icons/tools/git.svg";
 import githubIcon from "@/assets/icons/tools/github.svg";
 import gitlabIcon from "@/assets/icons/tools/gitlab.svg";
 import railwayIcon from "@/assets/icons/tools/railway.svg";
+import terraformIcon from "@/assets/icons/tools/terraform.svg";
 import powerbiIcon from "@/assets/icons/data/powerbi.svg";
 import excelIcon from "@/assets/icons/data/excel.svg";
 import claudeIcon from "@/assets/icons/ai/claude.svg";
@@ -226,6 +227,7 @@ const layers = [
       { name: "GitLab", icon: gitlabIcon },
       { name: "Docker", icon: dockerIcon },
       { name: "Railway", icon: railwayIcon, mono: true },
+      { name: "Terraform", icon: terraformIcon },
     ],
   },
 ];
