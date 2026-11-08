@@ -104,7 +104,10 @@ function buildCallouts() {
     );
     const dot = svgEl(
       "circle",
-      { r: "3", style: "fill:rgb(var(--brand));filter:drop-shadow(0 0 4px rgb(var(--brand) / 0.9))" },
+      {
+        r: "3",
+        style: "fill:rgb(var(--brand));filter:drop-shadow(0 0 4px rgb(var(--brand) / 0.9))",
+      },
       g,
     );
     const label = svgEl(
