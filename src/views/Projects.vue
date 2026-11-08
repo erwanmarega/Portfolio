@@ -15,13 +15,37 @@
         >
           Projets
           <sup class="ml-2 align-super font-mono text-xs font-normal text-brand-text">
-            ({{ String(projects.length).padStart(2, "0") }})
+            ({{ String(visibleProjects.length).padStart(2, "0") }})
           </sup>
         </h2>
         <p class="max-w-[360px] text-sm leading-relaxed text-paper/50 sm:text-right">
-          Du SaaS aux outils pour développeurs. Clique sur un nom pour ouvrir le projet.
+          Du SaaS aux outils pour développeurs, jusqu'à la chaîne qui les met en production.
+          Clique sur un nom pour ouvrir le projet.
         </p>
       </header>
+
+      <div
+        role="group"
+        aria-label="Filtrer les projets par type"
+        class="mt-10 flex flex-wrap gap-2"
+      >
+        <button
+          v-for="f in FILTERS"
+          :key="f.id"
+          type="button"
+          :aria-pressed="filter === f.id"
+          class="inline-flex min-h-[40px] items-center gap-2 rounded-full border px-4 font-mono text-xs uppercase tracking-widest transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          :class="
+            filter === f.id
+              ? 'border-brand bg-brand text-page'
+              : 'border-line/25 text-paper/70 hover:border-brand hover:text-paper'
+          "
+          @click="filter = f.id"
+        >
+          {{ f.label }}
+          <span class="opacity-60">{{ String(countFor(f.id)).padStart(2, "0") }}</span>
+        </button>
+      </div>
 
       <div
         class="mt-14 hidden grid-cols-[56px_1fr_220px_64px] border-b border-line/15 pb-4 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:grid"
@@ -35,7 +59,7 @@
 
       <ol ref="listEl" class="mt-10 border-t border-line/15 lg:mt-0 lg:border-t-0">
         <li
-          v-for="(project, index) in projects"
+          v-for="(project, index) in visibleProjects"
           :key="project.id"
           class="project-row relative border-b border-line/15"
         >
@@ -48,7 +72,7 @@
           >
             <span
               class="row-num font-mono text-xs transition-colors duration-300"
-              :class="openIndex === index ? 'text-brand-text' : 'text-paper/50'"
+              :class="openId === project.id ? 'text-brand-text' : 'text-paper/50'"
             >
               {{ String(index + 1).padStart(2, "0") }}
             </span>
@@ -57,23 +81,31 @@
               <button
                 type="button"
                 :id="`project-title-${project.id}`"
-                :aria-expanded="openIndex === index"
+                :aria-expanded="openId === project.id"
                 :aria-controls="`project-panel-${project.id}`"
                 class="project-title block max-w-full text-left font-sans font-extrabold leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-                :class="openIndex === index ? 'is-open' : 'is-closed'"
-                @click="openIndex = index"
+                :class="openId === project.id ? 'is-open' : 'is-closed'"
+                @click="openId = project.id"
               >
                 {{ project.title }}
               </button>
               <p
-                class="row-cat mt-2 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:hidden"
+                class="row-cat mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] uppercase tracking-widest text-paper/50 lg:hidden"
               >
                 {{ project.category }} · {{ project.altitude }} m
+                <span class="kind-badge" :class="`kind-${kindOf(project)}`">
+                  {{ KIND_LABELS[kindOf(project)] }}
+                </span>
               </p>
             </div>
 
             <div class="row-cat hidden font-mono text-xs uppercase lg:block">
-              <p class="tracking-widest text-paper/80">{{ project.category }}</p>
+              <p class="flex items-center gap-2 tracking-widest text-paper/80">
+                {{ project.category }}
+                <span class="kind-badge" :class="`kind-${kindOf(project)}`">
+                  {{ KIND_LABELS[kindOf(project)] }}
+                </span>
+              </p>
               <p class="mt-2 normal-case text-paper/50">{{ project.altitude }} m</p>
             </div>
 
@@ -85,7 +117,7 @@
                 :aria-label="`Ouvrir ${project.title} (nouvel onglet)`"
                 class="flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-page focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand lg:h-[52px] lg:w-[52px]"
                 :class="
-                  openIndex === index
+                  openId === project.id
                     ? 'border-ink bg-ink text-page'
                     : 'border-line/25 text-paper'
                 "
@@ -99,9 +131,9 @@
             :id="`project-panel-${project.id}`"
             role="region"
             :aria-labelledby="`project-title-${project.id}`"
-            :inert="openIndex !== index"
+            :inert="openId !== project.id"
             class="project-panel grid lg:pl-[56px]"
-            :class="{ 'is-open': openIndex === index }"
+            :class="{ 'is-open': openId === project.id }"
             @transitionend="onPanelEnd"
           >
             <div class="min-h-0 overflow-hidden">
@@ -165,6 +197,41 @@
                     <dd class="min-w-0 break-all font-mono text-sm text-paper/80">
                       {{ hostname(project.link) }}
                     </dd>
+                    <template v-if="project.pipeline">
+                      <dt class="self-start pt-1 font-mono text-[11px] uppercase tracking-widest text-paper/50">
+                        Pipeline
+                      </dt>
+                      <dd>
+                        <ol class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                          <li
+                            v-for="(step, i) in project.pipeline"
+                            :key="step"
+                            class="flex items-center gap-2"
+                          >
+                            <span v-if="i" class="text-brand-text" aria-hidden="true">→</span>
+                            <span class="rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-paper/80">
+                              {{ step }}
+                            </span>
+                          </li>
+                        </ol>
+                      </dd>
+                    </template>
+                    <template v-if="project.repo">
+                      <dt class="font-mono text-[11px] uppercase tracking-widest text-paper/50">
+                        Code
+                      </dt>
+                      <dd class="min-w-0 break-all font-mono text-sm">
+                        <a
+                          :href="project.repo"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-paper/80 underline decoration-line/30 underline-offset-4 transition-colors hover:text-brand-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                        >
+                          {{ repoLabel(project.repo) }}
+                          <span class="sr-only">(nouvel onglet)</span>
+                        </a>
+                      </dd>
+                    </template>
                   </dl>
 
                   <a
@@ -198,7 +265,7 @@
 </template>
 
 <script setup>
-import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
+import { ref, computed, watch, nextTick, onMounted, onUnmounted } from "vue";
 import { gsap, ScrollTrigger, SplitText, prefersReducedMotion } from "@/lib/motion.js";
 import spotifyImage from "../assets/images/projects/spotify.webp";
 import adiImage from "../assets/images/projects/adi.webp";
@@ -209,9 +276,30 @@ import Postulo from "../assets/images/projects/postulo.webp";
 const el = ref(null);
 const headerEl = ref(null);
 const listEl = ref(null);
-const openIndex = ref(0);
+// Each project lists the disciplines it covers: "dev", "devops", or both.
+const KIND_LABELS = { dev: "Dev", devops: "DevOps", both: "Dev + DevOps" };
+const FILTERS = [
+  { id: "all", label: "Tous" },
+  { id: "dev", label: "Dev" },
+  { id: "devops", label: "DevOps" },
+];
 
+// L'altitude suit l'ordre d'affichage : on monte la tour projet après projet.
 const projects = ref([
+  {
+    id: 2,
+    title: "Hovly",
+    description: "Crée ton tableau de bord immobilier en moins d'une minute.",
+    image: Hovly,
+    link: "https://hovly-production.up.railway.app/",
+    tags: ["IA", "Vue.js", "UX", "PDF"],
+    category: "SaaS",
+    kinds: ["dev", "devops"],
+    // Chaîne GitLab CI/CD : chaque commit sur main passe par ces étapes.
+    pipeline: ["Lint · Types · Tests", "Images Docker", "Scan sécurité", "Deploy Railway"],
+    repo: "https://gitlab.com/erwanmarega/hovly",
+    altitude: 57,
+  },
   {
     id: 0,
     title: "SpotCalendar",
@@ -221,7 +309,8 @@ const projects = ref([
     link: "https://spotcalendar.fr",
     tags: ["Spotify API", "Vue.js", "Music"],
     category: "Web App",
-    altitude: 57,
+    kinds: ["dev"],
+    altitude: 115,
   },
   {
     id: 1,
@@ -232,16 +321,7 @@ const projects = ref([
     link: "https://git-agent-steel.vercel.app/",
     tags: ["IA", "CLI", "Node.js"],
     category: "Outil",
-    altitude: 115,
-  },
-  {
-    id: 2,
-    title: "Hovly",
-    description: "Crée ton tableau de bord immobilier en moins d'une minute.",
-    image: Hovly,
-    link: "https://hovly-production.up.railway.app/",
-    tags: ["IA", "Vue.js", "UX", "PDF"],
-    category: "SaaS",
+    kinds: ["dev"],
     altitude: 180,
   },
   {
@@ -253,6 +333,7 @@ const projects = ref([
     link: "https://agencementimmo.vercel.app/",
     tags: ["Vue.js", "Tailwind", "Responsive"],
     category: "Refonte",
+    kinds: ["dev"],
     altitude: 276,
   },
   {
@@ -264,11 +345,27 @@ const projects = ref([
     link: "https://postulo.fr",
     tags: ["SaaS", "Vue.js", "Dashboard"],
     category: "SaaS",
+    kinds: ["dev"],
     altitude: 320,
   },
 ]);
 
 const hostname = (link) => new URL(link).hostname.replace(/^www\./, "");
+const repoLabel = (link) => hostname(link) + new URL(link).pathname;
+
+const kindOf = (project) => (project.kinds.length > 1 ? "both" : project.kinds[0]);
+
+const filter = ref("all");
+const matches = (project, id) => id === "all" || project.kinds.includes(id);
+const countFor = (id) => projects.value.filter((p) => matches(p, id)).length;
+const visibleProjects = computed(() => projects.value.filter((p) => matches(p, filter.value)));
+
+const openId = ref(projects.value[0].id);
+
+// The open project must stay visible: when a filter hides it, open the first match.
+watch(visibleProjects, (list) => {
+  if (!list.some((p) => p.id === openId.value)) openId.value = list[0]?.id ?? null;
+});
 
 const onPanelEnd = (event) => {
   if (event.target === event.currentTarget && event.propertyName === "grid-template-rows") {
@@ -283,8 +380,10 @@ let tiltEnabled = false;
 const altitudeState = { v: projects.value[0].altitude };
 const tiltTo = new Map();
 
-watch(openIndex, async (index) => {
-  const target = projects.value[index].altitude;
+watch(openId, async (id) => {
+  const project = projects.value.find((p) => p.id === id);
+  if (!project) return;
+  const target = project.altitude;
   if (!ctx) {
     displayAltitude.value = target;
     return;
@@ -306,7 +405,7 @@ watch(openIndex, async (index) => {
   });
 
   await nextTick();
-  const panel = el.value?.querySelector(`#project-panel-${projects.value[index].id}`);
+  const panel = el.value?.querySelector(`#project-panel-${project.id}`);
   if (!panel) return;
 
   ctx.add(() => {
@@ -506,6 +605,33 @@ onUnmounted(() => {
 
 .project-panel.is-open {
   grid-template-rows: 1fr;
+}
+
+.kind-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 9999px;
+  padding: 0.125rem 0.5rem;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.kind-dev {
+  border-color: rgb(var(--line) / 0.25);
+  color: rgb(var(--paper) / 0.6);
+}
+
+.kind-devops {
+  border-color: rgb(var(--brand));
+  color: rgb(var(--brand-text));
+}
+
+.kind-both {
+  border-color: rgb(var(--brand) / 0.6);
+  background-color: rgb(var(--brand) / 0.12);
+  color: rgb(var(--brand-text));
 }
 
 @media (prefers-reduced-motion: reduce) {
