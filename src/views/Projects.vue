@@ -77,9 +77,8 @@
             <div class="min-w-0">
               <button
                 :id="`project-title-${project.id}`"
-                :aria-expanded="openId === project.id"
                 type="button"
-                :aria-expanded="openIndex === index"
+                :aria-expanded="openId === project.id"
                 :aria-controls="`project-panel-${project.id}`"
                 class="project-title block max-w-full text-left font-sans font-extrabold leading-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
                 :class="openId === project.id ? 'is-open' : 'is-closed'"
@@ -118,7 +117,6 @@
                   openId === project.id
                     ? 'border-ink bg-ink text-page'
                     : 'border-line/25 text-paper'
-                  openIndex === index ? 'border-ink bg-ink text-page' : 'border-line/25 text-paper'
                 "
               >
                 <svg
