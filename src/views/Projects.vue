@@ -16,8 +16,8 @@
           </sup>
         </h2>
         <p class="max-w-[360px] text-sm leading-relaxed text-paper/50 sm:text-right">
-          Du SaaS aux outils pour développeurs, jusqu'à la chaîne qui les met en production.
-          Clique sur un nom pour ouvrir le projet.
+          Du SaaS aux outils pour développeurs, jusqu'à la chaîne qui les met en production. Clique
+          sur un nom pour ouvrir le projet.
         </p>
       </header>
 
@@ -206,7 +206,9 @@
                       {{ hostname(project.link) }}
                     </dd>
                     <template v-if="project.pipeline">
-                      <dt class="self-start pt-1 font-mono text-[11px] uppercase tracking-widest text-paper/50">
+                      <dt
+                        class="self-start pt-1 font-mono text-[11px] uppercase tracking-widest text-paper/50"
+                      >
                         Pipeline
                       </dt>
                       <dd>
@@ -217,7 +219,9 @@
                             class="flex items-center gap-2"
                           >
                             <span v-if="i" class="text-brand-text" aria-hidden="true">→</span>
-                            <span class="rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-paper/80">
+                            <span
+                              class="rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-paper/80"
+                            >
                               {{ step }}
                             </span>
                           </li>
