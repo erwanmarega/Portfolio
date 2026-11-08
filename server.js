@@ -18,11 +18,7 @@ if (!GMAIL_USER || !GMAIL_PASS) {
   process.exit(1);
 }
 
-const allowedOrigins = [
-  "https://www.ewmdev.com",
-  "http://localhost:5173",
-  "http://localhost:5174",
-];
+const allowedOrigins = ["https://www.ewmdev.com", "http://localhost:5173", "http://localhost:5174"];
 
 if (process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
@@ -65,7 +61,7 @@ app.use(
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json({ limit: "10kb" }));
@@ -292,7 +288,9 @@ app.post("/send-email", emailLimiter, async (req, res) => {
       emailSendTracker.set(email, record);
     }
 
-    res.status(500).json({ error: "Erreur lors de l'envoi de l'email. Veuillez réessayer plus tard." });
+    res
+      .status(500)
+      .json({ error: "Erreur lors de l'envoi de l'email. Veuillez réessayer plus tard." });
   }
 });
 

@@ -1,29 +1,22 @@
 <template>
-  <section
-    ref="el"
-    aria-labelledby="skills-title"
-    class="skills w-full py-16 sm:py-24"
-  >
+  <section ref="el" aria-labelledby="skills-title" class="skills w-full py-16 sm:py-24">
     <header class="lane-grid gap-y-8 pb-12 sm:pb-16">
       <div class="lane-left">
         <p v-reveal class="text-xs font-mono uppercase tracking-[0.3em] text-brand-text mb-2">
           // stack technique
         </p>
         <AsciiDecodeText
-          tag="h1"
           id="skills-title"
+          tag="h1"
           data-tower-anchor="skills"
           text="Du socle au sommet"
           idle-glitch
           :start="titleReady"
           class="text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
         />
-        <p
-          v-reveal="160"
-          class="mt-6 max-w-md text-base sm:text-lg leading-relaxed text-paper/70"
-        >
-          Les technologies et outils que j'utilise pour concevoir, développer et
-          déployer des applications web, couche par couche.
+        <p v-reveal="160" class="mt-6 max-w-md text-base sm:text-lg leading-relaxed text-paper/70">
+          Les technologies et outils que j'utilise pour concevoir, développer et déployer des
+          applications web, couche par couche.
         </p>
       </div>
 
@@ -35,9 +28,7 @@
           <dd class="stat-num">{{ pad(techCount) }}</dd>
         </div>
         <div class="flex flex-col-reverse items-start gap-2 lg:items-end">
-          <dt class="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60">
-            Couches
-          </dt>
+          <dt class="font-mono text-[11px] uppercase tracking-[0.2em] text-paper/60">Couches</dt>
           <dd class="stat-num">{{ pad(layers.length) }}</dd>
         </div>
       </dl>
@@ -89,18 +80,20 @@
           </ul>
         </div>
 
-        <div class="connector hidden lg:block lg:col-start-2 lg:row-start-1 self-stretch" aria-hidden="true">
+        <div
+          class="connector hidden lg:block lg:col-start-2 lg:row-start-1 self-stretch"
+          aria-hidden="true"
+        >
           <span class="connector-line" />
           <span class="connector-dot" />
         </div>
 
         <div class="lane-right lg:pl-5">
-          <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" :aria-label="`Technologies ${layer.title}`">
-            <li
-              v-for="(tech, j) in layer.technologies"
-              :key="tech.name"
-              v-reveal="120 + j * 40"
-            >
+          <ul
+            class="grid grid-cols-2 sm:grid-cols-3 gap-2.5"
+            :aria-label="`Technologies ${layer.title}`"
+          >
+            <li v-for="(tech, j) in layer.technologies" :key="tech.name" v-reveal="120 + j * 40">
               <div class="tile">
                 <div class="flex items-start justify-between gap-2">
                   <span class="font-mono text-[10px] tracking-[0.18em] text-paper/45">
@@ -241,8 +234,7 @@ const techCount = layers.reduce((n, l) => n + l.technologies.length, 0);
 const pad = (n) => String(n).padStart(2, "0");
 
 const reduced =
-  typeof window !== "undefined" &&
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const el = ref(null);
 const listEl = ref(null);
@@ -271,12 +263,10 @@ function updateAltimeter() {
   frame = 0;
   if (!altEl.value) return;
   const mid = window.innerHeight / 2;
-  const pts = rowEls
-    .filter(Boolean)
-    .map((r, i) => {
-      const b = r.getBoundingClientRect();
-      return [b.top + b.height / 2, layers[i].meters];
-    });
+  const pts = rowEls.filter(Boolean).map((r, i) => {
+    const b = r.getBoundingClientRect();
+    return [b.top + b.height / 2, layers[i].meters];
+  });
   if (!pts.length) return;
   let m = pts[0][1];
   if (mid >= pts[pts.length - 1][0]) m = pts[pts.length - 1][1];
@@ -321,7 +311,7 @@ onMounted(() => {
           if (entry.isIntersecting || entry.boundingClientRect.top < 0) activate(i);
         }
       },
-      { rootMargin: "-25% 0px -25% 0px" }
+      { rootMargin: "-25% 0px -25% 0px" },
     );
     rowEls.forEach((r) => r && rowObserver.observe(r));
   }
@@ -331,7 +321,7 @@ onMounted(() => {
       altVisible.value = entry.isIntersecting;
       if (entry.isIntersecting) updateAltimeter();
     },
-    { rootMargin: "-50% 0px -50% 0px" }
+    { rootMargin: "-50% 0px -50% 0px" },
   );
   if (listEl.value) altObserver.observe(listEl.value);
   window.addEventListener("scroll", onScroll, { passive: true });

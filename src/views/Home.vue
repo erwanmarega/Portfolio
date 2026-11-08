@@ -3,14 +3,9 @@
     ref="el"
     class="relative flex min-h-[calc(100svh-var(--bar-h)-var(--foot-h)-2*var(--frame-inset))] flex-col justify-center font-sans"
   >
-    <section
-      class="lane-grid relative z-10 w-full items-center gap-y-10 py-10 lg:gap-y-0 lg:py-16"
-    >
+    <section class="lane-grid relative z-10 w-full items-center gap-y-10 py-10 lg:gap-y-0 lg:py-16">
       <div ref="textBlock" class="lane-left min-w-0 lg:pr-6">
-        <p
-          data-hero="prompt"
-          class="mb-5 font-mono text-xs text-ink-soft"
-        >
+        <p data-hero="prompt" class="mb-5 font-mono text-xs text-ink-soft">
           <span class="text-brand-text">$</span> <span ref="whoamiEl">whoami</span>
         </p>
 
@@ -20,8 +15,7 @@
         >
           <span ref="titleA">Développeur web</span>{{ " " }}
           <span class="whitespace-nowrap"
-            ><span ref="titleB">fullstack</span
-            ><span class="cursor" aria-hidden="true"
+            ><span ref="titleB">fullstack</span><span class="cursor" aria-hidden="true"
           /></span>
         </h1>
 
@@ -29,8 +23,8 @@
           data-hero="para"
           class="mb-8 max-w-md text-base leading-relaxed text-paper/75 lg:text-[15px] xl:text-lg"
         >
-          Je conçois des applications web modernes et performantes. Passionné
-          par Vue.js, Node.js et l'expérience utilisateur.
+          Je conçois des applications web modernes et performantes. Passionné par Vue.js, Node.js et
+          l'expérience utilisateur.
         </p>
 
         <div data-hero="buttons" class="flex flex-wrap items-stretch">
@@ -50,20 +44,14 @@
         </div>
       </div>
 
-      <div
-        class="lane-right flex min-w-0 flex-col lg:items-end lg:pl-6"
-      >
+      <div class="lane-right flex min-w-0 flex-col lg:items-end lg:pl-6">
         <div class="w-full lg:max-w-[26rem]">
           <div data-hero="card" class="border border-line/15 bg-surface/70">
-            <div
-              class="flex items-center gap-1.5 border-b border-line/15 px-4 py-3"
-            >
+            <div class="flex items-center gap-1.5 border-b border-line/15 px-4 py-3">
               <span class="h-2 w-2 rounded-full bg-ink-muted/30" />
               <span class="h-2 w-2 rounded-full bg-ink-muted/30" />
               <span class="h-2 w-2 rounded-full bg-ink-muted/30" />
-              <span class="ml-3 font-mono text-[11px] text-ink-muted"
-                >profil.ts</span
-              >
+              <span class="ml-3 font-mono text-[11px] text-ink-muted">profil.ts</span>
             </div>
             <pre
               class="overflow-x-auto px-5 py-5 font-mono text-[13px] leading-[1.75] text-ink-muted"
@@ -97,13 +85,7 @@
 
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from "vue";
-import {
-  gsap,
-  SplitText,
-  prefersReducedMotion,
-  onSiteReady,
-  typeText,
-} from "../lib/motion.js";
+import { gsap, SplitText, prefersReducedMotion, onSiteReady, typeText } from "../lib/motion.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -169,7 +151,7 @@ onMounted(() => {
       card,
       { clipPath: "inset(0 0 100% 0)" },
       { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: "power2.inOut", clearProps: "clipPath" },
-      0.6
+      0.6,
     );
     const lines = gsap.utils.toArray(card.querySelectorAll(".code-line"));
     const carets = gsap.utils.toArray(card.querySelectorAll(".caret"));
@@ -179,7 +161,7 @@ onMounted(() => {
         line,
         { clipPath: "inset(0 100% 0 0)" },
         { clipPath: "inset(0 0% 0 0)", duration: 0.32, ease: "steps(12)", clearProps: "clipPath" },
-        t
+        t,
       );
       const caret = carets[i];
       if (caret) {
@@ -202,7 +184,7 @@ onMounted(() => {
         stagger: 0.12,
         clearProps: "clipPath,transform",
       },
-      1.5
+      1.5,
     );
     Object.entries(statTargets).forEach(([key, value], i) => {
       const counter = { v: 0 };
@@ -216,7 +198,7 @@ onMounted(() => {
             stats[key] = Math.round(counter.v);
           },
         },
-        1.5 + i * 0.12
+        1.5 + i * 0.12,
       );
     });
 
@@ -240,7 +222,6 @@ onUnmounted(() => {
   ctx?.revert();
 });
 </script>
-
 
 <style scoped>
 .cursor {

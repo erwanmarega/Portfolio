@@ -1,0 +1,7 @@
+dist
+coverage
+node_modules
+.expo
+public
+package-lock.json
+*.pdf

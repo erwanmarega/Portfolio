@@ -1,8 +1,5 @@
 <template>
-  <section
-    aria-labelledby="about-title"
-    class="w-full min-h-screen pt-28 sm:pt-36 pb-16"
-  >
+  <section aria-labelledby="about-title" class="w-full min-h-screen pt-28 sm:pt-36 pb-16">
     <div class="lane-grid gap-y-14">
       <!-- Identity -->
       <div class="lane-left lg:pr-8">
@@ -75,9 +72,9 @@
         </dl>
 
         <p v-reveal="280" class="mt-8 max-w-md text-sm leading-relaxed text-paper/70">
-          Développeur web en formation, passionné par la création de sites et la gestion de
-          projets digitaux. J'avance entre l'école et l'entreprise : la théorie le matin, la
-          mise en production l'après-midi.
+          Développeur web en formation, passionné par la création de sites et la gestion de projets
+          digitaux. J'avance entre l'école et l'entreprise : la théorie le matin, la mise en
+          production l'après-midi.
         </p>
 
         <div v-reveal="340" class="mt-8 flex flex-wrap items-center gap-6">

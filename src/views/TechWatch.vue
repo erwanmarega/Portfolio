@@ -1,6 +1,5 @@
 <template>
   <div ref="el" class="h-full flex flex-col justify-center py-10 gap-8 overflow-hidden">
-
     <header
       ref="headerEl"
       class="lane-grid gap-y-3 border-b border-line/15 pb-5 lg:border-b-0 lg:pb-0"
@@ -18,7 +17,9 @@
           class="text-4xl lg:text-3xl xl:text-5xl 2xl:text-6xl font-extrabold text-ink tracking-tight leading-[1.05]"
         />
       </div>
-      <div class="lane-right hidden sm:flex items-end justify-end lg:border-b lg:border-line/15 lg:pb-5">
+      <div
+        class="lane-right hidden sm:flex items-end justify-end lg:border-b lg:border-line/15 lg:pb-5"
+      >
         <p class="text-sm text-ink-muted italic max-w-xs lg:text-right watch-intro">
           Les sources que je consulte pour rester à jour.
         </p>
@@ -40,18 +41,28 @@
           :style="{ '--accent': item.accent }"
         >
           <span
-            :class="[ci === 0 ? 'origin-left' : 'origin-right', 'watch-line absolute left-0 right-0 bottom-0 h-px bg-line/15']"
+            :class="[
+              ci === 0 ? 'origin-left' : 'origin-right',
+              'watch-line absolute left-0 right-0 bottom-0 h-px bg-line/15',
+            ]"
             aria-hidden="true"
           />
-          <span class="watch-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <span
+            class="watch-fill absolute inset-0 -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          />
 
-          <span :data-num="String(ci * half + i + 1).padStart(2, '0')" class="watch-num relative z-10 font-mono text-sm w-8 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] transition-colors duration-300">
+          <span
+            :data-num="String(ci * half + i + 1).padStart(2, '0')"
+            class="watch-num relative z-10 font-mono text-sm w-8 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] transition-colors duration-300"
+          >
             {{ String(ci * half + i + 1).padStart(2, "0") }}
           </span>
 
           <div class="relative z-10 flex-1 min-w-0">
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <h3 class="text-xl sm:text-2xl font-bold text-ink-soft group-hover:text-ink transition-colors duration-300 group-hover:translate-x-1 transform-gpu">
+              <h3
+                class="text-xl sm:text-2xl font-bold text-ink-soft group-hover:text-ink transition-colors duration-300 group-hover:translate-x-1 transform-gpu"
+              >
                 {{ item.title }}
               </h3>
               <span
@@ -60,16 +71,25 @@
                 {{ item.category }}
               </span>
             </div>
-            <p class="text-sm text-ink-soft mt-0 max-h-0 opacity-0 group-hover:max-h-20 group-hover:mt-2 group-hover:opacity-100 transition-all duration-500 overflow-hidden">
+            <p
+              class="text-sm text-ink-soft mt-0 max-h-0 opacity-0 group-hover:max-h-20 group-hover:mt-2 group-hover:opacity-100 transition-all duration-500 overflow-hidden"
+            >
               {{ item.description }}
             </p>
           </div>
 
           <svg
             class="relative z-10 w-5 h-5 shrink-0 text-ink-muted group-hover:text-[color:var(--accent)] -translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H8M17 7V16" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 17L17 7M17 7H8M17 7V16"
+            />
           </svg>
         </a>
       </div>
@@ -148,7 +168,7 @@ const scrambleNumber = (node, final, duration) => {
         .map((ch, k) =>
           state.p >= (k + 1) / (final.length + 1) + 0.15
             ? ch
-            : String(Math.floor(Math.random() * 10))
+            : String(Math.floor(Math.random() * 10)),
         )
         .join("");
     },
@@ -174,7 +194,7 @@ useEnterAnimation(el, () => {
       headerEl.value.querySelector(".watch-intro"),
       { opacity: 0, y: 10 },
       { opacity: 1, y: 0, duration: 0.7, clearProps: "opacity,transform" },
-      0.2
+      0.2,
     );
 
     const rows = q(".watch-row");
@@ -188,13 +208,13 @@ useEnterAnimation(el, () => {
         row,
         { opacity: 0, x: right ? 40 : -40 },
         { opacity: 1, x: 0, duration: 0.7, clearProps: "opacity,transform" },
-        at
+        at,
       )
         .fromTo(
           row.querySelector(".watch-line"),
           { scaleX: 0 },
           { scaleX: 1, duration: 0.8, ease: "power3.inOut", clearProps: "transform" },
-          at
+          at,
         )
         .add(scrambleNumber(num, num.dataset.num, 0.7), at)
         .fromTo(
@@ -207,7 +227,7 @@ useEnterAnimation(el, () => {
             ],
             clearProps: "opacity,transition",
           },
-          at + 0.35
+          at + 0.35,
         );
     });
   }, el.value);
@@ -218,6 +238,10 @@ onUnmounted(() => ctx?.revert());
 
 <style scoped>
 .watch-fill {
-  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 75%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 10%, transparent) 0%,
+    transparent 75%
+  );
 }
 </style>
