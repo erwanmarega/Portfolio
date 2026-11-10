@@ -44,7 +44,12 @@
 
 <script setup>
 import { useRoute } from "vue-router";
-import { SECTION_LINKS, PAGE_LINKS, useActiveSection, playTick } from "../composables/useSectionNav.js";
+import {
+  SECTION_LINKS,
+  PAGE_LINKS,
+  useActiveSection,
+  playTick,
+} from "../composables/useSectionNav.js";
 
 // "À propos" is the top of the page; dropped here so the pill fits a 360px screen.
 const links = SECTION_LINKS.filter((link) => link.id !== "home");

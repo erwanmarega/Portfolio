@@ -14,7 +14,13 @@
       <span class="text-[11px] opacity-80">{{ item.creator }}</span>
     </button>
 
-    <dialog ref="dialogEl" class="shelf-dialog" :aria-label="item.title" @click="onBackdrop" @close="reset">
+    <dialog
+      ref="dialogEl"
+      class="shelf-dialog"
+      :aria-label="item.title"
+      @click="onBackdrop"
+      @close="reset"
+    >
       <div class="relative">
         <button
           type="button"
@@ -30,7 +36,9 @@
           </div>
 
           <div class="page page-right bg-surface text-ink" :class="aspect">
-            <p class="font-mono text-[10px] uppercase tracking-wider text-ink-muted">{{ typeLabel }}</p>
+            <p class="font-mono text-[10px] uppercase tracking-wider text-ink-muted">
+              {{ typeLabel }}
+            </p>
             <h4 class="mt-1 font-semibold">{{ item.title }}</h4>
             <p class="text-xs text-ink-muted">{{ item.creator }} · {{ item.year }}</p>
             <p
@@ -43,7 +51,9 @@
 
           <div class="front-cover" :class="aspect" aria-hidden="true">
             <div class="cover face" :class="aspect" :style="coverStyle">
-              <span class="font-mono text-[10px] uppercase tracking-wider opacity-70">{{ typeLabel }}</span>
+              <span class="font-mono text-[10px] uppercase tracking-wider opacity-70">{{
+                typeLabel
+              }}</span>
               <span class="text-sm font-semibold leading-tight">{{ item.title }}</span>
               <span class="text-[11px] opacity-80">{{ item.creator }}</span>
             </div>
@@ -58,7 +68,7 @@
 </template>
 
 <script setup>
-import { computed, nextTick, ref } from "vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({ item: { type: Object, required: true } });
 
@@ -99,7 +109,9 @@ function reset() {
   padding: 12px 12px 12px 18px;
   text-align: left;
   border-radius: 2px 6px 6px 2px;
-  box-shadow: inset 6px 0 0 rgb(0 0 0 / 0.18), 0 6px 14px rgb(33 28 24 / 0.2);
+  box-shadow:
+    inset 6px 0 0 rgb(0 0 0 / 0.18),
+    0 6px 14px rgb(33 28 24 / 0.2);
 }
 .cover > span:nth-child(2) {
   margin-top: auto;

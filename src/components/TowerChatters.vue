@@ -61,9 +61,35 @@ const COLORS = {
 
 const MAPS = [
   // pink cap + hoodie
-  ["..CCCC..", ".CCCCCC.", "..SSSS..", "..SSKS..", "..SSSS..", "..HHHH..", ".SHHHHS.", ".SHHHHS.", "..HHHH..", "..LLLL..", "..L..L..", ".BB..BB."],
+  [
+    "..CCCC..",
+    ".CCCCCC.",
+    "..SSSS..",
+    "..SSKS..",
+    "..SSSS..",
+    "..HHHH..",
+    ".SHHHHS.",
+    ".SHHHHS.",
+    "..HHHH..",
+    "..LLLL..",
+    "..L..L..",
+    ".BB..BB.",
+  ],
   // paper hair + pink scarf + grey jacket
-  ["..WWWW..", ".WWWWWW.", ".WSSSS..", "..SSKS..", "..SSSS..", "..CCCC..", ".SJJJJS.", ".SJJJJS.", "..JJJJ..", "..LLLL..", "..L..L..", ".BB..BB."],
+  [
+    "..WWWW..",
+    ".WWWWWW.",
+    ".WSSSS..",
+    "..SSKS..",
+    "..SSSS..",
+    "..CCCC..",
+    ".SJJJJS.",
+    ".SJJJJS.",
+    "..JJJJ..",
+    "..LLLL..",
+    "..L..L..",
+    ".BB..BB.",
+  ],
 ];
 
 function toRects(map) {
@@ -144,7 +170,10 @@ function update(scene, laneWidth) {
     [w, -w],
   ].map(([x, z]) => scene.projectPoint(x, DECK_Y, z));
   // Front edge = the two lowest projected corners (largest screen y).
-  const [a, b] = pts.sort((p, q) => q.y - p.y).slice(0, 2).sort((p, q) => p.x - q.x);
+  const [a, b] = pts
+    .sort((p, q) => q.y - p.y)
+    .slice(0, 2)
+    .sort((p, q) => p.x - q.x);
   const edgeLen = Math.hypot(b.x - a.x, b.y - a.y);
   const sizeFade = clamp((edgeLen - 30) / 50, 0, 1);
   const v = Math.min(a.visible, b.visible) * sizeFade;

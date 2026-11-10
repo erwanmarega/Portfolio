@@ -1,4 +1,3 @@
-
 const TOP_Y = 10;
 const P1_Y = 1.8;
 const P2_Y = 3.8;

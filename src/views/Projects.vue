@@ -4,9 +4,9 @@
 
     <ul class="mt-6">
       <li
-        v-reveal
         v-for="project in projects"
         :key="project.id"
+        v-reveal
         class="border-t border-line/10 first:border-t-0"
       >
         <a
@@ -15,9 +15,7 @@
           rel="noopener noreferrer"
           class="group grid gap-x-6 gap-y-4 rounded-lg py-6 outline-none first:pt-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:grid-cols-[220px_minmax(0,1fr)] sm:items-start"
         >
-          <div
-            class="overflow-hidden rounded-lg border border-line/10 bg-surface-strong"
-          >
+          <div class="overflow-hidden rounded-lg border border-line/10 bg-surface-strong">
             <img
               :src="project.image"
               :alt="`Capture d'écran du projet ${project.title}`"

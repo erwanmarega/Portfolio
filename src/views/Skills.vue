@@ -4,9 +4,9 @@
 
     <dl class="mt-6">
       <div
-        v-reveal
         v-for="group in groups"
         :key="group.title"
+        v-reveal
         class="grid gap-x-6 gap-y-2 border-t border-line/10 py-4 first:border-t-0 first:pt-0 sm:grid-cols-[7.5rem_minmax(0,1fr)]"
       >
         <dt class="text-[15px] text-ink-muted">{{ group.title }}</dt>
@@ -17,7 +17,13 @@
               :key="tech.name"
               class="tech flex items-center gap-2 text-[15px] text-ink"
             >
-              <img :src="tech.icon" alt="" width="18" height="18" class="tech-icon h-[18px] w-[18px] object-contain" />
+              <img
+                :src="tech.icon"
+                alt=""
+                width="18"
+                height="18"
+                class="tech-icon h-[18px] w-[18px] object-contain"
+              />
               {{ tech.name }}
             </li>
           </ul>
@@ -43,6 +49,7 @@ import gitIcon from "@/assets/icons/tools/git.svg";
 import githubIcon from "@/assets/icons/tools/github.svg";
 import gitlabIcon from "@/assets/icons/tools/gitlab.svg";
 import railwayIcon from "@/assets/icons/tools/railway.svg";
+import terraformIcon from "@/assets/icons/tools/terraform.svg";
 import claudeIcon from "@/assets/icons/ai/claude.svg";
 import codexIcon from "@/assets/icons/ai/codex.svg";
 import cursorIcon from "@/assets/icons/ai/cursor.svg";
@@ -76,6 +83,7 @@ const groups = [
       { name: "GitHub", icon: githubIcon },
       { name: "GitLab", icon: gitlabIcon },
       { name: "Railway", icon: railwayIcon },
+      { name: "Terraform", icon: terraformIcon },
       { name: "Claude", icon: claudeIcon },
       { name: "Codex", icon: codexIcon },
       { name: "Cursor", icon: cursorIcon },

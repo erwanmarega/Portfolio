@@ -27,11 +27,7 @@
             :to="{ name: 'home', hash: `#${link.id}` }"
             :aria-current="activeId === link.id ? 'true' : undefined"
             class="group flex items-center gap-3 rounded-sm text-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
-            :class="
-              activeId === link.id
-                ? 'font-medium text-ink'
-                : 'text-ink-muted hover:text-ink'
-            "
+            :class="activeId === link.id ? 'font-medium text-ink' : 'text-ink-muted hover:text-ink'"
             @click="playTick"
           >
             <span
@@ -50,9 +46,7 @@
             :aria-current="route.name === link.name ? 'page' : undefined"
             class="group flex items-center gap-3 rounded-sm text-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
             :class="
-              route.name === link.name
-                ? 'font-medium text-ink'
-                : 'text-ink-muted hover:text-ink'
+              route.name === link.name ? 'font-medium text-ink' : 'text-ink-muted hover:text-ink'
             "
             @click="playTick"
           >
@@ -76,7 +70,18 @@
           class="text-link rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
         >
           {{ item.label }}
-          <svg viewBox="0 0 16 16" class="ml-0.5 inline-block h-3 w-3" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+          <svg
+            viewBox="0 0 16 16"
+            class="ml-0.5 inline-block h-3 w-3"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+          </svg>
           <span class="sr-only">(nouvel onglet)</span>
         </a>
       </li>
@@ -96,7 +101,12 @@
 import avatar from "../assets/images/profile.webp";
 import CV_Marega from "../assets/docs/cv-erwan-marega.pdf";
 import { useRoute } from "vue-router";
-import { SECTION_LINKS, PAGE_LINKS, useActiveSection, playTick } from "../composables/useSectionNav.js";
+import {
+  SECTION_LINKS,
+  PAGE_LINKS,
+  useActiveSection,
+  playTick,
+} from "../composables/useSectionNav.js";
 
 const external = [
   { label: "CV", href: CV_Marega },

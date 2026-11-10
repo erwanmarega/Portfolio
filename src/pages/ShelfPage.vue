@@ -7,7 +7,10 @@
 
     <template v-for="group in groups" :key="group.type">
       <h3 class="mt-12 text-sm font-medium text-ink">{{ group.title }}</h3>
-      <ul v-reveal class="mt-5 flex flex-wrap items-end gap-x-6 gap-y-10 border-b-2 border-line/15 pb-0">
+      <ul
+        v-reveal
+        class="mt-5 flex flex-wrap items-end gap-x-6 gap-y-10 border-b-2 border-line/15 pb-0"
+      >
         <li v-for="item in group.items" :key="item.id">
           <ShelfItem :item="item" />
         </li>

@@ -1,5 +1,9 @@
 <template>
-  <div ref="wrap" class="video-hero relative overflow-hidden rounded-2xl bg-surface-strong" aria-hidden="true">
+  <div
+    ref="wrap"
+    class="video-hero relative overflow-hidden rounded-2xl bg-surface-strong"
+    aria-hidden="true"
+  >
     <!-- Two stacked players: the hidden one preloads the next clip, then they cross-fade. -->
     <video
       v-for="slot in 2"
@@ -18,7 +22,11 @@
     <div class="tint absolute inset-0"></div>
 
     <Transition name="caption">
-      <p v-if="caption" :key="caption" class="caption absolute inset-0 flex items-center justify-center px-6 text-center">
+      <p
+        v-if="caption"
+        :key="caption"
+        class="caption absolute inset-0 flex items-center justify-center px-6 text-center"
+      >
         {{ caption }}
       </p>
     </Transition>
@@ -37,7 +45,7 @@ const front = ref(0);
 const index = ref(0);
 
 const caption = computed(() =>
-  heroCaptions.length ? heroCaptions[index.value % heroCaptions.length] : ""
+  heroCaptions.length ? heroCaptions[index.value % heroCaptions.length] : "",
 );
 
 let timer = 0;

@@ -34,15 +34,10 @@
           class="flex min-w-0 items-center gap-2 border-r border-line/15 px-4 font-mono text-sm outline-none transition-colors hover:bg-line/5 focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-2 focus-visible:outline-brand-text sm:px-7"
         >
           <span class="text-brand-text">~/</span>
-          <span class="truncate font-sans font-bold text-paper"
-            >erwan-marega</span
-          >
+          <span class="truncate font-sans font-bold text-paper">erwan-marega</span>
         </a>
 
-        <nav
-          aria-label="Navigation principale"
-          class="hidden items-center lg:flex"
-        >
+        <nav aria-label="Navigation principale" class="hidden items-center lg:flex">
           <a
             v-for="link in navLinks"
             :key="link.href"
@@ -156,7 +151,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faGithub, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 import { gsap, prefersReducedMotion, onSiteReady } from "@/lib/motion.js";
@@ -245,13 +240,13 @@ function setupIntro() {
         ease: "expo.out",
         clearProps: "transform,opacity",
       },
-      0
+      0,
     )
       .from(hairs, { scaleX: 0, duration: 0.9, ease: "power2.inOut" }, 0.1)
       .from(
         q(".rail-num"),
         { opacity: 0, x: -10, duration: 0.45, stagger: 0.05, clearProps: "transform,opacity" },
-        0.3
+        0.3,
       )
       .from(
         ticks,
@@ -261,17 +256,17 @@ function setupIntro() {
           stagger: { each: 0.05, from: "end" },
           clearProps: "transform",
         },
-        0.3
+        0.3,
       )
       .from(
         [...q(".tick-label"), marker.value],
         { opacity: 0, duration: 0.5, clearProps: "opacity" },
-        0.7
+        0.7,
       )
       .from(
         q(".nav-link"),
         { opacity: 0, y: -6, duration: 0.45, stagger: 0.07, clearProps: "transform,opacity" },
-        0.45
+        0.45,
       );
 
     offReady = onSiteReady(() => tl.play());
@@ -281,10 +276,7 @@ function setupIntro() {
 function measure() {
   rawStops = computeStops();
   levelStops = normalizeStops(rawStops);
-  maxScroll = Math.max(
-    1,
-    document.documentElement.scrollHeight - window.innerHeight
-  );
+  maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
 }
 
 function update() {
@@ -305,10 +297,7 @@ function update() {
   if (progress.value) progress.value.style.transform = `scaleX(${p})`;
 
   if (!marker.value) return;
-  const meters = Math.min(
-    MAX_ALTITUDE,
-    Math.max(0, levelAt(levelStops, p) * METERS_PER_UNIT)
-  );
+  const meters = Math.min(MAX_ALTITUDE, Math.max(0, levelAt(levelStops, p) * METERS_PER_UNIT));
   marker.value.style.top = `${100 - (meters / MAX_ALTITUDE) * 100}%`;
   const rounded = Math.round(meters);
   if (rounded !== lastMeters) {

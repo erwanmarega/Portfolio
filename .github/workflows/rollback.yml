@@ -1,0 +1,35 @@
+name: Rollback production
+
+# One-click rollback: Actions → "Rollback production" → Run workflow.
+# Leave the input empty to roll back to the previous production deployment,
+# or paste a specific deployment URL / ID from the Vercel dashboard.
+# Requires the VERCEL_TOKEN repository secret.
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment:
+        description: "Deployment URL or ID to restore (empty = previous production deployment)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_SCOPE: erwanmaregas-projects
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Roll back on Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          TARGET: ${{ inputs.deployment }}
+        run: |
+          npx --yes vercel@latest rollback $TARGET \
+            --token "$VERCEL_TOKEN" --scope "$VERCEL_SCOPE" --yes

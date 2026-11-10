@@ -5,15 +5,14 @@
       Une opportunité, un projet ou une question ? Écris-moi, je réponds rapidement.
     </p>
     <div v-reveal="160">
-    <a
-      href="mailto:maregaerwan@gmail.com"
-      class="text-link mt-4 inline-block text-xl font-medium tracking-tight sm:text-2xl"
-    >
-      maregaerwan@gmail.com
-    </a>
+      <a
+        href="mailto:maregaerwan@gmail.com"
+        class="text-link mt-4 inline-block text-xl font-medium tracking-tight sm:text-2xl"
+      >
+        maregaerwan@gmail.com
+      </a>
     </div>
   </section>
 </template>
 
-<script setup>
-</script>
+<script setup></script>

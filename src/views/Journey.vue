@@ -4,9 +4,9 @@
 
     <ol class="mt-6">
       <li
-        v-reveal
         v-for="item in items"
         :key="item.title"
+        v-reveal
         class="grid gap-x-6 gap-y-1 border-t border-line/10 py-5 first:border-t-0 first:pt-0 sm:grid-cols-[7.5rem_minmax(0,1fr)]"
       >
         <p class="font-mono text-[13px] text-ink-muted sm:pt-0.5">{{ item.years }}</p>
@@ -39,8 +39,7 @@ const items = [
     institution: "Cegedim Business Services",
     years: "2025 – 2027",
     ongoing: true,
-    description:
-      "Développement d'interfaces web front-end, principalement en Vue.js.",
+    description: "Développement d'interfaces web front-end, principalement en Vue.js.",
   },
   {
     title: "Mastère Dev Manager Full Stack",

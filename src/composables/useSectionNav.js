@@ -39,7 +39,7 @@ export function useActiveSection() {
           if (entry.isIntersecting) activeId.value = entry.target.id;
         }
       },
-      { rootMargin: "-40% 0px -55% 0px" }
+      { rootMargin: "-40% 0px -55% 0px" },
     );
     SECTION_LINKS.forEach(({ id }) => {
       const el = document.getElementById(id);

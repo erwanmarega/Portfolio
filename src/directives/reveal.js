@@ -12,7 +12,7 @@ const getObserver = () => {
         observer.unobserve(entry.target);
       }
     },
-    { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
   );
   return observer;
 };

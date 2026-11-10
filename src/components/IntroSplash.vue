@@ -13,10 +13,22 @@
           <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4" />
           <feDisplacementMap in="SourceGraphic" scale="2.6" />
         </filter>
-        <pattern id="intro-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+        <pattern
+          id="intro-hatch"
+          width="7"
+          height="7"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(38)"
+        >
           <line x1="0" y1="0" x2="0" y2="7" class="hatch-line" />
         </pattern>
-        <pattern id="intro-hatch-sun" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)">
+        <pattern
+          id="intro-hatch-sun"
+          width="5"
+          height="5"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(-32)"
+        >
           <line x1="0" y1="0" x2="0" y2="5" class="hatch-sun" />
         </pattern>
         <linearGradient id="intro-soil-fade" x1="0" y1="0" x2="0" y2="1">
@@ -32,7 +44,16 @@
         <!-- Sun -->
         <g class="sun">
           <g class="sun-rays">
-            <line v-for="ray in rays" :key="ray.i" :x1="ray.x1" :y1="ray.y1" :x2="ray.x2" :y2="ray.y2" class="ray" :style="{ '--i': ray.i }" />
+            <line
+              v-for="ray in rays"
+              :key="ray.i"
+              :x1="ray.x1"
+              :y1="ray.y1"
+              :x2="ray.x2"
+              :y2="ray.y2"
+              class="ray"
+              :style="{ '--i': ray.i }"
+            />
           </g>
           <circle cx="318" cy="70" r="25" class="sun-disc" />
           <circle cx="318" cy="70" r="25" fill="url(#intro-hatch-sun)" stroke="none" />
@@ -44,15 +65,32 @@
           <rect x="30" y="212" width="340" height="58" fill="url(#intro-hatch)" stroke="none" />
         </g>
         <path d="M30 212 H184 Q200 236 216 212 H370" pathLength="1" class="ink draw ground" />
-        <path v-for="(blade, i) in grass" :key="i" :d="blade" pathLength="1" class="ink thin draw grass" :style="{ '--i': i }" />
+        <path
+          v-for="(blade, i) in grass"
+          :key="i"
+          :d="blade"
+          pathLength="1"
+          class="ink thin draw grass"
+          :style="{ '--i': i }"
+        />
 
         <!-- Seed -->
         <ellipse cx="200" cy="218" rx="7" ry="4.5" class="seed" />
 
         <!-- Plant -->
-        <path d="M200 216 C197 196 204 180 200 158 C196 140 203 124 200 106" pathLength="1" class="stem draw" />
-        <path d="M200 172 C180 166 166 150 163 134 C181 136 196 150 200 172 Z" class="leaf leaf-left" />
-        <path d="M200 150 C220 144 234 128 237 112 C219 114 204 128 200 150 Z" class="leaf leaf-right" />
+        <path
+          d="M200 216 C197 196 204 180 200 158 C196 140 203 124 200 106"
+          pathLength="1"
+          class="stem draw"
+        />
+        <path
+          d="M200 172 C180 166 166 150 163 134 C181 136 196 150 200 172 Z"
+          class="leaf leaf-left"
+        />
+        <path
+          d="M200 150 C220 144 234 128 237 112 C219 114 204 128 200 150 Z"
+          class="leaf leaf-right"
+        />
 
         <!-- Fruit: a small browser window -->
         <g class="fruit">

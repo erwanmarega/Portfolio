@@ -2,7 +2,11 @@
   <IntroSplash />
   <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8">
     <MobileNav />
-    <component :is="heroClips.length ? VideoHero : HorizonHero" v-if="route.name === 'home'" class="mt-5 sm:mt-8" />
+    <component
+      :is="heroClips.length ? VideoHero : HorizonHero"
+      v-if="route.name === 'home'"
+      class="mt-5 sm:mt-8"
+    />
     <div class="mt-10 lg:mt-16 lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-x-20">
       <SiteSidebar />
       <main class="mt-14 lg:mt-0 min-w-0">

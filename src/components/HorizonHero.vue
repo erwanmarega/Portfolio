@@ -13,16 +13,40 @@
           <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" />
           <feDisplacementMap in="SourceGraphic" scale="2.6" />
         </filter>
-        <pattern id="hero-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+        <pattern
+          id="hero-hatch"
+          width="7"
+          height="7"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(38)"
+        >
           <line x1="0" y1="0" x2="0" y2="7" class="hatch" />
         </pattern>
-        <pattern id="hero-hatch-sun" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)">
+        <pattern
+          id="hero-hatch-sun"
+          width="5"
+          height="5"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(-32)"
+        >
           <line x1="0" y1="0" x2="0" y2="5" class="hatch" />
         </pattern>
-        <pattern id="hero-hatch-cloud" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(60)">
+        <pattern
+          id="hero-hatch-cloud"
+          width="6"
+          height="6"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(60)"
+        >
           <line x1="0" y1="0" x2="0" y2="6" class="hatch-cloud" />
         </pattern>
-        <pattern id="hero-hatch-night" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(38)">
+        <pattern
+          id="hero-hatch-night"
+          width="8"
+          height="8"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(38)"
+        >
           <line x1="0" y1="0" x2="0" y2="8" class="hatch-night" />
         </pattern>
       </defs>
@@ -35,31 +59,83 @@
           <g transform="translate(612 78)">
             <g class="pop" style="--at: 0.3s">
               <g class="spin">
-                <line v-for="ray in rays" :key="ray.i" :x1="ray.x1" :y1="ray.y1" :x2="ray.x2" :y2="ray.y2" class="ray fade" :style="{ '--at': `${0.6 + ray.i * 0.04}s` }" />
+                <line
+                  v-for="ray in rays"
+                  :key="ray.i"
+                  :x1="ray.x1"
+                  :y1="ray.y1"
+                  :x2="ray.x2"
+                  :y2="ray.y2"
+                  class="ray fade"
+                  :style="{ '--at': `${0.6 + ray.i * 0.04}s` }"
+                />
               </g>
               <circle r="30" class="sun-disc" />
               <circle r="30" fill="url(#hero-hatch-sun)" />
             </g>
           </g>
 
-          <g transform="translate(170 70)"><g class="drift fade" style="--at: 0.4s"><path :d="CLOUD" class="cloud" /></g></g>
-          <g transform="translate(490 40) scale(0.6)"><g class="drift slow fade" style="--at: 0.7s"><path :d="CLOUD" class="cloud" /></g></g>
+          <g transform="translate(170 70)">
+            <g class="drift fade" style="--at: 0.4s"><path :d="CLOUD" class="cloud" /></g>
+          </g>
+          <g transform="translate(490 40) scale(0.6)">
+            <g class="drift slow fade" style="--at: 0.7s"><path :d="CLOUD" class="cloud" /></g>
+          </g>
 
           <path :d="HILL_FILL" class="soil" />
           <path :d="HILL_FILL" fill="url(#hero-hatch)" />
           <path :d="HILL_LINE" pathLength="1" class="ink draw" style="--dur: 0.9s" />
-          <path v-for="(blade, i) in grass" :key="i" :d="blade" pathLength="1" class="ink thin draw" :style="{ '--at': `${0.6 + i * 0.05}s`, '--dur': '0.25s' }" />
+          <path
+            v-for="(blade, i) in grass"
+            :key="i"
+            :d="blade"
+            pathLength="1"
+            class="ink thin draw"
+            :style="{ '--at': `${0.6 + i * 0.05}s`, '--dur': '0.25s' }"
+          />
 
-          <g v-for="plant in gardenPlants" :key="plant.x" :transform="`translate(${plant.x} ${plant.y}) scale(${plant.s})`">
-            <path :d="STEM" pathLength="1" class="stem draw" :style="{ '--at': `${plant.at}s`, '--dur': '0.9s' }" />
-            <path :d="LEAF_LEFT" class="leaf pop origin-br" :style="{ '--at': `${plant.at + 0.45}s` }" />
-            <path :d="LEAF_RIGHT" class="leaf pop origin-bl" :style="{ '--at': `${plant.at + 0.65}s` }" />
+          <g
+            v-for="plant in gardenPlants"
+            :key="plant.x"
+            :transform="`translate(${plant.x} ${plant.y}) scale(${plant.s})`"
+          >
+            <path
+              :d="STEM"
+              pathLength="1"
+              class="stem draw"
+              :style="{ '--at': `${plant.at}s`, '--dur': '0.9s' }"
+            />
+            <path
+              :d="LEAF_LEFT"
+              class="leaf pop origin-br"
+              :style="{ '--at': `${plant.at + 0.45}s` }"
+            />
+            <path
+              :d="LEAF_RIGHT"
+              class="leaf pop origin-bl"
+              :style="{ '--at': `${plant.at + 0.65}s` }"
+            />
             <g v-if="plant.fruit" class="pop origin-b" :style="{ '--at': `${plant.at + 0.9}s` }">
               <g class="sway">
                 <rect x="-42" y="-168" width="84" height="58" rx="7" class="window" />
                 <path d="M-42 -153 H42" class="ink thin" />
-                <circle v-for="cx in [-33, -25.5, -18]" :key="cx" :cx="cx" cy="-160.5" r="2" class="dot" />
-                <rect x="-33" y="-145" width="26" height="26" rx="3" class="block" :style="{ fill: plant.color }" />
+                <circle
+                  v-for="cx in [-33, -25.5, -18]"
+                  :key="cx"
+                  :cx="cx"
+                  cy="-160.5"
+                  r="2"
+                  class="dot"
+                />
+                <rect
+                  x="-33"
+                  y="-145"
+                  width="26"
+                  height="26"
+                  rx="3"
+                  class="block"
+                  :style="{ fill: plant.color }"
+                />
                 <path d="M1 -141 H32 M1 -132 H26 M1 -123 H18" class="ink thin" />
               </g>
             </g>
@@ -76,18 +152,51 @@
               <path :d="CLOUD" fill="url(#hero-hatch-cloud)" />
             </g>
           </g>
-          <line v-for="drop in rain" :key="drop.i" :x1="drop.x" y1="112" :x2="drop.x - 4" y2="124" class="drop" :style="{ '--at': `${0.8 + drop.delay}s` }" />
+          <line
+            v-for="drop in rain"
+            :key="drop.i"
+            :x1="drop.x"
+            y1="112"
+            :x2="drop.x - 4"
+            y2="124"
+            class="drop"
+            :style="{ '--at': `${0.8 + drop.delay}s` }"
+          />
 
           <path :d="HILL_FILL" class="soil wet" />
           <path :d="HILL_FILL" fill="url(#hero-hatch)" />
           <path :d="HILL_LINE" pathLength="1" class="ink draw" style="--dur: 0.9s" />
-          <path v-for="(blade, i) in grass" :key="i" :d="blade" pathLength="1" class="ink thin draw" :style="{ '--at': `${0.6 + i * 0.05}s`, '--dur': '0.25s' }" />
+          <path
+            v-for="(blade, i) in grass"
+            :key="i"
+            :d="blade"
+            pathLength="1"
+            class="ink thin draw"
+            :style="{ '--at': `${0.6 + i * 0.05}s`, '--dur': '0.25s' }"
+          />
 
-          <g v-for="sprout in sprouts" :key="sprout.x" :transform="`translate(${sprout.x} ${sprout.y}) scale(${sprout.s})`">
+          <g
+            v-for="sprout in sprouts"
+            :key="sprout.x"
+            :transform="`translate(${sprout.x} ${sprout.y}) scale(${sprout.s})`"
+          >
             <g class="sway origin-b">
-              <path :d="STEM" pathLength="1" class="stem draw" :style="{ '--at': `${sprout.at}s`, '--dur': '1.4s' }" />
-              <path :d="LEAF_LEFT" class="leaf pop origin-br" :style="{ '--at': `${sprout.at + 0.7}s` }" />
-              <path :d="LEAF_RIGHT" class="leaf pop origin-bl" :style="{ '--at': `${sprout.at + 1}s` }" />
+              <path
+                :d="STEM"
+                pathLength="1"
+                class="stem draw"
+                :style="{ '--at': `${sprout.at}s`, '--dur': '1.4s' }"
+              />
+              <path
+                :d="LEAF_LEFT"
+                class="leaf pop origin-br"
+                :style="{ '--at': `${sprout.at + 0.7}s` }"
+              />
+              <path
+                :d="LEAF_RIGHT"
+                class="leaf pop origin-bl"
+                :style="{ '--at': `${sprout.at + 1}s` }"
+              />
             </g>
           </g>
         </g>
@@ -101,13 +210,27 @@
             <circle r="24" class="moon" />
             <circle cx="11" cy="-7" r="21" class="sky" />
           </g>
-          <path v-for="star in stars" :key="star.i" :d="star.d" class="star twinkle" :style="{ '--at': `${star.delay}s` }" />
+          <path
+            v-for="star in stars"
+            :key="star.i"
+            :d="star.d"
+            class="star twinkle"
+            :style="{ '--at': `${star.delay}s` }"
+          />
 
           <path :d="HILL_FILL" class="soil dark" />
           <path :d="HILL_FILL" fill="url(#hero-hatch-night)" />
           <path :d="HILL_LINE" pathLength="1" class="chalk draw" style="--dur: 0.9s" />
 
-          <path v-for="(line, i) in TOWER" :key="i" :d="line" pathLength="1" class="chalk draw" :class="{ thin: i > 3 }" :style="{ '--at': `${0.9 + i * 0.28}s`, '--dur': '0.8s' }" />
+          <path
+            v-for="(line, i) in TOWER"
+            :key="i"
+            :d="line"
+            pathLength="1"
+            class="chalk draw"
+            :class="{ thin: i > 3 }"
+            :style="{ '--at': `${0.9 + i * 0.28}s`, '--dur': '0.8s' }"
+          />
           <circle cx="400" cy="44" r="3.5" class="beacon" />
 
           <g class="plane">
@@ -137,7 +260,8 @@ const hillY = (x) => {
 const STEM = "M0 0 C-3 -20 4 -36 0 -58 C-4 -76 3 -92 0 -110";
 const LEAF_LEFT = "M0 -44 C-20 -50 -34 -66 -37 -82 C-19 -80 -4 -66 0 -44 Z";
 const LEAF_RIGHT = "M0 -66 C20 -72 34 -88 37 -104 C19 -102 4 -88 0 -66 Z";
-const CLOUD = "M-52 18 C-66 18 -68 -2 -52 -4 C-52 -24 -22 -30 -12 -14 C-2 -34 34 -30 36 -8 C56 -10 62 16 44 18 Z";
+const CLOUD =
+  "M-52 18 C-66 18 -68 -2 -52 -4 C-52 -24 -22 -30 -12 -14 C-2 -34 34 -30 36 -8 C56 -10 62 16 44 18 Z";
 
 const TOWER = [
   "M352 222 C378 182 392 122 398 60",
@@ -191,8 +315,20 @@ const rain = Array.from({ length: 18 }, (_, i) => ({
 }));
 
 const STAR_POINTS = [
-  [70, 50], [130, 110], [190, 40], [250, 90], [300, 36], [470, 44], [520, 100],
-  [560, 30], [690, 40], [730, 110], [760, 64], [96, 160], [700, 170], [230, 150],
+  [70, 50],
+  [130, 110],
+  [190, 40],
+  [250, 90],
+  [300, 36],
+  [470, 44],
+  [520, 100],
+  [560, 30],
+  [690, 40],
+  [730, 110],
+  [760, 64],
+  [96, 160],
+  [700, 170],
+  [230, 150],
 ];
 const stars = STAR_POINTS.map(([x, y], i) => {
   const r = 3 + (i % 3);
