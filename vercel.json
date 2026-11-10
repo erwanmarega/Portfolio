@@ -4,6 +4,14 @@
       {
         "source": "/api/(.*)",
         "destination": "https://ewmnode.onrender.com/$1"
+      },
+      {
+        "source": "/now",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/shelf",
+        "destination": "/index.html"
       }
     ],
     "headers": [

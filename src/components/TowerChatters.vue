@@ -43,6 +43,7 @@ import { gsap, prefersReducedMotion, typeText } from "@/lib/motion.js";
 import { halfWidthAt } from "@/lib/eiffel/geometry.js";
 
 const DECK_Y = 8.9;
+const WORD = "hello";
 const BUBBLE_W = 156;
 const BUBBLE_MARGIN = 6;
 const ALONG = [0.35, 0.65];
@@ -93,6 +94,28 @@ let tl = null;
 let idleTweens = [];
 let active = false;
 let shown = false;
+let enabled = false;
+let typedKeys = "";
+
+function isEditable(el) {
+  if (!el) return false;
+  const tag = el.tagName;
+  return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || el.isContentEditable;
+}
+
+function onKeydown(e) {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (isEditable(document.activeElement) || isEditable(e.target)) {
+    typedKeys = "";
+    return;
+  }
+  if (e.key.length !== 1) return;
+  typedKeys = (typedKeys + e.key.toLowerCase()).slice(-WORD.length);
+  if (typedKeys === WORD) {
+    typedKeys = "";
+    enabled ? disable() : enable();
+  }
+}
 
 function setActive(next) {
   if (next === active) return;
@@ -112,7 +135,7 @@ function clamp(v, lo, hi) {
 // Called by EiffelBackground on every scene render.
 function update(scene, laneWidth) {
   const el = root.value;
-  if (!el) return;
+  if (!enabled || !el) return;
   const w = halfWidthAt(DECK_Y);
   const pts = [
     [w, w],
@@ -174,7 +197,9 @@ function buildTimeline() {
   tl.to(bubbles, { autoAlpha: 0, duration: 0.3 });
 }
 
-onMounted(() => {
+function enable() {
+  if (enabled) return;
+  enabled = true;
   ctx = gsap.context(() => {
     if (reduced) {
       gsap.set(bubbles, { autoAlpha: 1 });
@@ -193,15 +218,35 @@ onMounted(() => {
     );
     buildTimeline();
   });
+}
+
+// Kill every tween and hide the layer so nothing runs while disabled.
+function disable() {
+  if (!enabled) return;
+  enabled = false;
+  tl?.kill();
+  ctx?.revert();
+  ctx = null;
+  tl = null;
+  idleTweens = [];
+  active = false;
+  shown = false;
+  if (!reduced) typed.forEach((t) => t && (t.textContent = ""));
+  if (root.value) {
+    root.value.style.visibility = "hidden";
+    root.value.style.opacity = "0";
+  }
+}
+
+onMounted(() => {
+  window.addEventListener("keydown", onKeydown);
   document.addEventListener("visibilitychange", onVisibility);
 });
 
 onUnmounted(() => {
+  window.removeEventListener("keydown", onKeydown);
   document.removeEventListener("visibilitychange", onVisibility);
-  tl?.kill();
-  ctx?.revert();
-  tl = null;
-  idleTweens = [];
+  disable();
 });
 
 defineExpose({ update });

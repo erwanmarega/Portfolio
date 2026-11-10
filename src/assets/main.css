@@ -4,22 +4,23 @@
 
 @layer base {
   :root {
-    --page: 10 10 10;
-    --surface: 23 17 20;
-    --surface-strong: 33 24 29;
-    --ink: 249 168 212;
-    --ink-soft: 217 163 191;
-    --ink-muted: 176 122 150;
-    --brand: 236 72 153;
-    --brand-text: 244 114 182;
-    --line: 249 168 212;
-    --paper: 242 239 243;
+    --page: 247 242 233;
+    --surface: 255 252 246;
+    --surface-strong: 237 229 215;
+    --ink: 33 28 24;
+    --ink-soft: 74 64 56;
+    --ink-muted: 118 104 92;
+    --brand: 194 86 42;
+    --brand-text: 158 64 26;
+    --line: 33 28 24;
+    --paper: 33 28 24;
 
-    --ascii-ink: #F9A8D4;
-    --ascii-accent: #EC4899;
-    --ascii-bg: #0A0A0A;
+    --ascii-ink: #9E401A;
+    --ascii-accent: #C2562A;
+    --ascii-bg: #F7F2E9;
+
+    /* Legacy: used only by the unmounted tower/blueprint components. */
     --tower-lane: clamp(240px, 28vw, 440px);
-
     --frame-inset: 12px;
     --rail-w: 0px;
     --bar-h: 48px;
@@ -43,9 +44,21 @@
   html {
     background-color: rgb(var(--page));
   }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: rgb(var(--brand) / 0.18);
+  }
 }
 
 @layer components {
+  /* Legacy: used only by the unmounted tower/blueprint components. */
   .lane-grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -60,5 +73,57 @@
     .lane-left { grid-column: 1; }
     .lane-right { grid-column: 3; }
     .lane-full { grid-column: 1 / -1; }
+  }
+
+  .text-link {
+    color: rgb(var(--ink));
+    text-decoration-line: underline;
+    text-decoration-color: rgb(var(--ink) / 0.25);
+    text-underline-offset: 3px;
+    transition: color 150ms ease, text-decoration-color 150ms ease;
+  }
+  .text-link:hover,
+  .text-link:focus-visible {
+    color: rgb(var(--brand-text));
+    text-decoration-color: rgb(var(--brand-text));
+  }
+
+  .section-label {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgb(var(--ink-muted));
+    display: block;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgb(var(--line) / 0.15);
+  }
+
+  /* Scroll reveal (v-reveal directive). Without motion, elements are simply visible. */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity 0.6s ease var(--reveal-delay, 0ms),
+        transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+    }
+    .reveal.is-in {
+      opacity: 1;
+      transform: none;
+    }
+    /* Section titles: the hairline draws itself from the left. */
+    .section-label.reveal {
+      border-bottom-color: transparent;
+      background: linear-gradient(rgb(var(--line) / 0.15), rgb(var(--line) / 0.15)) left bottom / 0% 1px no-repeat;
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1),
+        background-size 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s;
+    }
+    .section-label.reveal.is-in {
+      background-size: 100% 1px;
+    }
   }
 }

@@ -111,12 +111,6 @@
             {{ String(i + 1).padStart(2, "0") }}
           </a>
         </div>
-        <span
-          class="shrink-0 pb-5 pt-3 rotate-180 font-mono text-[10px] tracking-[0.2em] text-ink-muted [writing-mode:vertical-rl]"
-          aria-hidden="true"
-        >
-          SCROLL →
-        </span>
       </nav>
 
       <div
@@ -129,11 +123,11 @@
           <template v-for="m in ticks" :key="m">
             <span
               class="tick absolute left-0 h-px origin-left bg-line/30"
-              :class="m % 50 === 0 ? 'w-3' : 'w-1.5'"
+              :class="m % 100 === 0 ? 'w-3' : 'w-1.5'"
               :style="{ top: `${100 - (m / 330) * 100}%` }"
             />
             <span
-              v-if="m % 50 === 0"
+              v-if="m % 100 === 0"
               class="tick-label absolute left-4 -translate-y-1/2 font-mono text-[9px] leading-none text-ink-muted/70"
               :style="{ top: `${100 - (m / 330) * 100}%` }"
               >{{ m }}</span
@@ -155,9 +149,6 @@
           aria-hidden="true"
         />
         <span>48.8584° N / 2.2945° E</span>
-        <span class="hidden md:inline"
-          >Three.js · particules · scroll-driven</span
-        >
         <span>© 2026 Erwan Marega</span>
       </footer>
     </div>
@@ -193,15 +184,13 @@ const navLinks = [
 
 const railLinks = [
   { id: "home", label: "Accueil" },
-  { id: "about", label: "À propos" },
+  { id: "projects", label: "Projets" },
   { id: "journey", label: "Parcours" },
   { id: "skills", label: "Compétences" },
-  { id: "tech-watch", label: "Veille" },
-  { id: "projects", label: "Projets" },
   { id: "contact", label: "Contact" },
 ];
 
-const ticks = Array.from({ length: MAX_ALTITUDE / 10 + 1 }, (_, i) => i * 10);
+const ticks = Array.from({ length: MAX_ALTITUDE / 50 + 1 }, (_, i) => i * 50);
 
 const activeId = ref(CALLOUTS[0].id);
 const root = ref(null);
@@ -269,7 +258,7 @@ function setupIntro() {
         {
           scaleX: 0,
           duration: 0.4,
-          stagger: { each: 0.012, from: "end" },
+          stagger: { each: 0.05, from: "end" },
           clearProps: "transform",
         },
         0.3
