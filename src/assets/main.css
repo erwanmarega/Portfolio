@@ -13,33 +13,10 @@
     --brand: 194 86 42;
     --brand-text: 158 64 26;
     --line: 33 28 24;
-    --paper: 33 28 24;
 
     --ascii-ink: #9e401a;
     --ascii-accent: #c2562a;
     --ascii-bg: #f7f2e9;
-
-    /* Legacy: used only by the unmounted tower/blueprint components. */
-    --tower-lane: clamp(240px, 28vw, 440px);
-    --frame-inset: 12px;
-    --rail-w: 0px;
-    --bar-h: 48px;
-    --foot-h: 36px;
-    --frame-gutter: calc(var(--frame-inset) + 1rem);
-  }
-  @media (min-width: 1024px) {
-    :root {
-      --frame-inset: 24px;
-      --rail-w: 64px;
-      --bar-h: 56px;
-      --foot-h: 44px;
-      --frame-gutter: calc(var(--frame-inset) + var(--rail-w) + 1.5rem);
-    }
-  }
-  @media (min-width: 1280px) {
-    :root {
-      --rail-w: 88px;
-    }
   }
   html {
     background-color: rgb(var(--page));
@@ -58,29 +35,6 @@
 }
 
 @layer components {
-  /* Legacy: used only by the unmounted tower/blueprint components. */
-  .lane-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: 3rem;
-  }
-  @media (min-width: 1024px) {
-    .lane-grid {
-      grid-template-columns: minmax(0, 1fr) var(--tower-lane) minmax(0, 1fr);
-      grid-auto-flow: row dense;
-      column-gap: 0;
-    }
-    .lane-left {
-      grid-column: 1;
-    }
-    .lane-right {
-      grid-column: 3;
-    }
-    .lane-full {
-      grid-column: 1 / -1;
-    }
-  }
-
   .text-link {
     color: rgb(var(--ink));
     text-decoration-line: underline;

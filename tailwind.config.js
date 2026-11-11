@@ -33,7 +33,6 @@ export default {
           text: "rgb(var(--brand-text) / <alpha-value>)",
         },
         line: "rgb(var(--line) / <alpha-value>)",
-        paper: "rgb(var(--paper) / <alpha-value>)",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -77,5 +76,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };

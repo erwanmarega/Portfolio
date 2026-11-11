@@ -168,7 +168,6 @@ export default {
     ],
   },
   cv: {
-    title: "CV",
     print: "Télécharger en PDF",
     sections: {
       profile: "Profil",
