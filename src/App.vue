@@ -1,15 +1,19 @@
 <template>
   <IntroSplash />
-  <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8">
+  <PageWipe />
+  <div class="mx-auto w-full max-w-[1120px] px-5 sm:px-8 print:max-w-none print:px-0">
     <MobileNav />
     <component
       :is="heroClips.length ? VideoHero : HorizonHero"
       v-if="route.name === 'home'"
-      class="mt-5 sm:mt-8"
+      class="mt-5 print:hidden sm:mt-8"
     />
-    <div class="mt-10 lg:mt-16 lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-x-20">
+    <div
+      class="mt-10 lg:mt-16 lg:grid lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-x-20 print:mt-0 print:block"
+    >
       <SiteSidebar />
-      <main class="mt-14 lg:mt-0 min-w-0">
+      <main class="mt-14 min-w-0 lg:mt-0 print:mt-0">
+        <PageBreadcrumb v-if="route.name && route.name !== 'home'" />
         <RouterView v-slot="{ Component }">
           <Transition name="page">
             <component :is="Component" />
@@ -24,6 +28,8 @@
 <script setup>
 import { useRoute } from "vue-router";
 import IntroSplash from "./components/IntroSplash.vue";
+import PageWipe from "./components/PageWipe.vue";
+import PageBreadcrumb from "./components/PageBreadcrumb.vue";
 import HorizonHero from "./components/HorizonHero.vue";
 import VideoHero from "./components/VideoHero.vue";
 import { heroClips } from "./data/heroClips.js";

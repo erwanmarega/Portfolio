@@ -136,3 +136,40 @@
     }
   }
 }
+
+/* Print (CV page): white paper, black text, single column. Chrome that is not
+   part of the CV is hidden with `print:hidden` in the templates. */
+@page {
+  size: A4;
+  margin: 9mm 13mm;
+}
+@media print {
+  :root {
+    --page: 255 255 255;
+    --surface: 255 255 255;
+    --surface-strong: 255 255 255;
+    --ink: 0 0 0;
+    --ink-soft: 0 0 0;
+    --ink-muted: 70 70 70;
+    --brand-text: 0 0 0;
+    --line: 0 0 0;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000;
+    font-size: 10.5pt;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* The hairline is a background gradient on revealed labels: show a plain border instead. */
+  .section-label.reveal {
+    background: none !important;
+    border-bottom-color: rgb(var(--line) / 0.3) !important;
+  }
+  a {
+    text-decoration: none;
+  }
+}

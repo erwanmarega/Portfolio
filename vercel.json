@@ -10,7 +10,19 @@
       "destination": "/index.html"
     },
     {
-      "source": "/shelf",
+      "source": "/cv",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/en",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/en/now",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/en/cv",
       "destination": "/index.html"
     }
   ],

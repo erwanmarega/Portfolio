@@ -1,13 +1,13 @@
 <template>
   <section aria-labelledby="now-title">
-    <h2 id="now-title" v-reveal class="section-label">En ce moment</h2>
+    <h2 id="now-title" v-reveal class="section-label">{{ t.now.title }}</h2>
     <p v-reveal="80" class="mt-6 max-w-[62ch] text-lg leading-relaxed text-ink-soft">
-      Ce qui m'occupe ces temps-ci.
+      {{ t.now.intro }}
     </p>
 
     <dl class="mt-8">
       <div
-        v-for="item in now"
+        v-for="item in t.now.rows"
         :key="item.label"
         v-reveal
         class="grid gap-x-6 gap-y-1 border-t border-line/10 py-5 first:border-t-0 first:pt-0 sm:grid-cols-[7.5rem_minmax(0,1fr)]"
@@ -22,10 +22,14 @@
       </div>
     </dl>
 
-    <p class="mt-8 font-mono text-xs text-ink-muted">Mis à jour : {{ updated }}</p>
+    <p class="mt-8 font-mono text-xs text-ink-muted">
+      {{ t.now.updatedLabel }} {{ t.now.updated }}
+    </p>
   </section>
 </template>
 
 <script setup>
-import { now, updated } from "../data/now.js";
+import { useLocale } from "../composables/useLocale.js";
+
+const { t } = useLocale();
 </script>

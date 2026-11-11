@@ -1,18 +1,18 @@
 import { nextTick, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 
+// Ids and route names only; labels come from the locale messages (nav.sections / nav.pages).
 export const SECTION_LINKS = [
-  { label: "À propos", id: "home" },
-  { label: "Projets", id: "projects" },
-  { label: "Parcours", id: "journey" },
-  { label: "Stack", id: "skills" },
-  { label: "Contact", id: "contact" },
+  { id: "home" },
+  { id: "projects" },
+  { id: "journey" },
+  { id: "skills" },
+  { id: "contact" },
 ];
 
-export const PAGE_LINKS = [
-  { label: "En ce moment", name: "now" },
-  { label: "Étagère", name: "shelf" },
-];
+// The cv route exists but is not in the menu: it is the template the
+// downloadable PDFs are generated from (scripts/generate-cv-pdf.mjs).
+export const PAGE_LINKS = [{ name: "now" }];
 
 // Tracks which section currently sits around the middle of the viewport.
 // Only the home route has sections; elsewhere the active id is null.
@@ -36,7 +36,9 @@ export function useActiveSection() {
     observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) activeId.value = entry.target.id;
+          if (!entry.isIntersecting) continue;
+          activeId.value = entry.target.id;
+          playSectionTick(entry.target.id);
         }
       },
       { rootMargin: "-40% 0px -55% 0px" },
@@ -48,27 +50,39 @@ export function useActiveSection() {
   }
 
   onMounted(() => nextTick(sync));
-  watch(() => route.name, sync, { flush: "post" });
+  // Path (not name): switching / <-> /en keeps the route name but should re-sync.
+  watch(() => route.path, sync, { flush: "post" });
   onUnmounted(disconnect);
 
   return activeId;
 }
 
 let audio = null;
+let unlocked = false;
+let quietUntil = 0;
+let lastSectionId = SECTION_LINKS[0].id;
 
-// Short, quiet synthesized tick for menu clicks (no audio file).
-export function playTick() {
+// Browsers only allow sound after a real interaction; scrolling alone is not one.
+if (typeof window !== "undefined") {
+  const unlock = () => (unlocked = true);
+  ["pointerdown", "keydown", "touchend"].forEach((type) =>
+    window.addEventListener(type, unlock, { once: true, passive: true }),
+  );
+}
+
+// One short synthesized note (no audio file): pitch glides from `from` to `to`.
+function blip(from, to, peak, type) {
   try {
     audio ??= new (window.AudioContext || window.webkitAudioContext)();
     if (audio.state === "suspended") audio.resume();
     const now = audio.currentTime;
     const osc = audio.createOscillator();
     const gain = audio.createGain();
-    osc.type = "triangle";
-    osc.frequency.setValueAtTime(880, now);
-    osc.frequency.exponentialRampToValueAtTime(520, now + 0.07);
+    osc.type = type;
+    osc.frequency.setValueAtTime(from, now);
+    osc.frequency.exponentialRampToValueAtTime(to, now + 0.07);
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.05, now + 0.008);
+    gain.gain.exponentialRampToValueAtTime(peak, now + 0.008);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
     osc.connect(gain).connect(audio.destination);
     osc.start(now);
@@ -76,4 +90,24 @@ export function playTick() {
   } catch {
     // Audio is a nicety; ignore browsers that block or lack Web Audio.
   }
+}
+
+// Short, quiet tick for menu clicks. Mutes the scroll notes while the page
+// smooth-scrolls to the clicked section.
+export function playTick() {
+  quietUntil = performance.now() + 1200;
+  blip(880, 520, 0.05, "triangle");
+}
+
+// One soft note per section (rising scale, top to bottom), played when scrolling
+// brings a new section into view. Several components track the active section,
+// so the same id is only played once.
+const SECTION_NOTES = [392, 440, 523.25, 587.33, 659.25];
+
+function playSectionTick(id) {
+  if (id === lastSectionId) return;
+  lastSectionId = id;
+  if (!unlocked || performance.now() < quietUntil) return;
+  const note = SECTION_NOTES[SECTION_LINKS.findIndex((link) => link.id === id)];
+  if (note) blip(note, note * 0.98, 0.03, "sine");
 }

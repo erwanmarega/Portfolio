@@ -1,8 +1,8 @@
 <template>
   <section aria-labelledby="contact-title">
-    <h2 id="contact-title" v-reveal class="section-label">Contact</h2>
+    <h2 id="contact-title" v-reveal class="section-label">{{ t.contact.title }}</h2>
     <p v-reveal="80" class="mt-6 text-[17px] leading-relaxed text-ink-soft">
-      Une opportunité, un projet ou une question ? Écris-moi, je réponds rapidement.
+      {{ t.contact.text }}
     </p>
     <div v-reveal="160">
       <a
@@ -15,4 +15,8 @@
   </section>
 </template>
 
-<script setup></script>
+<script setup>
+import { useLocale } from "../composables/useLocale.js";
+
+const { t } = useLocale();
+</script>

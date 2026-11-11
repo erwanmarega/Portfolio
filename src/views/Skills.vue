@@ -1,15 +1,15 @@
 <template>
   <section aria-labelledby="skills-title">
-    <h2 id="skills-title" v-reveal class="section-label">Stack</h2>
+    <h2 id="skills-title" v-reveal class="section-label">{{ t.skills.title }}</h2>
 
     <dl class="mt-6">
       <div
-        v-for="group in groups"
-        :key="group.title"
+        v-for="(group, index) in groups"
+        :key="group.id"
         v-reveal
         class="grid gap-x-6 gap-y-2 border-t border-line/10 py-4 first:border-t-0 first:pt-0 sm:grid-cols-[7.5rem_minmax(0,1fr)]"
       >
-        <dt class="text-[15px] text-ink-muted">{{ group.title }}</dt>
+        <dt class="text-[15px] text-ink-muted">{{ t.skills.groups[index] }}</dt>
         <dd>
           <ul class="flex flex-wrap gap-x-5 gap-y-2.5">
             <li
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import { useLocale } from "../composables/useLocale.js";
 import vueIcon from "@/assets/icons/frontend/vue.svg";
 import reactIcon from "@/assets/icons/frontend/react.svg";
 import tsIcon from "@/assets/icons/frontend/typescript.svg";
@@ -56,7 +57,7 @@ import cursorIcon from "@/assets/icons/ai/cursor.svg";
 
 const groups = [
   {
-    title: "Front-End",
+    id: "front",
     technologies: [
       { name: "Vue.js", icon: vueIcon },
       { name: "React", icon: reactIcon },
@@ -65,7 +66,7 @@ const groups = [
     ],
   },
   {
-    title: "Back-End & Data",
+    id: "back",
     technologies: [
       { name: "Node.js", icon: nodeIcon },
       { name: "Symfony", icon: symfonyIcon },
@@ -77,7 +78,7 @@ const groups = [
     ],
   },
   {
-    title: "Outils & IA",
+    id: "tools",
     technologies: [
       { name: "Git", icon: gitIcon },
       { name: "GitHub", icon: githubIcon },
@@ -90,6 +91,8 @@ const groups = [
     ],
   },
 ];
+
+const { t } = useLocale();
 </script>
 
 <style scoped>

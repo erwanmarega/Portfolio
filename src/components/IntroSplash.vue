@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="show"
-    class="intro fixed inset-0 z-50 flex flex-col items-center justify-center bg-page px-6"
+    class="intro print:hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-page px-6"
     :class="{ 'is-leaving': leaving }"
     @click="finish"
     @transitionend.self="onLeft"
@@ -107,22 +107,24 @@
     </svg>
 
     <p class="name mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Erwan Marega</p>
-    <p class="role mt-2 font-mono text-xs text-ink-muted">Développeur web fullstack</p>
+    <p class="role mt-2 font-mono text-xs text-ink-muted">{{ t.intro.role }}</p>
 
     <button
       type="button"
       class="skip absolute bottom-6 right-6 rounded-sm font-mono text-xs text-ink-muted outline-none transition-colors hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
       @click.stop="finish"
     >
-      Passer l'intro
+      {{ t.intro.skip }}
     </button>
   </div>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted, ref } from "vue";
+import { useLocale } from "../composables/useLocale.js";
 
 // Shown once per browser session, never with reduced motion. Any click or key skips it.
+const { t } = useLocale();
 const STORAGE_KEY = "intro-seen";
 const DURATION_MS = 4300;
 
