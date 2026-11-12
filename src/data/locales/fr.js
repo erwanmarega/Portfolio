@@ -42,6 +42,14 @@ export default {
     newTab: "(nouvel onglet)",
     alt: "Capture d'écran du projet {title}",
     code: "Code source",
+    contributions: {
+      title: "Activité GitHub",
+      total: "{count} contributions sur les 12 derniers mois",
+      dayNone: "Aucune contribution · {date}",
+      dayOne: "1 contribution · {date}",
+      dayMany: "{count} contributions · {date}",
+      profile: "Profil GitHub",
+    },
     groups: {
       devops: "DevOps",
       fullstack: "Full-stack",
@@ -52,26 +60,21 @@ export default {
       0: {
         description:
           "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify.",
-        category: "Web App",
       },
       1: {
         description:
           "Assistant CLI qui génère messages de commit, noms de branches, et s'intègre à Jira et GitHub.",
-        category: "Outil",
       },
       2: {
         description: "Crée ton tableau de bord immobilier en moins d'une minute.",
-        category: "SaaS",
       },
       3: {
         description:
           "Refonte complète du site de la société ADI, spécialisée dans l'agencement immobilier.",
-        category: "Refonte",
       },
       4: {
         description:
           "Connecte vos étudiants à votre tableau de bord. Pour les CFA et écoles en recherche d'alternance.",
-        category: "SaaS",
       },
     },
   },
@@ -159,11 +162,6 @@ export default {
       {
         label: "J'apprends",
         text: "Astro pour le front, et Terraform côté DevOps.",
-      },
-      {
-        label: "Je cherche",
-        text: "À compléter : ce que tu recherches (CDI, freelance, rencontres…).",
-        placeholder: true,
       },
     ],
   },

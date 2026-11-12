@@ -22,7 +22,10 @@
       <p class="mt-1 font-mono text-xs text-ink-muted">{{ t.sidebar.location }}</p>
     </div>
 
-    <nav :aria-label="t.nav.ariaLabel" class="mt-12 hidden lg:block">
+    <nav
+      :aria-label="t.nav.ariaLabel"
+      class="mt-8 hidden lg:block [@media(min-height:720px)]:mt-12"
+    >
       <ul class="flex flex-col gap-3">
         <li v-for="link in links" :key="link.id">
           <RouterLink
@@ -63,7 +66,7 @@
       </ul>
     </nav>
 
-    <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm lg:mt-auto">
+    <ul class="mt-8 flex flex-wrap gap-x-4 gap-y-2 text-sm lg:mt-auto lg:pt-6">
       <li v-for="item in external" :key="item.label">
         <a
           :href="item.href"

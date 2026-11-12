@@ -21,9 +21,39 @@ export function useActiveSection() {
   const activeId = ref(SECTION_LINKS[0].id);
   let observer = null;
 
+  let atBottom = false;
+
   function disconnect() {
     observer?.disconnect();
     observer = null;
+    window.removeEventListener("scroll", onScroll);
+  }
+
+  function setActive(id) {
+    activeId.value = id;
+    playSectionTick(id);
+  }
+
+  // The last section is often too short to reach the middle of the viewport:
+  // at the very bottom of the page it is the active one.
+  function onScroll() {
+    // Top of the page (hero above the first section): the first section is active,
+    // even after an instant jump that crossed no tracking line.
+    if (window.scrollY <= 2 && activeId.value !== SECTION_LINKS[0].id) {
+      return setActive(SECTION_LINKS[0].id);
+    }
+    const root = document.documentElement;
+    const bottom = window.innerHeight + window.scrollY >= root.scrollHeight - 2;
+    if (bottom === atBottom) return;
+    atBottom = bottom;
+    if (bottom) return setActive(SECTION_LINKS.at(-1).id);
+    // Leaving the bottom: back to the section under the tracking line.
+    const line = window.innerHeight * 0.42;
+    const current = SECTION_LINKS.find(({ id }) => {
+      const rect = document.getElementById(id)?.getBoundingClientRect();
+      return rect && rect.top <= line && rect.bottom >= line;
+    });
+    if (current) setActive(current.id);
   }
 
   function sync() {
@@ -36,9 +66,8 @@ export function useActiveSection() {
     observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          activeId.value = entry.target.id;
-          playSectionTick(entry.target.id);
+          if (!entry.isIntersecting || atBottom) continue;
+          setActive(entry.target.id);
         }
       },
       { rootMargin: "-40% 0px -55% 0px" },
@@ -47,11 +76,14 @@ export function useActiveSection() {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
+    atBottom = false;
+    window.addEventListener("scroll", onScroll, { passive: true });
   }
 
   onMounted(() => nextTick(sync));
-  // Path (not name): switching / <-> /en keeps the route name but should re-sync.
-  watch(() => route.path, sync, { flush: "post" });
+  // Name: on first load the route resolves after mount (undefined -> "home")
+  // while the path stays "/". Locale: / <-> /en keeps the name but needs a re-sync.
+  watch(() => [route.name, route.params.locale], sync, { flush: "post" });
   onUnmounted(disconnect);
 
   return activeId;
@@ -63,18 +95,36 @@ let quietUntil = 0;
 let lastSectionId = SECTION_LINKS[0].id;
 
 // Browsers only allow sound after a real interaction; scrolling alone is not one.
+// The audio context is created and resumed inside that interaction: Safari keeps
+// a context suspended when it is first touched from a scroll callback.
+const UNLOCK_EVENTS = ["pointerdown", "click", "keydown", "touchend"];
+
+function getAudio() {
+  audio ??= new (window.AudioContext || window.webkitAudioContext)();
+  if (audio.state === "suspended") audio.resume();
+  return audio;
+}
+
+function unlock() {
+  try {
+    unlocked = true;
+    // Keep listening until the context really runs (the first gesture may not be enough).
+    if (getAudio().state === "running") {
+      UNLOCK_EVENTS.forEach((type) => window.removeEventListener(type, unlock));
+    }
+  } catch {
+    // No Web Audio: stay silent.
+  }
+}
+
 if (typeof window !== "undefined") {
-  const unlock = () => (unlocked = true);
-  ["pointerdown", "keydown", "touchend"].forEach((type) =>
-    window.addEventListener(type, unlock, { once: true, passive: true }),
-  );
+  UNLOCK_EVENTS.forEach((type) => window.addEventListener(type, unlock, { passive: true }));
 }
 
 // One short synthesized note (no audio file): pitch glides from `from` to `to`.
 function blip(from, to, peak, type) {
   try {
-    audio ??= new (window.AudioContext || window.webkitAudioContext)();
-    if (audio.state === "suspended") audio.resume();
+    const audio = getAudio();
     const now = audio.currentTime;
     const osc = audio.createOscillator();
     const gain = audio.createGain();

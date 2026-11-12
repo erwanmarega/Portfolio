@@ -384,6 +384,9 @@ onUnmounted(() => {
   --night: #1c2740;
   --chalk: #f3e9d6;
   /* Same ratio as the 800x300 drawing; narrow screens keep a usable height and crop the sides. */
+  /* Explicit width: without it, min-height + aspect-ratio widen the band past
+     the viewport on phones (220px tall forces 587px wide). */
+  width: 100%;
   aspect-ratio: 8 / 3;
   min-height: 220px;
   background: rgb(var(--surface));
