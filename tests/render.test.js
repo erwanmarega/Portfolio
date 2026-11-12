@@ -30,8 +30,16 @@ describe("Projects section", () => {
     await router.isReady();
     const wrapper = mount(Projects, { global: { plugins: [router], directives: { reveal } } });
 
-    const headings = wrapper.findAll("h3").map((h) => h.text());
+    // The contributions block adds its own trailing h3: only compare the group headings.
+    const headings = wrapper
+      .findAll("h3")
+      .map((h) => h.text())
+      .slice(0, PROJECT_GROUPS.length);
     expect(headings).toEqual(PROJECT_GROUPS.map((id) => fr.projects.groups[id]));
+    expect(wrapper.findAll("h3").map((h) => h.text())).toEqual([
+      ...PROJECT_GROUPS.map((id) => fr.projects.groups[id]),
+      fr.projects.contributions.title,
+    ]);
     expect(wrapper.findAll("h4").map((h) => h.text())).toEqual(projects.map((p) => p.title));
     expect(projects.every((p) => PROJECT_GROUPS.includes(p.group))).toBe(true);
     wrapper.unmount();

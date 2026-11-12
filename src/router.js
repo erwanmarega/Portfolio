@@ -79,6 +79,30 @@ function updateHead(to) {
   });
   description.content = meta.description;
 
+  // Canonical URL and link-preview tags; the static ones in index.html cover
+  // crawlers that do not run JavaScript.
+  const url = `${SITE_URL}${pagePath(locale, to.name)}`;
+  const canonical = ensureHeadTag('link[rel="canonical"]', () => {
+    const el = document.createElement("link");
+    el.rel = "canonical";
+    return el;
+  });
+  canonical.href = url;
+  const og = {
+    "og:title": title ?? document.title,
+    "og:description": meta.description,
+    "og:url": url,
+    "og:locale": locale === "en" ? "en_US" : "fr_FR",
+  };
+  for (const [property, content] of Object.entries(og)) {
+    const tag = ensureHeadTag(`meta[property="${property}"]`, () => {
+      const el = document.createElement("meta");
+      el.setAttribute("property", property);
+      return el;
+    });
+    tag.content = content;
+  }
+
   const hrefs = {
     fr: `${SITE_URL}${pagePath("fr", to.name)}`,
     en: `${SITE_URL}${pagePath("en", to.name)}`,

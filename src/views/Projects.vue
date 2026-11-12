@@ -11,13 +11,13 @@
           v-for="project in group.items"
           :key="project.id"
           v-reveal
-          class="border-t border-line/10 first:border-t-0"
+          class="relative border-t border-line/10 first:border-t-0 [&:first-child>a]:pt-0"
         >
           <a
             :href="project.link"
             target="_blank"
             rel="noopener noreferrer"
-            class="group grid gap-x-6 gap-y-4 rounded-lg py-6 outline-none first:pt-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:grid-cols-[220px_minmax(0,1fr)] sm:items-start"
+            class="group grid gap-x-6 gap-y-4 rounded-lg py-6 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand sm:grid-cols-[220px_minmax(0,1fr)] sm:items-start"
           >
             <div class="overflow-hidden rounded-lg border border-line/10 bg-surface-strong">
               <img
@@ -28,29 +28,25 @@
               />
             </div>
 
-            <div class="min-w-0">
-              <div class="flex items-baseline justify-between gap-4">
-                <h4
-                  class="flex items-baseline gap-2 font-medium text-ink transition-colors group-hover:text-brand-text"
+            <!-- sm+: room for the repo link, pinned to the bottom of the row. -->
+            <div class="min-w-0" :class="{ 'sm:pb-8': project.repo }">
+              <h4
+                class="flex items-baseline gap-2 font-medium text-ink transition-colors group-hover:text-brand-text"
+              >
+                {{ project.title }}
+                <svg
+                  viewBox="0 0 16 16"
+                  class="h-3 w-3 shrink-0 self-center"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.75"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
                 >
-                  {{ project.title }}
-                  <svg
-                    viewBox="0 0 16 16"
-                    class="h-3 w-3 shrink-0 self-center"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.75"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
-                  </svg>
-                </h4>
-                <p class="shrink-0 font-mono text-xs text-ink-muted">
-                  {{ project.category }}
-                </p>
-              </div>
+                  <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
+                </svg>
+              </h4>
               <p class="mt-1.5 text-[15px] leading-relaxed text-ink-soft">
                 {{ project.description }}
               </p>
@@ -61,7 +57,10 @@
             </div>
           </a>
           <!-- Separate link: the row above is already one link to the live site. -->
-          <p v-if="project.repo" class="-mt-3 pb-6 sm:pl-[calc(220px+1.5rem)]">
+          <p
+            v-if="project.repo"
+            class="-mt-3 pb-6 sm:absolute sm:bottom-6 sm:left-[calc(220px+1.5rem)] sm:mt-0 sm:pb-0"
+          >
             <a
               :href="project.repo"
               target="_blank"
@@ -75,12 +74,14 @@
         </li>
       </ul>
     </template>
+    <ContributionGraph />
   </section>
 </template>
 
 <script setup>
 import { computed } from "vue";
 import { useLocale } from "../composables/useLocale.js";
+import ContributionGraph from "../components/ContributionGraph.vue";
 import { PROJECT_GROUPS, projects } from "../data/projects.js";
 
 const { t } = useLocale();

@@ -42,6 +42,14 @@ export default {
     newTab: "(new tab)",
     alt: "Screenshot of the {title} project",
     code: "Source code",
+    contributions: {
+      title: "GitHub activity",
+      total: "{count} contributions in the last 12 months",
+      dayNone: "No contributions · {date}",
+      dayOne: "1 contribution · {date}",
+      dayMany: "{count} contributions · {date}",
+      profile: "GitHub profile",
+    },
     groups: {
       devops: "DevOps",
       fullstack: "Full-stack",
@@ -52,26 +60,21 @@ export default {
       0: {
         description:
           "Track music releases through a modern interface connected to the Spotify API.",
-        category: "Web App",
       },
       1: {
         description:
           "CLI assistant that writes commit messages and branch names, and plugs into Jira and GitHub.",
-        category: "Tool",
       },
       2: {
         description: "Build your real-estate dashboard in under a minute.",
-        category: "SaaS",
       },
       3: {
         description:
           "Full redesign of the website of ADI, a company specialised in property fit-out.",
-        category: "Redesign",
       },
       4: {
         description:
           "Connects your students to your dashboard. For apprenticeship centres and schools whose students are looking for a work-study placement.",
-        category: "SaaS",
       },
     },
   },
@@ -159,11 +162,6 @@ export default {
       {
         label: "Learning",
         text: "Astro on the front-end, and Terraform on the DevOps side.",
-      },
-      {
-        label: "Looking for",
-        text: "To be completed: what I'm looking for (full-time role, freelance, meeting people…).",
-        placeholder: true,
       },
     ],
   },

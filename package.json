@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/fetch-contributions.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -15,6 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
+    "contributions": "node scripts/fetch-contributions.mjs",
     "cv:pdf": "node scripts/generate-cv-pdf.mjs",
     "test:watch": "vitest"
   },

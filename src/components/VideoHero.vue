@@ -117,8 +117,14 @@ onUnmounted(() => {
 <style scoped>
 .video-hero {
   /* Clips are cropped to this ratio by scripts/prepare-hero-clip.sh. */
+  /* Explicit width: without it, min-height + aspect-ratio widen the band past
+     the viewport on phones (220px tall forces 587px wide). */
+  width: 100%;
   aspect-ratio: 8 / 3;
   min-height: 220px;
+  /* Wide screens: keep the band short so the name and the first section stay
+     on the first screen (object-cover crops the top and bottom). */
+  max-height: 300px;
   isolation: isolate;
 }
 /* Same rule as the project thumbnails: tinted only where hover exists, touch

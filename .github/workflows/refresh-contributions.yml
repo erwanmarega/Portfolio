@@ -1,0 +1,24 @@
+name: Refresh contributions
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  redeploy:
+    name: Trigger Vercel deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Call the Vercel deploy hook
+        env:
+          HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$HOOK_URL" ]; then
+            echo "::notice::VERCEL_DEPLOY_HOOK_URL is not set, skipping"
+            exit 0
+          fi
+          curl --fail --silent --show-error --max-time 30 -X POST "$HOOK_URL" -o /dev/null
