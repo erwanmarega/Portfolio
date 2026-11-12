@@ -19,7 +19,7 @@ export default [
     },
   },
   {
-    files: ["server.js", "*.config.js", "*.config.cjs", "tests/**"],
+    files: ["server.js", "*.config.js", "*.config.cjs", "tests/**", "scripts/**"],
     languageOptions: { globals: { ...globals.node } },
   },
   prettier,

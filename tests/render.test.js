@@ -1,14 +1,39 @@
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import Skills from "@/views/Skills.vue";
+import { createMemoryHistory, createRouter } from "vue-router";
+import { routes } from "@/router.js";
+import { reveal } from "@/directives/reveal.js";
 
 describe("Skills section", () => {
-  it("renders the title and the technology layers", () => {
-    const wrapper = mount(Skills, { global: { stubs: { FontAwesomeIcon: true } } });
+  it("renders the title and the technology groups", async () => {
+    const router = createRouter({ history: createMemoryHistory(), routes });
+    router.push("/");
+    await router.isReady();
+    const wrapper = mount(Skills, { global: { plugins: [router], directives: { reveal } } });
 
-    expect(wrapper.find("#skills-title").exists()).toBe(true);
-    expect(wrapper.text()).toContain("Technologies");
-    expect(wrapper.findAll("li.layer").length).toBeGreaterThan(0);
+    expect(wrapper.find("#skills-title").text()).toBe("Stack");
+    expect(wrapper.findAll("dt").length).toBeGreaterThan(0);
+    expect(wrapper.findAll("li.tech").length).toBeGreaterThan(0);
+    expect(wrapper.text()).toContain("Vue.js");
+    wrapper.unmount();
+  });
+});
+
+describe("Projects section", () => {
+  it("groups every project under its category heading, in group order", async () => {
+    const { default: Projects } = await import("@/views/Projects.vue");
+    const { PROJECT_GROUPS, projects } = await import("@/data/projects.js");
+    const { default: fr } = await import("@/data/locales/fr.js");
+    const router = createRouter({ history: createMemoryHistory(), routes });
+    router.push("/");
+    await router.isReady();
+    const wrapper = mount(Projects, { global: { plugins: [router], directives: { reveal } } });
+
+    const headings = wrapper.findAll("h3").map((h) => h.text());
+    expect(headings).toEqual(PROJECT_GROUPS.map((id) => fr.projects.groups[id]));
+    expect(wrapper.findAll("h4").map((h) => h.text())).toEqual(projects.map((p) => p.title));
+    expect(projects.every((p) => PROJECT_GROUPS.includes(p.group))).toBe(true);
     wrapper.unmount();
   });
 });

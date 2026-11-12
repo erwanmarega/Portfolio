@@ -1,42 +1,27 @@
-// v-reveal: adds `is-revealed` once the element enters the viewport.
-// Styling lives in CSS ([data-reveal] / .is-revealed); pass a delay in ms as value:
-//   <div v-reveal="120">
-// With prefers-reduced-motion the element is revealed immediately.
-
+// v-reveal: fades an element up the first time it enters the viewport.
+// Optional value = delay in ms (e.g. v-reveal="120"). Styles live in main.css
+// (.reveal / .is-in) and only apply when the user has not asked for reduced motion.
 let observer = null;
 
-function getObserver() {
-  if (observer) return observer;
-  observer = new IntersectionObserver(
+const getObserver = () => {
+  observer ??= new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        entry.target.classList.add("is-revealed");
+        entry.target.classList.add("is-in");
         observer.unobserve(entry.target);
       }
     },
-    { rootMargin: "0px 0px -12% 0px", threshold: 0 },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
   );
   return observer;
-}
+};
 
-const reduced = () =>
-  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-export const vReveal = {
+export const reveal = {
   mounted(el, binding) {
-    el.setAttribute("data-reveal", "");
+    el.classList.add("reveal");
     if (binding.value) el.style.setProperty("--reveal-delay", `${binding.value}ms`);
-    if (reduced() || typeof IntersectionObserver === "undefined") {
-      el.classList.add("is-revealed");
-      return;
-    }
     getObserver().observe(el);
-  },
-  updated(el, binding) {
-    if (binding.value !== binding.oldValue) {
-      el.style.setProperty("--reveal-delay", `${binding.value || 0}ms`);
-    }
   },
   unmounted(el) {
     observer?.unobserve(el);
