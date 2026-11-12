@@ -21,7 +21,7 @@ describe("Skills section", () => {
 });
 
 describe("Projects section", () => {
-  it("groups every project under its category heading, in group order", async () => {
+  it("shows the featured projects first, then the others under their category", async () => {
     const { default: Projects } = await import("@/views/Projects.vue");
     const { PROJECT_GROUPS, projects } = await import("@/data/projects.js");
     const { default: fr } = await import("@/data/locales/fr.js");
@@ -30,17 +30,34 @@ describe("Projects section", () => {
     await router.isReady();
     const wrapper = mount(Projects, { global: { plugins: [router], directives: { reveal } } });
 
-    // The contributions block adds its own trailing h3: only compare the group headings.
-    const headings = wrapper
-      .findAll("h3")
-      .map((h) => h.text())
-      .slice(0, PROJECT_GROUPS.length);
-    expect(headings).toEqual(PROJECT_GROUPS.map((id) => fr.projects.groups[id]));
+    const featured = projects.filter((p) => p.featured);
+    const others = projects.filter((p) => !p.featured);
+
+    const usedGroups = PROJECT_GROUPS.filter((id) => others.some((p) => p.group === id));
+
+    expect(featured.length).toBeGreaterThan(0);
     expect(wrapper.findAll("h3").map((h) => h.text())).toEqual([
-      ...PROJECT_GROUPS.map((id) => fr.projects.groups[id]),
+      fr.projects.featured,
+      ...usedGroups.map((id) => fr.projects.groups[id]),
       fr.projects.contributions.title,
     ]);
-    expect(wrapper.findAll("h4").map((h) => h.text())).toEqual(projects.map((p) => p.title));
+    expect(
+      wrapper.findAll("h4").map((h) => h.text().replace(fr.projects.newTab, "").trim()),
+    ).toEqual([...featured, ...others].map((p) => p.title));
+
+    const articles = wrapper.findAll("article");
+    expect(articles).toHaveLength(featured.length);
+    featured.forEach((project, i) => {
+      const study = fr.projects.items[project.id].study;
+      expect(articles[i].findAll("dt").map((dt) => dt.text())).toEqual([
+        fr.projects.study.problem,
+        fr.projects.study.role,
+        fr.projects.study.result,
+      ]);
+      expect(articles[i].text()).toContain(study.problem);
+      expect(articles[i].text()).toContain(study.role);
+      expect(articles[i].text()).toContain(study.result);
+    });
     expect(projects.every((p) => PROJECT_GROUPS.includes(p.group))).toBe(true);
     wrapper.unmount();
   });

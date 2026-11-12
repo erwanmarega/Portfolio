@@ -26,7 +26,6 @@ async function mountAt(component, path) {
   return { wrapper, router };
 }
 
-// Returns the list of differences between two message trees.
 function diffStructure(a, b, path = "") {
   const issues = [];
   if (Array.isArray(a) || Array.isArray(b)) {
@@ -112,14 +111,18 @@ describe("locale routing", () => {
 
 describe("localized rendering", () => {
   it("Home shows French at / and English at /en", async () => {
+    const plain = (text) => text.replaceAll("**", "");
+
     const a = await mountAt(Home, "/");
-    expect(a.wrapper.text()).toContain(fr.home.p1);
-    expect(a.wrapper.text()).not.toContain(en.home.p1);
+    expect(a.wrapper.text()).toContain(plain(fr.home.p1));
+    expect(a.wrapper.text()).not.toContain(plain(en.home.p1));
+    expect(a.wrapper.findAll("strong").map((s) => s.text())).toContain("Vue.js");
+    expect(a.wrapper.text()).not.toContain("**");
     a.wrapper.unmount();
 
     const b = await mountAt(Home, "/en");
-    expect(b.wrapper.text()).toContain(en.home.p1);
-    expect(b.wrapper.text()).not.toContain(fr.home.p1);
+    expect(b.wrapper.text()).toContain(plain(en.home.p1));
+    expect(b.wrapper.text()).not.toContain(plain(fr.home.p1));
     b.wrapper.unmount();
   });
 
@@ -159,10 +162,10 @@ describe("SiteSidebar language switch", () => {
     expect(internal).toContain("/en");
     expect(internal).toContain("/en#projects");
     expect(internal).toContain("/en/now");
-    // The CV is not a menu page: the sidebar links to the PDF of the current language.
+
     expect(internal).not.toContain("/en/cv");
     expect(hrefs(wrapper)).toContain("/cv-erwan-marega-en.pdf");
-    // Everything except the switch link (to French) stays under /en.
+
     expect(internal.filter((h) => h !== "/now").every((h) => h.startsWith("/en"))).toBe(true);
     expect(switchLink(wrapper, "fr").attributes("href")).toBe("/now");
     expect(switchLink(wrapper, "en").exists()).toBe(false);

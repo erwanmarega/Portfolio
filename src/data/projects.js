@@ -4,18 +4,16 @@ import hovlyImage from "../assets/images/projects/hovly.webp";
 import gitAgentImage from "../assets/images/projects/git-agent.webp";
 import postuloImage from "../assets/images/projects/postulo.webp";
 
-// Non-text project data, shared by the home section and the CV page. Texts come
-// from the locale messages (projects.items), matched by id. Tags are the real
-// stack of each repository.
-// `group` is one of PROJECT_GROUPS; the array order is the display order
-// (projects of a group are kept together).
 export const PROJECT_GROUPS = ["devops", "fullstack", "frontend", "tools"];
+
+export const repoHost = (url) => (url.includes("gitlab.com") ? "GitLab" : "GitHub");
 
 export const projects = [
   {
     id: 2,
     group: "devops",
     title: "Hovly",
+    featured: true,
     image: hovlyImage,
     link: "https://hovly-production.up.railway.app/",
     repo: "https://gitlab.com/erwanmarega/hovly",
@@ -25,6 +23,7 @@ export const projects = [
     id: 0,
     group: "fullstack",
     title: "SpotCalendar",
+    featured: true,
     image: spotifyImage,
     link: "https://spotcalendar.fr",
     repo: "https://github.com/erwanmarega/spotcalendar",

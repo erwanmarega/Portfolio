@@ -1,6 +1,3 @@
-// v-reveal: fades an element up the first time it enters the viewport.
-// Optional value = delay in ms (e.g. v-reveal="120"). Styles live in main.css
-// (.reveal / .is-in) and only apply when the user has not asked for reduced motion.
 let observer = null;
 
 const getObserver = () => {

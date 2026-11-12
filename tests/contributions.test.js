@@ -112,8 +112,6 @@ describe("contributions snapshot", () => {
     }
   });
 
-  // Asserts equality with the sum of counts: GitHub's totalContributions is the sum of the
-  // daily counts of the same calendar, so a mismatch means a corrupted or hand-edited file.
   it("has a total equal to the sum of the daily counts", () => {
     const sum = snapshot.days.reduce((acc, d) => acc + d.count, 0);
     expect(Number.isInteger(snapshot.total)).toBe(true);
@@ -149,9 +147,9 @@ describe.each([
     wrapper.unmount();
   });
 
-  it("renders one titled cell per day", async () => {
+  it("renders one labelled cell per day", async () => {
     const wrapper = await mountAt(path);
-    expect(wrapper.findAll(".cell[title]").length).toBe(snapshot.days.length);
+    expect(wrapper.findAll(".cell[data-label]").length).toBe(snapshot.days.length);
     wrapper.unmount();
   });
 
@@ -162,9 +160,9 @@ describe.each([
     wrapper.unmount();
   });
 
-  it("words the title of empty and multi-contribution days", async () => {
+  it("words the label of empty and multi-contribution days", async () => {
     const wrapper = await mountAt(path);
-    const titles = wrapper.findAll(".cell[title]").map((c) => c.attributes("title"));
+    const titles = wrapper.findAll(".cell[data-label]").map((c) => c.attributes("data-label"));
     const zeroIndex = snapshot.days.findIndex((d) => d.count === 0);
     const manyIndex = snapshot.days.findIndex((d) => d.count > 1);
     expect(zeroIndex).toBeGreaterThanOrEqual(0);

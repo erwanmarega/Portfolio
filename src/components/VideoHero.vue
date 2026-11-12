@@ -4,7 +4,6 @@
     class="video-hero relative overflow-hidden rounded-2xl bg-surface-strong"
     aria-hidden="true"
   >
-    <!-- Two stacked players: the hidden one preloads the next clip, then they cross-fade. -->
     <video
       v-for="slot in 2"
       :key="slot"
@@ -18,7 +17,6 @@
       tabindex="-1"
     ></video>
 
-    <!-- Ink tint over the footage; fades out on hover to show the real colors. -->
     <div class="tint absolute inset-0"></div>
 
     <Transition name="caption">
@@ -60,7 +58,6 @@ const load = (player, clipIndex) => {
 };
 
 const playFront = () => {
-  // Autoplay can be refused (data saver, low power): the first frame stays as a still.
   players[front.value]?.play().catch(() => {});
 };
 
@@ -72,7 +69,7 @@ const next = () => {
   front.value = incoming;
   players[incoming].currentTime = 0;
   playFront();
-  // Once the fade is over, stop the old clip and line up the one after.
+
   setTimeout(() => {
     players[outgoing]?.pause();
     if (players[outgoing]) load(players[outgoing], index.value + 1);
@@ -96,7 +93,7 @@ const sync = () => (visible && !document.hidden ? start() : stop());
 onMounted(() => {
   reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   load(players[0], 0);
-  if (reduced) return; // first frame only, no playback
+  if (reduced) return;
   if (heroClips.length > 1) load(players[1], 1);
 
   observer = new IntersectionObserver(([entry]) => {
@@ -116,19 +113,14 @@ onUnmounted(() => {
 
 <style scoped>
 .video-hero {
-  /* Clips are cropped to this ratio by scripts/prepare-hero-clip.sh. */
-  /* Explicit width: without it, min-height + aspect-ratio widen the band past
-     the viewport on phones (220px tall forces 587px wide). */
   width: 100%;
   aspect-ratio: 8 / 3;
   min-height: 220px;
-  /* Wide screens: keep the band short so the name and the first section stay
-     on the first screen (object-cover crops the top and bottom). */
+
   max-height: 300px;
   isolation: isolate;
 }
-/* Same rule as the project thumbnails: tinted only where hover exists, touch
-   screens always show the real colors. */
+
 .tint {
   display: none;
   pointer-events: none;

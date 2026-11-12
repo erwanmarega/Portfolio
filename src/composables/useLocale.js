@@ -6,13 +6,10 @@ import en from "../data/locales/en.js";
 export const LOCALES = ["fr", "en"];
 export const messages = { fr, en };
 
-// French is the default (no URL prefix); English lives under /en.
 export function localeFromRoute(route) {
   return route.params.locale === "en" ? "en" : "fr";
 }
 
-// vue-router does not carry optional params over on named navigation, so the
-// locale param is always passed explicitly.
 export function buildLocaleRoute(locale, name, extra = {}) {
   return { name, params: { locale: locale === "en" ? "en" : "" }, ...extra };
 }

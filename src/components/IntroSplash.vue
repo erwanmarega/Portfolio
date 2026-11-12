@@ -6,7 +6,6 @@
     @click="finish"
     @transitionend.self="onLeft"
   >
-    <!-- Tiny hand-drawn story: a seed is planted, the sun comes up, a web app grows. -->
     <svg viewBox="0 0 400 270" class="w-full max-w-[440px]" aria-hidden="true">
       <defs>
         <filter id="intro-wobble" x="-5%" y="-5%" width="110%" height="110%">
@@ -41,7 +40,6 @@
       </defs>
 
       <g filter="url(#intro-wobble)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-        <!-- Sun -->
         <g class="sun">
           <g class="sun-rays">
             <line
@@ -59,7 +57,6 @@
           <circle cx="318" cy="70" r="25" fill="url(#intro-hatch-sun)" stroke="none" />
         </g>
 
-        <!-- Soil and ground line -->
         <g mask="url(#intro-soil-mask)" class="soil">
           <rect x="30" y="212" width="340" height="58" class="soil-fill" stroke="none" />
           <rect x="30" y="212" width="340" height="58" fill="url(#intro-hatch)" stroke="none" />
@@ -74,10 +71,8 @@
           :style="{ '--i': i }"
         />
 
-        <!-- Seed -->
         <ellipse cx="200" cy="218" rx="7" ry="4.5" class="seed" />
 
-        <!-- Plant -->
         <path
           d="M200 216 C197 196 204 180 200 158 C196 140 203 124 200 106"
           pathLength="1"
@@ -92,7 +87,6 @@
           class="leaf leaf-right"
         />
 
-        <!-- Fruit: a small browser window -->
         <g class="fruit">
           <rect x="158" y="48" width="84" height="58" rx="7" class="window" />
           <path d="M158 63 H242" class="ink thin" />
@@ -123,7 +117,6 @@
 import { onMounted, onUnmounted, ref } from "vue";
 import { useLocale } from "../composables/useLocale.js";
 
-// Shown once per browser session, never with reduced motion. Any click or key skips it.
 const { t } = useLocale();
 const STORAGE_KEY = "intro-seen";
 const DURATION_MS = 4300;
@@ -168,7 +161,7 @@ const remember = () => {
   try {
     sessionStorage.setItem(STORAGE_KEY, "1");
   } catch {
-    // Storage can be unavailable (private mode); the intro then simply replays.
+    return;
   }
 };
 
@@ -214,7 +207,6 @@ onUnmounted(() => {
   transform: translateY(-100%);
 }
 
-/* Strokes */
 .ink {
   stroke: rgb(var(--ink));
   stroke-width: 2.5;
@@ -231,7 +223,6 @@ onUnmounted(() => {
   stroke-width: 1;
 }
 
-/* Self-drawing paths (pathLength="1") */
 .draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;

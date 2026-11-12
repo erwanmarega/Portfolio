@@ -34,13 +34,16 @@ export default {
   },
   home: {
     title: "À propos",
-    p1: "Avec l'IA, écrire du code n'est plus la partie difficile. Ce qui m'intéresse, c'est le reste : choisir quoi construire, soigner l'interface et aller jusqu'à la mise en ligne.",
-    p2: "Formé au design et à l'UX autant qu'au code, je développe en Vue.js chez Cegedim Business Services en alternance, et je sors mes propres produits à côté, comme SpotCalendar, Postulo ou Git Agent.",
+    p1: "Avec l'IA, écrire du code n'est plus la partie difficile. Ce qui m'intéresse, c'est le reste : **choisir quoi construire**, **soigner l'interface** et **aller jusqu'à la mise en ligne**.",
+    p2: "Formé au **design et à l'UX** autant qu'au code, je développe en **Vue.js** chez **Cegedim Business Services** en alternance, et je **sors mes propres produits** à côté, comme SpotCalendar, Postulo ou Git Agent.",
   },
   projects: {
     title: "Projets",
     newTab: "(nouvel onglet)",
     alt: "Capture d'écran du projet {title}",
+    featured: "Projets phares",
+    visit: "Voir le site",
+    study: { problem: "Problème", role: "Mon rôle", result: "Résultat" },
     code: "Code source",
     contributions: {
       title: "Activité GitHub",
@@ -60,6 +63,13 @@ export default {
       0: {
         description:
           "Suivi des sorties musicales avec une interface moderne connectée à l'API Spotify.",
+        study: {
+          problem:
+            "Les nouveautés se perdent dans l'appli Spotify : impossible de voir d'un coup d'œil ce que mes artistes sortent cette semaine.",
+          role: "Seul sur le projet, de la maquette à la mise en ligne : front React, API Express avec connexion Spotify (OAuth, jetons chiffrés), e-mail hebdomadaire automatique et extension Chrome.",
+          result:
+            "En ligne sur spotcalendar.fr : calendrier des sorties semaine par semaine, onglet Découvertes, application installable (PWA) et back-end couvert par des tests.",
+        },
       },
       1: {
         description:
@@ -67,6 +77,13 @@ export default {
       },
       2: {
         description: "Crée ton tableau de bord immobilier en moins d'une minute.",
+        study: {
+          problem:
+            "Chercher un logement, c'est des annonces dispersées sur plusieurs sites, des prix qui bougent et aucun moyen simple de comparer.",
+          role: "Seul sur le projet : l'application Nuxt et Supabase, le scraping des sites immobiliers (Leboncoin, SeLoger, Bien'ici…) pour importer une annonce depuis son lien, la comparaison et les alertes de prix, et toute la chaîne DevOps, des images Docker à la pipeline GitLab CI/CD.",
+          result:
+            "En ligne sur Railway : chaque commit passe lint, typage, tests et analyses de sécurité (SAST, secrets, scan de l'image) avant le déploiement en production.",
+        },
       },
       3: {
         description:
@@ -191,6 +208,13 @@ export default {
       { label: "Atouts", text: "Esprit d'équipe, curiosité, autonomie, résolution de problèmes" },
       { label: "Permis", text: "Permis B, véhiculé" },
     ],
+  },
+  notFound: {
+    title: "Page introuvable | Erwan Marega",
+    label: "Erreur 404",
+    heading: "Page introuvable",
+    text: "L'avion s'est posé au mauvais endroit : cette page n'existe pas, ou plus.",
+    back: "Retour à l'accueil",
   },
   footer: {
     newTab: "(nouvel onglet)",

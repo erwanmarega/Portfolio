@@ -96,7 +96,6 @@ const { t } = useLocale();
 </script>
 
 <style scoped>
-/* Logos sit in monochrome next to the text and reveal their brand colors on hover. */
 .tech-icon {
   filter: grayscale(1) contrast(1.1);
   opacity: 0.75;
