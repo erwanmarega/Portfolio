@@ -52,8 +52,6 @@ body {
   scroll-margin-top: 4.5rem;
 }
 
-/* Page change: the new page fades in; the old one leaves instantly so hash
-   scrolling and section tracking never wait on a leave animation. */
 @media (prefers-reduced-motion: no-preference) {
   .page-enter-active {
     transition: opacity 0.3s ease;

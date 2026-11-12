@@ -1,10 +1,9 @@
 <template>
   <article class="cv-page">
-    <!-- Print only: the sidebar is hidden on paper, so the identity block is repeated here. -->
     <header class="hidden print:block">
       <p class="cv-name font-semibold text-ink">Erwan Marega</p>
       <p class="text-ink-soft">{{ t.sidebar.role }}</p>
-      <!-- Real links: they stay clickable in the generated PDF. -->
+
       <p class="mt-1 text-ink-soft">
         <template v-for="(contact, index) in contacts" :key="contact.href">
           <span v-if="index > 0" aria-hidden="true"> · </span>
@@ -153,7 +152,6 @@ const contacts = [
   { label: "www.ewmdev.com", href: "https://www.ewmdev.com" },
 ];
 
-// Experience (kind work) and Education (kind education), texts matched by entry id.
 const journeyBlocks = computed(() =>
   [
     { id: "experience", kind: "work" },
@@ -177,9 +175,6 @@ function printPage() {
 
 <style scoped>
 @media print {
-  /* Compact sizes so the whole CV fits one A4 page. Utilities set fixed px
-     sizes and margins, hence !important. Check with a print preview after
-     adding content. */
   .cv-name {
     font-size: 18pt;
     line-height: 1.1;

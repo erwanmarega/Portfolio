@@ -32,7 +32,7 @@ const router = createRouter({
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       return { el: to.hash, top: 72, behavior: reduce ? "auto" : "smooth" };
     }
-    // Back to the top of the same page (e.g. /#projects -> /): scroll, do not jump.
+
     if (to.path === from.path) {
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       return { top: 0, behavior: reduce ? "auto" : "smooth" };
@@ -47,7 +47,6 @@ function pagePath(locale, name) {
   return `${base}${suffix}` || "/";
 }
 
-// Creates the tag once, then only updates it.
 function ensureHeadTag(selector, create) {
   let el = document.head.querySelector(selector);
   if (!el) {
@@ -64,7 +63,6 @@ function updateHead(to) {
   if (title) document.title = title;
   document.documentElement.lang = locale;
 
-  // The cv page is only the print template behind the downloadable PDFs.
   const robots = ensureHeadTag('meta[name="robots"]', () => {
     const el = document.createElement("meta");
     el.name = "robots";
@@ -79,8 +77,6 @@ function updateHead(to) {
   });
   description.content = meta.description;
 
-  // Canonical URL and link-preview tags; the static ones in index.html cover
-  // crawlers that do not run JavaScript.
   const url = `${SITE_URL}${pagePath(locale, to.name)}`;
   const canonical = ensureHeadTag('link[rel="canonical"]', () => {
     const el = document.createElement("link");

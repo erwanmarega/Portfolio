@@ -13,10 +13,6 @@
     --brand: 194 86 42;
     --brand-text: 158 64 26;
     --line: 33 28 24;
-
-    --ascii-ink: #9e401a;
-    --ascii-accent: #c2562a;
-    --ascii-bg: #f7f2e9;
   }
   html {
     background-color: rgb(var(--page));
@@ -62,7 +58,6 @@
     border-bottom: 1px solid rgb(var(--line) / 0.15);
   }
 
-  /* Scroll reveal (v-reveal directive). Without motion, elements are simply visible. */
   @media (prefers-reduced-motion: no-preference) {
     .reveal {
       opacity: 0;
@@ -75,7 +70,7 @@
       opacity: 1;
       transform: none;
     }
-    /* Section titles: the hairline draws itself from the left. */
+
     .section-label.reveal {
       border-bottom-color: transparent;
       background: linear-gradient(rgb(var(--line) / 0.15), rgb(var(--line) / 0.15)) left bottom / 0%
@@ -91,8 +86,6 @@
   }
 }
 
-/* Print (CV page): white paper, black text, single column. Chrome that is not
-   part of the CV is hidden with `print:hidden` in the templates. */
 @page {
   size: A4;
   margin: 9mm 13mm;
@@ -118,7 +111,7 @@
     opacity: 1 !important;
     transform: none !important;
   }
-  /* The hairline is a background gradient on revealed labels: show a plain border instead. */
+
   .section-label.reveal {
     background: none !important;
     border-bottom-color: rgb(var(--line) / 0.3) !important;

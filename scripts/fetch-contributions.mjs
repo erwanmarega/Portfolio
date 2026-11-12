@@ -1,7 +1,3 @@
-// Fetches the GitHub contribution calendar and stores it in src/data/contributions.json.
-// Usage: npm run contributions   (also runs before every build via "prebuild")
-// Needs GH_CONTRIBUTIONS_TOKEN (read-only token, server side only). It never fails
-// a build: on any problem the committed snapshot is kept.
 import { writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -20,7 +16,6 @@ const LEVELS = {
   FOURTH_QUARTILE: 4,
 };
 
-// The snapshot is rendered on the page: only accept what a calendar can contain.
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_DAYS = 400;
 

@@ -1,7 +1,4 @@
 <template>
-  <!-- Page change: a cream panel slides in from the left with a small hand-drawn
-       scene (a paper plane loops across the sky), the page swaps underneath,
-       then the panel leaves to the right. Same drawing style as IntroSplash. -->
   <div
     v-if="phase !== 'idle'"
     class="page-wipe print:hidden fixed inset-0 z-50 flex flex-col items-center justify-center bg-page px-6"
@@ -15,7 +12,7 @@
           <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" />
           <feDisplacementMap in="SourceGraphic" scale="2.6" />
         </filter>
-        <!-- The dashed trail is revealed by a solid stroke that draws itself. -->
+
         <mask
           id="wipe-trail-mask"
           maskUnits="userSpaceOnUse"
@@ -61,29 +58,26 @@ import { nextTick, onUnmounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { localeFromRoute, messages } from "../composables/useLocale.js";
 
-// Total = IN_MS + HOLD_MS + the 0.45s exit (keep the CSS durations below in sync).
 const IN_MS = 450;
 const HOLD_MS = 800;
 
-// Flight path of the plane (one loop, then off the right edge); also the trail.
 const FLIGHT =
   "M-30 150 C60 150 90 90 150 110 C200 127 190 180 160 170 C128 160 150 100 220 105 C300 110 350 85 440 50";
 
 const router = useRouter();
-const phase = ref("idle"); // "idle" | "in" | "out"
+const phase = ref("idle");
 const label = ref("");
 let timer = 0;
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const removeBefore = router.beforeEach((to, from) => {
-  // Only real page changes: not the first load, a hash, or a language switch.
   if (!from.name || to.name === from.name) return;
   if (phase.value !== "idle" || reducedMotion()) return;
 
   label.value = messages[localeFromRoute(to)].nav.pages[to.name] ?? "Erwan Marega";
   phase.value = "in";
-  // Hold the navigation until the scene has played, so the swap stays hidden.
+
   return new Promise((resolve) => {
     timer = setTimeout(resolve, IN_MS + HOLD_MS);
   });
@@ -108,8 +102,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Panel: in from the left, out to the right. The scene animations below are not
-   tied to .is-in / .is-out, so they do not restart when the panel leaves. */
 .page-wipe.is-in {
   animation: wipe-in 0.45s cubic-bezier(0.7, 0, 0.2, 1) forwards;
 }
@@ -117,7 +109,6 @@ onUnmounted(() => {
   animation: wipe-out 0.45s cubic-bezier(0.7, 0, 0.2, 1) forwards;
 }
 
-/* Strokes */
 .ink {
   stroke: rgb(var(--ink));
   stroke-width: 2.5;
@@ -126,7 +117,6 @@ onUnmounted(() => {
   stroke-width: 1.8;
 }
 
-/* Self-drawing paths (pathLength="1") */
 .draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -152,7 +142,6 @@ onUnmounted(() => {
   animation: draw 0.85s cubic-bezier(0.45, 0, 0.4, 1) 0.3s forwards;
 }
 
-/* The plane follows the same path as the trail, nose first. */
 .plane {
   offset-path: path(
     "M-30 150 C60 150 90 90 150 110 C200 127 190 180 160 170 C128 160 150 100 220 105 C300 110 350 85 440 50"

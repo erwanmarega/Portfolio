@@ -1,7 +1,3 @@
-// Regenerates the two downloadable CVs (public/cv-erwan-marega-{fr,en}.pdf) from
-// the /cv page, so the PDFs always match the site content.
-// Usage: npm run cv:pdf   (run it after any change to the CV / journey texts)
-// Needs Chrome or Chromium; set CHROME_BIN if it is not at a usual location.
 import { execFile } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -27,7 +23,6 @@ if (!chrome) {
   process.exit(1);
 }
 
-// A rendered CV is ~115 kB; a blank page is ~1 kB.
 const MIN_BYTES = 20_000;
 
 const TARGETS = [
@@ -43,14 +38,13 @@ let failed = false;
 try {
   for (const { locale, path } of TARGETS) {
     const out = resolve(root, "public", `cv-erwan-marega-${locale}.pdf`);
-    // A cold start can print before the page has rendered, which gives an
-    // almost empty file: retry until the PDF has real content.
+
     for (let attempt = 1; attempt <= 3; attempt++) {
       await run(chrome, [
         "--headless=new",
         "--disable-gpu",
         "--no-pdf-header-footer",
-        // Lets the lazy page chunk and the web fonts load before printing.
+
         "--virtual-time-budget=9000",
         `--print-to-pdf=${out}`,
         `${origin}${path}`,

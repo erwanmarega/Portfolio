@@ -11,7 +11,6 @@
     <link rel="icon" href="./src/assets/images/logo.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Shrikhand&display=swap" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap"
       rel="stylesheet"
@@ -25,24 +24,81 @@
     </style>
     <title>Page introuvable | Erwan Marega</title>
   </head>
-  <body class="text-ink">
-    <main
-      class="relative flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center"
-    >
-      <div class="h-[30vh] w-full" aria-hidden="true">
-        <canvas id="shark" class="block h-full w-full"></canvas>
+
+  <body class="font-sans text-ink">
+    <main class="flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center">
+      <svg viewBox="0 0 400 220" class="lost-plane w-full max-w-[520px]" aria-hidden="true">
+        <defs>
+          <filter id="lost-wobble" x="-5%" y="-5%" width="110%" height="110%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" />
+            <feDisplacementMap in="SourceGraphic" scale="2.6" />
+          </filter>
+          <mask
+            id="lost-trail-mask"
+            maskUnits="userSpaceOnUse"
+            x="-40"
+            y="0"
+            width="480"
+            height="220"
+          >
+            <path
+              d="M-30 120 C50 120 90 60 150 85 C200 105 195 160 165 152 C132 143 150 85 215 88 C252 90 262 135 266 170"
+              pathLength="1"
+              class="trail-reveal"
+            />
+          </mask>
+        </defs>
+
+        <g filter="url(#lost-wobble)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M62 58 q-13 0 -13 -11 q0 -11 13 -10 q4 -13 19 -9 q11 -7 18 5 q13 0 12 12 q0 13 -13 13 Z"
+            pathLength="1"
+            class="ink draw cloud-a"
+          />
+          <path
+            d="M322 96 q-10 0 -10 -9 q0 -9 10 -8 q3 -10 15 -7 q9 -5 14 4 q10 0 10 10 q0 10 -11 10 Z"
+            pathLength="1"
+            class="ink thin draw cloud-b"
+          />
+
+          <path d="M70 189 q130 -9 260 -2" pathLength="1" class="ink draw ground" />
+
+          <path
+            d="M-30 120 C50 120 90 60 150 85 C200 105 195 160 165 152 C132 143 150 85 215 88 C252 90 262 135 266 170"
+            class="trail"
+            mask="url(#lost-trail-mask)"
+          />
+
+          <g class="plane">
+            <path d="M16 0 L-13 -10 L-7 0 L-13 10 Z" class="plane-body" />
+            <path d="M16 0 L-7 0 L-13 10 Z" class="plane-shade" />
+            <path d="M16 0 L-7 0" class="ink thin" />
+          </g>
+
+          <path d="M252 180 l-9 -7" pathLength="1" class="ink thin draw bump" />
+          <path d="M246 188 l-12 -1" pathLength="1" class="ink thin draw bump" />
+          <path d="M286 180 l9 -7" pathLength="1" class="ink thin draw bump" />
+          <path d="M292 188 l12 -1" pathLength="1" class="ink thin draw bump" />
+        </g>
+      </svg>
+
+      <div class="lost-text">
+        <p
+          class="mt-8 font-mono text-xs font-medium uppercase tracking-[0.14em] text-ink-muted"
+          data-t="label"
+        >
+          Erreur 404
+        </p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl" data-t="heading">
+          Page introuvable
+        </h1>
+        <p class="mx-auto mt-4 max-w-[44ch] text-lg leading-relaxed text-ink-soft" data-t="text">
+          L'avion s'est posé au mauvais endroit : cette page n'existe pas, ou plus.
+        </p>
+        <p class="mt-8">
+          <a href="/" class="text-link" data-t="back">Retour à l'accueil</a>
+        </p>
       </div>
-      <h1
-        class="text-8xl font-bold sm:text-9xl"
-        style="font-family: &quot;Shrikhand&quot;, cursive"
-      >
-        404
-      </h1>
-      <p class="text-2xl font-semibold">Page introuvable</p>
-      <p class="max-w-md text-ink-soft">Ce requin a mangé la page que tu cherchais.</p>
-      <a href="/" class="rounded-full bg-ink px-6 py-3 font-semibold text-page"
-        >Retour à l'accueil</a
-      >
     </main>
     <script type="module" src="/src/notFound.js"></script>
   </body>

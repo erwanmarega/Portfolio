@@ -1,0 +1,94 @@
+.lost-plane {
+  overflow: visible;
+}
+.lost-plane .ink {
+  stroke: rgb(var(--ink));
+  stroke-width: 2.5;
+}
+.lost-plane .thin {
+  stroke-width: 1.8;
+}
+.lost-plane .trail {
+  stroke: rgb(var(--brand-text));
+  stroke-width: 1.8;
+  stroke-dasharray: 5 7;
+}
+.lost-plane .trail-reveal {
+  stroke: #fff;
+  stroke-width: 8;
+}
+.lost-plane .plane {
+  offset-path: path(
+    "M-30 120 C50 120 90 60 150 85 C200 105 195 160 165 152 C132 143 150 85 215 88 C252 90 262 135 266 170"
+  );
+  offset-rotate: auto;
+  offset-distance: 100%;
+}
+.lost-plane .plane-body {
+  fill: rgb(var(--page));
+  stroke: rgb(var(--ink));
+  stroke-width: 2.5;
+}
+.lost-plane .plane-shade {
+  fill: rgb(var(--brand) / 0.3);
+}
+@supports not (offset-path: path("M0 0")) {
+  .lost-plane .plane {
+    transform: translate(266px, 170px) rotate(80deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lost-plane .draw,
+  .lost-plane .trail-reveal {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: lost-draw var(--dur, 0.5s) ease-out var(--at, 0s) forwards;
+  }
+  .lost-plane .ground {
+    --dur: 0.6s;
+    --at: 0.1s;
+  }
+  .lost-plane .cloud-a {
+    --at: 0.3s;
+  }
+  .lost-plane .cloud-b {
+    --at: 0.45s;
+  }
+  .lost-plane .trail-reveal {
+    animation: lost-draw 1.3s cubic-bezier(0.45, 0, 0.6, 1) 0.5s forwards;
+  }
+  .lost-plane .plane {
+    offset-distance: 0%;
+    animation: lost-fly 1.3s cubic-bezier(0.45, 0, 0.6, 1) 0.5s forwards;
+  }
+  .lost-plane .bump {
+    --dur: 0.2s;
+    --at: 1.8s;
+  }
+  .lost-text {
+    opacity: 0;
+    animation: lost-rise 0.5s ease-out 1.6s forwards;
+  }
+}
+
+@keyframes lost-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes lost-fly {
+  to {
+    offset-distance: 100%;
+  }
+}
+@keyframes lost-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

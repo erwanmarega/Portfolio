@@ -5,8 +5,6 @@
     :class="{ 'is-paused': paused, 'is-static': reduced }"
     aria-hidden="true"
   >
-    <!-- Hand-drawn scenes in the same style as IntroSplash: ink outlines, hatching, wobble.
-         All scenes share one curved hill; they cross-fade and replay their animations on entry. -->
     <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMax slice" class="block h-full w-full">
       <defs>
         <filter id="hero-wobble" x="-5%" y="-5%" width="110%" height="110%">
@@ -52,7 +50,6 @@
       </defs>
 
       <Transition name="scene">
-        <!-- 1. Garden: sun, drifting clouds, web apps growing on the hill. -->
         <g v-if="scene === 0" key="garden" filter="url(#hero-wobble)" class="art">
           <rect width="800" height="300" class="paper" />
 
@@ -142,7 +139,6 @@
           </g>
         </g>
 
-        <!-- 2. Rain: a cloud waters a row of sprouts. -->
         <g v-else-if="scene === 1" key="rain" filter="url(#hero-wobble)" class="art">
           <rect width="800" height="300" class="paper rainy" />
 
@@ -201,7 +197,6 @@
           </g>
         </g>
 
-        <!-- 3. Paris by night: the tower sketches itself under the moon. -->
         <g v-else key="night" filter="url(#hero-wobble)" class="art night">
           <rect width="800" height="300" class="sky" />
           <rect width="800" height="300" fill="url(#hero-hatch-night)" />
@@ -248,7 +243,6 @@ import { onMounted, onUnmounted, ref } from "vue";
 const SCENE_COUNT = 3;
 const SCENE_MS = 8500;
 
-// Shared curved hill (quadratic through y=220 at the center of the 800x300 canvas).
 const HILL_LINE = "M-20 250 Q400 190 820 250";
 const HILL_FILL = `${HILL_LINE} L820 320 L-20 320 Z`;
 const hillY = (x) => {
@@ -256,7 +250,6 @@ const hillY = (x) => {
   return 250 - 120 * t * (1 - t);
 };
 
-// Plant drawn at the origin, growing upward.
 const STEM = "M0 0 C-3 -20 4 -36 0 -58 C-4 -76 3 -92 0 -110";
 const LEAF_LEFT = "M0 -44 C-20 -50 -34 -66 -37 -82 C-19 -80 -4 -66 0 -44 Z";
 const LEAF_RIGHT = "M0 -66 C20 -72 34 -88 37 -104 C19 -102 4 -88 0 -66 Z";
@@ -383,16 +376,13 @@ onUnmounted(() => {
   --sun: #f2b44d;
   --night: #1c2740;
   --chalk: #f3e9d6;
-  /* Same ratio as the 800x300 drawing; narrow screens keep a usable height and crop the sides. */
-  /* Explicit width: without it, min-height + aspect-ratio widen the band past
-     the viewport on phones (220px tall forces 587px wide). */
+
   width: 100%;
   aspect-ratio: 8 / 3;
   min-height: 220px;
   background: rgb(var(--surface));
 }
 
-/* Scene cross-fade */
 .scene-enter-active,
 .scene-leave-active {
   transition: opacity 0.9s ease;
@@ -402,8 +392,6 @@ onUnmounted(() => {
   opacity: 0;
 }
 
-/* Paused off-screen / static with reduced motion. Base styles are the final
-   state, so removing animations leaves a complete drawing. */
 .is-paused .art * {
   animation-play-state: paused !important;
 }
@@ -426,7 +414,6 @@ onUnmounted(() => {
   fill: var(--night);
 }
 
-/* Strokes */
 .ink {
   stroke: rgb(var(--ink));
   stroke-width: 2.5;
@@ -451,7 +438,6 @@ onUnmounted(() => {
   stroke-width: 1.2;
 }
 
-/* Fills */
 .soil {
   fill: rgb(var(--brand) / 0.16);
 }
@@ -507,7 +493,6 @@ onUnmounted(() => {
   fill: var(--night);
 }
 
-/* Entrance animations (fill-mode both: hidden during the delay, final state after) */
 .draw {
   stroke-dasharray: 1;
   animation: draw var(--dur, 0.6s) ease-out var(--at, 0s) both;
@@ -531,7 +516,6 @@ onUnmounted(() => {
   transform-origin: right bottom;
 }
 
-/* Loops */
 .spin {
   transform-box: fill-box;
   transform-origin: center;

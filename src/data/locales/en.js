@@ -34,13 +34,16 @@ export default {
   },
   home: {
     title: "About",
-    p1: "With AI, writing code is no longer the hard part. What interests me is everything else: choosing what to build, polishing the interface and getting it shipped.",
-    p2: "Trained in design and UX as much as in code, I build with Vue.js at Cegedim Business Services as an apprentice, and I ship my own products on the side, such as SpotCalendar, Postulo and Git Agent.",
+    p1: "With AI, writing code is no longer the hard part. What interests me is everything else: **choosing what to build**, **polishing the interface** and **getting it shipped**.",
+    p2: "Trained in **design and UX** as much as in code, I build with **Vue.js** at **Cegedim Business Services** as an apprentice, and I **ship my own products** on the side, such as SpotCalendar, Postulo and Git Agent.",
   },
   projects: {
     title: "Projects",
     newTab: "(new tab)",
     alt: "Screenshot of the {title} project",
+    featured: "Featured",
+    visit: "Visit the site",
+    study: { problem: "Problem", role: "My role", result: "Outcome" },
     code: "Source code",
     contributions: {
       title: "GitHub activity",
@@ -60,6 +63,13 @@ export default {
       0: {
         description:
           "Track music releases through a modern interface connected to the Spotify API.",
+        study: {
+          problem:
+            "New releases get lost in the Spotify app: there is no way to see at a glance what my artists are putting out this week.",
+          role: "Solo project, from mockup to launch: React front end, Express API with Spotify sign-in (OAuth, encrypted tokens), automatic weekly email and a Chrome extension.",
+          result:
+            "Live at spotcalendar.fr: week-by-week release calendar, a Discoveries tab, an installable app (PWA) and a tested back end.",
+        },
       },
       1: {
         description:
@@ -67,6 +77,13 @@ export default {
       },
       2: {
         description: "Build your real-estate dashboard in under a minute.",
+        study: {
+          problem:
+            "Looking for a home means listings scattered across several sites, prices that keep moving and no simple way to compare.",
+          role: "Solo project: the Nuxt and Supabase app, scraping property sites (Leboncoin, SeLoger, Bien'ici…) to import a listing from its link, comparison and price alerts, and the whole DevOps chain, from Docker images to the GitLab CI/CD pipeline.",
+          result:
+            "Live on Railway: every commit goes through lint, type checks, tests and security scans (SAST, secrets, image scan) before the production deploy.",
+        },
       },
       3: {
         description:
@@ -191,6 +208,13 @@ export default {
       { label: "Strengths", text: "Team spirit, curiosity, autonomy, problem solving" },
       { label: "Driving licence", text: "Category B, own vehicle" },
     ],
+  },
+  notFound: {
+    title: "Page not found | Erwan Marega",
+    label: "Error 404",
+    heading: "Page not found",
+    text: "The plane landed in the wrong place: this page doesn't exist, or no longer does.",
+    back: "Back to home",
   },
   footer: {
     newTab: "(new tab)",

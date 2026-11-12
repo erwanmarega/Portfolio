@@ -34,7 +34,7 @@
           <p class="mt-1.5 text-[15px] leading-relaxed text-ink-muted">
             {{ item.description }}
           </p>
-          <!-- What I do there, kept apart from the context sentence above. -->
+
           <ul v-if="item.tasks" class="mt-3 space-y-1.5">
             <li
               v-for="task in item.tasks"
@@ -62,15 +62,13 @@ import { journey } from "../data/journey.js";
 const homeItems = journey.filter((item) => item.home);
 
 const { t } = useLocale();
-// Texts come from the locale messages, matched by entry id.
+
 const localized = computed(() =>
   homeItems.map((item) => ({ ...item, ...t.value.journey.items[item.id] })),
 );
 </script>
 
 <style scoped>
-/* Same treatment as the Stack logos: monochrome next to the text, brand colors
-   when the row is hovered. */
 .journey-logo {
   filter: grayscale(1) contrast(1.1);
   opacity: 0.7;
