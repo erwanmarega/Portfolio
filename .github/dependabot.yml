@@ -5,15 +5,33 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Préfixe des PR : "chore(deps): ..." plutôt que "Bump ..."
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
     groups:
+      # Mineures et correctifs : une seule PR par type de dépendance
       dev-dependencies:
         dependency-type: development
         update-types: [minor, patch]
       prod-dependencies:
         dependency-type: production
         update-types: [minor, patch]
+    ignore:
+      # Majeures qui demandent une vraie migration : faites à la main, pas par PR auto.
+      # Tailwind 4 change la config (CSS-first) et Express 5 le routing / la gestion d'erreurs.
+      - dependency-name: tailwindcss
+        update-types: ["version-update:semver-major"]
+      - dependency-name: express
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: monthly
+    commit-message:
+      prefix: "ci"
+    groups:
+      # Toutes les actions (checkout, setup-node, upload-artifact...) dans une seule PR
+      github-actions:
+        patterns: ["*"]
